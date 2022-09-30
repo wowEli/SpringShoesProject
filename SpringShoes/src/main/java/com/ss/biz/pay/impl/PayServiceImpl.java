@@ -17,14 +17,12 @@ public class PayServiceImpl implements PayService{
 	private PayDAO payDAO;
 
 	@Override
-	public boolean insertPay(PayVO vo) {
+	public void insertPay(PayVO vo) {
 		payDAO.insertPay(vo);
-		return false;
 	}
 
 	@Override
 	public List<PayVO> selectAllPay(PayVO vo) {
-		payDAO.selectAllPay(vo);
-		return null;
+		return payDAO.selectAllPay(vo);
 	}
 }

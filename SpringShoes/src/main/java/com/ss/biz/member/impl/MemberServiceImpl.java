@@ -32,8 +32,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberVO selectOneMember(MemberVO vo) {
-		memberDAO.selectOneMember(vo);
-		return null;
+		return memberDAO.selectOneMember(vo);
 	}
 
 	@Override

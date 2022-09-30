@@ -30,12 +30,12 @@ public class ShoesDAO {
 	final String sql_selectAllColorShoes = "SELECT * FROM SHOESCOLOR";
 
 	//★ShoesVO에 저장할 selectAll
-	final String sql_selectAllShoes = "SELECT COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND FROM SHOESCOLOR SC inner JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK";
+	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK";
 		
 		
 	// ==========*selectOne 모음==========
 	//★shoesVO에 저장할 selectOne
-	final String sql_selectOneShoes = "SELECT COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
+	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
 	
 	
 
@@ -44,7 +44,7 @@ public class ShoesDAO {
 	final String sql_updateSizeShoes = "UPDATE SHOESSIZE SET CNT=CNT-1 WHERE COLORPK=? AND SIZE=?";
 
 	// ★필터검색용 sql
-	String sql_FilterSearch = "SELECT * FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK\r\n"
+	String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK\r\n"
 			+ "INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE'%?%' AND BRAND LIKE'%?%' AND (PRICE>=? AND PRICE<=?) AND";
 
 	
@@ -131,7 +131,7 @@ class ShoesRowMapper implements RowMapper<ShoesVO> {
 	@Override
 	public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		ShoesVO data = new ShoesVO();
-		data.setColorPk(rs.getInt("COLORPK"));
+		data.setColorpk(rs.getInt("COLORPK"));
 		data.setBrand(rs.getString("BRAND"));
 		data.setPrice(rs.getInt("PRICE"));
 		data.setShoesColor(rs.getString("COLOR"));

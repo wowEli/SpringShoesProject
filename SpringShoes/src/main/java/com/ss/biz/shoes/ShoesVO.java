@@ -7,7 +7,7 @@ public class ShoesVO {
 	private int price;
 	private String shoesColor;
 	private String shoesImg;
-	private int colorPk;
+	private int colorpk;
 	
 	private String filterColor; //  필터 검색 신발 색상
 	private String filterBrand; // 필터 검색 신발 브랜드
@@ -47,11 +47,12 @@ public class ShoesVO {
 	
 	
 	
-	public int getColorPk() {
-		return colorPk;
+	
+	public int getColorpk() {
+		return colorpk;
 	}
-	public void setColorPk(int colorPk) {
-		this.colorPk = colorPk;
+	public void setColorpk(int colorpk) {
+		this.colorpk = colorpk;
 	}
 	public String getFilterColor() {
 		return filterColor;
@@ -80,7 +81,7 @@ public class ShoesVO {
 	@Override
 	public String toString() {
 		return "ShoesVO [shoesName=" + shoesName + ", brand=" + brand + ", price=" + price + ", shoesColor="
-				+ shoesColor + ", shoesImg=" + shoesImg + ", colorPk=" + colorPk + ", filterColor=" + filterColor
+				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", filterColor=" + filterColor
 				+ ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice + ", filterHighPrice="
 				+ filterHighPrice + "]";
 	}

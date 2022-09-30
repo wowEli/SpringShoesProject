@@ -15,39 +15,33 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewDAO reviewDAO;
 
 	@Override
-	public boolean insertReview(ReviewVO vo) {
+	public void insertReview(ReviewVO vo) {
 		reviewDAO.insertReview(vo);
-		return false;
 	}
 
 	@Override
-	public boolean updateReview(ReviewVO vo) {
+	public void updateReview(ReviewVO vo) {
 		reviewDAO.updateReview(vo);
-		return false;
 	}
 
 	@Override
-	public boolean deleteReview(ReviewVO vo) {
+	public void deleteReview(ReviewVO vo) {
 		reviewDAO.deleteReview(vo);
-		return false;
 	}
 
 	@Override
 	public ReviewVO selectOneReview(ReviewVO vo) {
-		reviewDAO.selectOneReview(vo);
-		return null;
+		return reviewDAO.selectOneReview(vo);
 	}
 
 	@Override
 	public List<ReviewVO> selectAllReview(ReviewVO vo) {
-		reviewDAO.selectAllReview(vo);
-		return null;
+		return reviewDAO.selectAllReview(vo);
 	}
 
 	@Override
 	public List<ReviewVO> selectAllReviewM(ReviewVO vo) {
-		reviewDAO.selectAllReviewM(vo);
-		return null;
+		return reviewDAO.selectAllReviewM(vo);
 	}
 
 }

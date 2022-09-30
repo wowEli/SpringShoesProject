@@ -17,26 +17,23 @@ public class ReviewDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	final String sql_insert="INSERT INTO REVIEW VALUES(?,?,?,?,?)";
+	final String sql_insert="INSERT INTO REVIEW(CONTENT,WRITEDAY,MID,COLORPK) VALUES(?,?,?,?)";
 	final String sql_update="UPDATE REVIEW SET CONTENT=? WHERE RPK=?"; //++이미지? 
 	final String sql_delete="DELETE REVIEW WHERE RPK=?"; 
 	final String sql_selectOne="SELECT * FROM REVIEW WHERE RPK=?"; 
 	final String sql_selectAll="SELECT * FROM REVIEW WHERE COLORPK=?";
 	final String sql_selectAll_M="SELECT * FROM REVIEW WHERE MID=?";
 	
-	public boolean insertReview(ReviewVO vo) {
-		jdbcTemplate.update(sql_insert, vo.getRpk(), vo.getContent(), vo.getWriteday(), vo.getMid(), vo.getColorpk());
-		return false;
+	public void insertReview(ReviewVO vo) {
+		jdbcTemplate.update(sql_insert, vo.getContent(), vo.getWriteday(), vo.getMid(), vo.getColorpk());
 	}
 
-	public boolean updateReview(ReviewVO vo) {
+	public void updateReview(ReviewVO vo) {
 		jdbcTemplate.update(sql_update, vo.getContent(), vo.getRpk());
-		return false;
 	}
 
-	public boolean deleteReview(ReviewVO vo) {
+	public void deleteReview(ReviewVO vo) {
 		jdbcTemplate.update(sql_delete, vo.getRpk());
-		return false;
 	}
 
 	public ReviewVO selectOneReview(ReviewVO vo) {

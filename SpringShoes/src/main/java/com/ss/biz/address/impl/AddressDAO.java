@@ -17,7 +17,7 @@ public class AddressDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	final String sql_insert="INSERT INTO ADDRESS VALUES(?,?,?,?,?,?,?)";
+	final String sql_insert="INSERT INTO ADDRESS(ANAME,POSTCODE,ADDRESS,DETAILADDRESS,EXTRAADDRESS,MID) VALUES(?,?,?,?,?,?)";
 //	-	apk INT PRIMARY KEY AUTO_INCREMENT
 //	-	aname VARCHAR(20) – 주소이름
 //	-	mid – FK (MEMBER PK)
@@ -31,7 +31,7 @@ public class AddressDAO {
 	
 	
 	public void insertAddress(AddressVO vo) {
-		jdbcTemplate.update(sql_insert, vo.getApk(),vo.getAname(),vo.getMid(),vo.getPostcode(),vo.getAddress(),vo.getDetailAddress(),vo.getExtraAddress());
+		jdbcTemplate.update(sql_insert,vo.getAname(),vo.getPostcode(),vo.getAddress(),vo.getDetailAddress(),vo.getExtraAddress(),vo.getMid());
 	}
 	
 	public void deleteAddress(AddressVO vo) {
