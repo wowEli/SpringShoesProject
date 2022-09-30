@@ -1,5 +1,9 @@
 package com.ss.biz.address;
 
-public interface AddressService {
+import java.util.List;
 
+public interface AddressService {
+	void insertAddress(AddressVO vo);
+	void deleteAddress(AddressVO vo);
+	List<AddressVO> selectAllAddress(AddressVO vo);
 }

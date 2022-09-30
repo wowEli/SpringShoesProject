@@ -1,25 +1,39 @@
 package com.ss.biz.shoes.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ss.biz.shoes.ShoesColorVO;
 import com.ss.biz.shoes.ShoesSampleVO;
 import com.ss.biz.shoes.ShoesService;
+import com.ss.biz.shoes.ShoesVO;
 
 public class ShoesServiceImpl implements ShoesService{
 
-	@Autowired // MemberDAO 타입의 객체가 메모리에 있어야지만 DI(의존성 주입) 가능함!
-	private ShoesDAO shoesDAO; // 핵심로직을 수행할 객체
-	
+	@Autowired 
+	private ShoesDAO shoesDAO;
+
 	@Override
-	public void insertShoesSample(ShoesSampleVO vo) {
-		shoesDAO.insertSampleShoes(vo);
-		
+	public void updateShoes(ShoesVO vo, int size) {
+		shoesDAO.updateShoes(vo, size);
 	}
 
 	@Override
-	public void insertShoesColor(ShoesColorVO vo) {
-		shoesDAO.insertColorShoes(vo);
+	public ShoesVO selectOneShoes(ShoesVO vo) {
+		return shoesDAO.selectOneShoes(vo);
 	}
+
+	@Override
+	public List<ShoesVO> selectAllShoes(ShoesVO vo) {
+		return shoesDAO.selectAllShoes(vo);
+	}
+
+	@Override
+	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size) {
+		return shoesDAO.filterSearch(vo, size);
+	} 
+	
+
 
 }

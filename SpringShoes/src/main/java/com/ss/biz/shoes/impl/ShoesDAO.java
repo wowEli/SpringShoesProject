@@ -19,62 +19,95 @@ public class ShoesDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	// insert 모음
+	final String sql_insertSampleShoes = "INSERT INTO SHOESSAMPLE(SHOESNAME,PRICE,BRAND) VALUES(?,?,?)";
+	final String sql_insertColorShoes = "INSERT INTO SHOESCOLOR(SAMPLEPK,COLOR,SHOESIMG) VALUES(?,?,?)";
+	final String sql_insertSizeShoes = "INSERT INTO SHOESSIZE(COLORPK,SIZE,CNT) VALUES(?,?,10)";
+
+	// ==========*selectAll 모음===========
+	//shoesColorVO에 저장할 selectAll 크롤링 전용!!!!
+	final String sql_selectAllColorShoes = "SELECT * FROM SHOESCOLOR";
+
+	//★ShoesVO에 저장할 selectAll
+	final String sql_selectAllShoes = "SELECT COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND FROM SHOESCOLOR SC inner JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK";
+		
+		
+	// ==========*selectOne 모음==========
+	//★shoesVO에 저장할 selectOne
+	final String sql_selectOneShoes = "SELECT COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
 	
-	//insert 모음
-	final String sql_insertSampleShoes="INSERT INTO SHOESSAMPLE(SHOESNAME,PRICE,BRAND) VALUES(?,?,?)";
-	final String sql_insertColorShoes="INSERT INTO SHOESCOLOR(SAMPLEPK,COLOR,SHOESIMG) VALUES(?,?,?)";
-	final String sql_insertSizeShoes="INSERT INTO SHOESSIZE(COLORPK,SIZE,CNT) VALUES(?,?,10)";
 	
-	//selectAll 모음
-	final String sql_selectAllColorShoes="SELECT * FROM SHOESCOLOR";
+
+	// =============update 모음==========
+	//★shoesSize update
+	final String sql_updateSizeShoes = "UPDATE SHOESSIZE SET CNT=CNT-1 WHERE COLORPK=? AND SIZE=?";
+
+	// ★필터검색용 sql
+	String sql_FilterSearch = "SELECT * FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK\r\n"
+			+ "INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE'%?%' AND BRAND LIKE'%?%' AND (PRICE>=? AND PRICE<=?) AND";
+
 	
-	//update 모음
-	final String sql_updateSizeShoes="UPDATE SHOESSIZE SET CNT=CNT-1 WHERE COLORPK=? AND SIZE=?";
-	
-	//필터검색용 sql
-	String sql_FilterSearch="SELECT SC.*,SS.BRAND,S.CONT FROM SHOESCOLOR SC LEFT JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK\r\n"
-			+ "LEFT JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE'%%' AND BRAND LIKE'%%' AND SIZE=220 OR SIZE=230";
-	
-	
-	//SampleShoes 크롤링할때 INSERT 메서드
+	// SampleShoes 크롤링할때 INSERT 메서드
 	public void insertSampleShoes(ShoesSampleVO vo) {
-		System.out.println(vo);
-		System.out.println(jdbcTemplate);
-		jdbcTemplate.update(sql_insertSampleShoes,vo.getShoesName(),vo.getPrice(),vo.getBrand());
+		jdbcTemplate.update(sql_insertSampleShoes, vo.getShoesName(), vo.getPrice(), vo.getBrand());
 	}
-	
-	//ColorShoes 크롤링할때 INSERT 메서드
+
+	// ColorShoes 크롤링할때 INSERT 메서드
 	public void insertColorShoes(ShoesColorVO vo) {
-		jdbcTemplate.update(sql_insertColorShoes,vo.getSamplepk(),vo.getColor(),vo.getShoesImg());
+		jdbcTemplate.update(sql_insertColorShoes, vo.getSamplepk(), vo.getColor(), vo.getShoesImg());
 	}
-	//SizeShoes 테이블에 INSERT 메서드
+
+	// SizeShoes 테이블에 INSERT 메서드
 	public void insertSizeShoes(ShoesSizeVO vo) {
-		jdbcTemplate.update(sql_insertSizeShoes,vo.getColorpk(),vo.getSize());
-	}
-	//사용자가 구매시 SizeShoes 재고를 -1 UPDATE
-	public void updateShoes(ShoesVO vo,int size) {
-		jdbcTemplate.update(sql_updateSizeShoes,vo.getColorpk(),size);
-	}
-	//SizeShoes를 INSERT할때 필요한 메서드
-	public List<ShoesColorVO> selectAllShoesColor(ShoesColorVO vo){
-		return jdbcTemplate.query(sql_selectAllColorShoes, new ShoesColorRowMapper());
+		jdbcTemplate.update(sql_insertSizeShoes, vo.getColorpk(), vo.getSize());
 	}
 	
-	//필터검색 메서드
-	public List<ShoesVO> filterSearch(ShoesVO vo,int[] size){
-		for(int i=0; i<size.length; i++) {
-			if(i==0) {
-				sql_FilterSearch=sql_FilterSearch+" (SIZE="+size[i];
-			}
-			else {
-				sql_FilterSearch=sql_FilterSearch+" OR SIZE="+size[i];
-			}
-			sql_FilterSearch=sql_FilterSearch+")";
+	// shoesColor selectAll
+		public List<ShoesColorVO> selectAllShoesColor(ShoesColorVO vo) {
+			return jdbcTemplate.query(sql_selectAllColorShoes, new ShoesColorRowMapper());
 		}
 		
-		return jdbcTemplate.query(sql_FilterSearch, new ShoesRowMapper());
+	//===============================================================================================
+		
+	// 사용자가 구매시 SizeShoes 재고를 -1 UPDATE
+	public void updateShoes(ShoesVO vo, int size) {
+		jdbcTemplate.update(sql_updateSizeShoes, vo.getColorpk(), size);
+	}
+
+
+	public ShoesVO selectOneShoes(ShoesVO vo) {
+		Object[] args = {vo.getColorpk()};
+		return jdbcTemplate.queryForObject(sql_selectOneShoes, args, new ShoesRowMapper() );
+	}
+
+	public List<ShoesVO> selectAllShoes(ShoesVO vo) {
+		return jdbcTemplate.query(sql_selectAllShoes, new ShoesRowMapper());
 	}
 	
+	// 필터검색 메서드
+	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size) {
+		Object[] args = {vo.getFilterColor(),vo.getFilterBrand(),vo.getFilterLowPrice(),vo.getFilterHighPrice()};
+		
+		for (int i = 0; i < size.length; i++) {
+			if (i == 0) {
+				sql_FilterSearch = sql_FilterSearch + " (SIZE=" + size[i];
+			} else {
+				sql_FilterSearch = sql_FilterSearch + " OR SIZE=" + size[i];
+			}
+		}
+		sql_FilterSearch = sql_FilterSearch + ")";
+		
+		return jdbcTemplate.query(sql_FilterSearch,args, new ShoesRowMapper());
+	}
+//	for(int i=0; i<datas.size(); i++) {
+//		for(int j=i+1; j<datas.size(); j++) {
+//			if(datas.get(i).getColorPk()==datas.get(i).getColorPk()) {
+//				datas.remove(j);
+//			}
+//		}
+//	}
+
 }
 
 //shoesColor Select 메서드 활용 RowMapper
@@ -82,10 +115,6 @@ class ShoesColorRowMapper implements RowMapper<ShoesColorVO> {
 
 	@Override
 	public ShoesColorVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//		private int colorpk; //pk
-//		private int samplepk; // shoessample pk
-//		private String color; //신발 색상(필터검색)
-//		private String shoesimg; //신발 이미지
 		ShoesColorVO data = new ShoesColorVO();
 		data.setColorpk(rs.getInt("COLORPK"));
 		data.setSamplepk(rs.getInt("SAMPLEPK"));
@@ -97,19 +126,19 @@ class ShoesColorRowMapper implements RowMapper<ShoesColorVO> {
 
 }
 
-class ShoesRowMapper implements RowMapper<ShoesVO>{
+class ShoesRowMapper implements RowMapper<ShoesVO> {
 
 	@Override
 	public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		ShoesVO data = new ShoesVO();
-		data.setColorpk(rs.getInt("COLORPK"));
+		data.setColorPk(rs.getInt("COLORPK"));
 		data.setBrand(rs.getString("BRAND"));
 		data.setPrice(rs.getInt("PRICE"));
 		data.setShoesColor(rs.getString("COLOR"));
 		data.setShoesImg(rs.getString("SHOESIMG"));
 		data.setShoesName(rs.getString("SHOESNAME"));
-		
+
 		return data;
 	}
-	
+
 }

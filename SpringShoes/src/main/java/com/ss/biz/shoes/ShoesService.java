@@ -1,7 +1,11 @@
 package com.ss.biz.shoes;
 
+import java.util.List;
+
 public interface ShoesService {
-	void insertShoesSample(ShoesSampleVO vo);
-	void insertShoesColor(ShoesColorVO vo);
+	public void updateShoes(ShoesVO vo, int size);
+	public ShoesVO selectOneShoes(ShoesVO vo);
+	public List<ShoesVO> selectAllShoes(ShoesVO vo);
+	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size);
 	
 }
