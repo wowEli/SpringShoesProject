@@ -12,22 +12,22 @@ import com.ss.biz.review.impl.ReviewDAO;
 @Controller
 public class ReviewController {  
 	
-	@RequestMapping(value="/insertR.do",method=RequestMethod.POST) //ÈÄ±â ÀÛ¼º
+	@RequestMapping(value="/insertR.do",method=RequestMethod.POST) // í›„ê¸° ì‘ì„±
 	public String InsertR(MemberVO mVO, ReviewVO rVO, ReviewDAO rDAO ) {
 		rDAO.insertReview(rVO);
-		return "review.do"; //ÀÛ¼ºÀ» ´©¸£¸é review ÆäÀÌÁö·Î ÀÌµ¿
+		return "review.do"; // ì‘ì„±ì„ ëˆ„ë¥´ë©´ review í˜ì´ì§€ë¡œ ì´ë™
 	}
 	
-	@RequestMapping("/updateR.do") //ÈÄ±â ¼öÁ¤
+	@RequestMapping("/updateR.do") // í›„ê¸° ìˆ˜ì •
 	public String UpdateR(MemberVO mVO, ReviewVO rVO, ReviewDAO rDAO ) {
 		rDAO.updateReview(rVO);
-		return "review.do"; //¼öÁ¤À» ´©¸£¸é review ÆäÀÌÁö·Î ÀÌµ¿
+		return "review.do"; // ìˆ˜ì •ì„ ëˆ„ë¥´ë©´ review í˜ì´ì§€ë¡œ ì´ë™
 	}
 	
-	@RequestMapping("/deleteR.do") //ÈÄ±â »èÁ¦
+	@RequestMapping("/deleteR.do") // í›„ê¸° ì‚­ì œ
 	public String DeleteR(MemberVO mVO, ReviewVO rVO, ReviewDAO rDAO ) {
 		rDAO.deleteReview(rVO);
-		return "review.do"; //»èÁ¦¸¦ ´©¸£¸é review ÆäÀÌÁö·Î ÀÌµ¿
+		return "review.do"; // ì‚­ì œë¥¼ ëˆ„ë¥´ë©´ review í˜ì´ì§€ë¡œ ì´ë™
 	}
 	
 }

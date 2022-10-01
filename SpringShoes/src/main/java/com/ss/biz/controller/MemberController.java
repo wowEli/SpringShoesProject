@@ -18,33 +18,33 @@ public class MemberController {
 	public String SelectOneMember(MemberVO mVO, MemberDAO mDAO, Model model) {
 		
 		mVO = mDAO.selectOneMember(mVO);	
-		if(mVO==null) {		// ·Î±×ÀÎ ½ÇÆĞ½Ã
-			return "redirect:login.jsp"; // ´Ù½Ã ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+		if(mVO==null) {		// ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ
+			return "login.jsp"; // ë‹¤ì‹œ ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ ì´ë™ <ë™ìš±: ë¡œê·¸ì¸ -> ë¡œê·¸ì¸ ë¡œì§ì´ë‹ˆ forwordë¡œ ìˆ˜ì •>
 		}
 		else {
-			model.addAttribute("member", mVO); //·Î±×ÀÎ ¼º°ø½Ã
-			return "";	//¸ŞÀÎÈ­¸éÀ¸·Î ÀÌµ¿  main?
+			model.addAttribute("member", mVO); //ë¡œê·¸ì¸ ì„±ê³µì‹œ
+			return "redirect:selectAllS.do";	//ë©”ì¸í™”ë©´ìœ¼ë¡œ ì´ë™  main? <ë™ìš±: ë©”ì¸ == ì „ì²´ ìŠˆì¦ˆ í˜ì´ì§€ == selectAllS.do>
 		}
 	}
 	
-	@RequestMapping(value="/insertMember.do", method=RequestMethod.POST) // È¸¿ø °¡ÀÔ
+	@RequestMapping(value="/insertMember.do", method=RequestMethod.POST) // íšŒì› ê°€ì…
 	public String InsertMember(MemberVO mVO,MemberDAO mDAO) {
 		mDAO.insertMember(mVO);
-		return "redirect:login.do";	// È¸¿ø°¡ÀÔ ÈÄ ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+		return "redirect:login.do";	// íšŒì›ê°€ì… í›„ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™
 	}
 	
-	@RequestMapping(value="/updateM.do", method=RequestMethod.POST) // È¸¿øÁ¤º¸ ¼öÁ¤
+	@RequestMapping(value="/updateM.do", method=RequestMethod.POST) // íšŒì›ì •ë³´ ìˆ˜ì •
 	public String UpdateMember(HttpSession session, MemberVO mVO,MemberDAO mDAO) {
 		mDAO.updateMember(mVO);					
 		session.invalidate();
-		return "redirect:login.do"; //¼öÁ¤ÈÄ ´Ù½Ã ·Î±×ÀÎÀ» ÇÏ°Ô ·Î±×ÀÎ ÆäÀÌÁö·Î
+		return "redirect:login.do"; //ìˆ˜ì •í›„ ë‹¤ì‹œ ë¡œê·¸ì¸ì„ í•˜ê²Œ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ
 	}
 	
-	@RequestMapping(value="/deleteM.do") // È¸¿ø Å»Åğ 
+	@RequestMapping(value="/deleteM.do") // íšŒì› íƒˆí‡´ 
 	public String DeleteMember(HttpSession session, MemberVO mVO,MemberDAO mDAO) {
 		mDAO.deleteMember(mVO);
 		session.invalidate();
-		return "redirect:login.do"; // È¸¿ø Å»Åğ¸¦ ´©¸£¸é ´Ù½Ã ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+		return "redirect:login.do"; // íšŒì› íƒˆí‡´ë¥¼ ëˆ„ë¥´ë©´ ë‹¤ì‹œ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™
 	}
 		
 }
