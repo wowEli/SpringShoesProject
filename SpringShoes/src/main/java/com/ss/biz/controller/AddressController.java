@@ -26,8 +26,9 @@ public class AddressController {
 	}
 	
 	@RequestMapping(value="/selectAllA.do", method=RequestMethod.POST) //배송지 전체 보기
-	public void name(AddressVO aVO, AddressDAO aDAO, Model model) {	//주문하기에서 배송지 목록들 보여줄 때 사용 예정
+	public String name(AddressVO aVO, AddressDAO aDAO, Model model) {	//마이페이지에서 모든 배송지 모여줄 때
 		List<AddressVO> aDatas = aDAO.selectAllAddress(aVO);
-		model.addAttribute("aDatas", aDatas);		//반환 값?
+		model.addAttribute("aDatas", aDatas);
+		return "myPage.do";
 	}
 }
