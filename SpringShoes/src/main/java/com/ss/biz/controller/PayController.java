@@ -17,16 +17,16 @@ import com.ss.biz.shoes.impl.ShoesDAO;
 @Controller
 public class PayController {
 	
-	@RequestMapping(value="/±¸¸ÅÇÏ±â.do", method=RequestMethod.POST)		//±¸¸ÅÇÏ±â-> Àç°í-1
+	@RequestMapping(value="/insertP.do", method=RequestMethod.POST)		//êµ¬ë§¤í•˜ê¸°-> ì¬ê³ -1
 	public String insertS(ShoesVO sVO, ShoesSizeVO ssVO ,ShoesDAO sDAO, PayVO pVO, PayDAO pDAO, Model model) {
-		pDAO.insertPay(pVO);	//±¸¸Å ¸ñ·Ï¿¡ Ãß°¡
-		sDAO.updateShoes(sVO, ssVO.getSize()); // Àç°í -1
-		List<PayVO> pDatas = pDAO.selectAllPay(pVO);
-		model.addAttribute("pDatas", pDatas);
-		return "cart.do"; //±¸¸ÅÇÑ µÚ ¾îµğ·Î °¥°ÍÀÎ°¡? ±¸¸ÅÇÑ ¸ñ·ÏÀ» º¼ ¼ö ÀÖ°Ô ¹Ù·Î Ä«Æ®·Î ÀÌµ¿
+		pDAO.insertPay(pVO);	//êµ¬ë§¤ ëª©ë¡ì— ì¶”ê°€
+		sDAO.updateShoes(sVO, ssVO.getSize()); // ì¬ê³  -1
+		List<PayVO> pDatas = pDAO.selectAllPay(pVO); 
+		model.addAttribute("pDatas", pDatas);		 
+		return "cart.do"; //êµ¬ë§¤í•œ ë’¤ ì–´ë””ë¡œ ê°ˆê²ƒì¸ê°€? êµ¬ë§¤í•œ ëª©ë¡ì„ ë³¼ ìˆ˜ ìˆê²Œ ë°”ë¡œ ì¹´íŠ¸ë¡œ ì´ë™
 	}
 	
-	@RequestMapping(value="/selectAllPay.do", method=RequestMethod.POST) //¸ğµç ±¸¸Å¸ñ·Ï º¸±â
+	@RequestMapping(value="/selectAllPay.do", method=RequestMethod.POST) //ëª¨ë“  êµ¬ë§¤ëª©ë¡ ë³´ê¸°
 	public String selectAllPay(PayVO pVO, PayDAO pDAO, Model model) {
 		List<PayVO> pDatas = pDAO.selectAllPay(pVO);
 		model.addAttribute("pDatas", pDatas);

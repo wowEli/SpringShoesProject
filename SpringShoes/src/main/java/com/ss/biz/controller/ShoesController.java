@@ -17,32 +17,29 @@ import com.ss.biz.shoes.impl.ShoesDAO;
 
 @Controller
 public class ShoesController {
-		
 	
-	
-	@RequestMapping(value="/selectAllShoes.do", method=RequestMethod.POST)  //¸ğµç ½Å¹ß Ãâ·Â
+	@RequestMapping(value="/selectAllShoes.do", method=RequestMethod.POST)  //ëª¨ë“  ì‹ ë°œ ì¶œë ¥
 	public String selectAllColorShoes(ShoesVO sVO, ShoesDAO sDAO, Model model) {
 		List<ShoesVO> sDatas = sDAO.selectAllShoes(sVO);
 		model.addAttribute("sDatas", sDatas);
-		return "main.do";		//±âº» °Ë»öÀ¸·Î ¾µ searchContent(½Å¹ßÀÌ¸§)ÀÌ VO¿¡ ÇÊ¿äÇÔ
+		return "main.do";		//ê¸°ë³¸ ê²€ìƒ‰ìœ¼ë¡œ ì“¸ searchContent(ì‹ ë°œì´ë¦„)ì´ VOì— í•„ìš”í•¨
 	}
 		
-	
-	@RequestMapping(value="/selectOneShoes.do", method=RequestMethod.POST)  //½Å¹ß ÇÏ³ª ¼±ÅÃ
+	@RequestMapping(value="/selectOneShoes.do", method=RequestMethod.POST)  //ì‹ ë°œ í•˜ë‚˜ ì„ íƒ
 	public String selectOneSHoes(ShoesVO sVO, ShoesDAO sDAO, Model model, ReviewVO rVO, ReviewDAO rDAO) {
 		sVO = sDAO.selectOneShoes(sVO);
-		//»ó¼¼ ÆäÀÌÁö·Î ÀÌµ¿ÇßÀ» ¶§ »çÀÌÁîº°·Î ¹üÀ§¿¡ ÀÖ´Â ¾ÖµéÀº È°¼ºÈ­°¡ µÇ¾îÀÖ¾î¾ßÇÏ°í ¾Æ´Ñ ¾ÖµéÀº ºñÈ°¼ºÈ­ µÇ¾îÀÖ¾î¾ß ÇÔ
-		// ±×·¡¼­ size¸¦ Ãâ·ÂÇØ ÁÙ ¼ö ÀÖ´Â boardSelectAllÀÌ ÇÊ¿äÇÔ!
+		//ìƒì„¸ í˜ì´ì§€ë¡œ ì´ë™í–ˆì„ ë•Œ ì‚¬ì´ì¦ˆë³„ë¡œ ë²”ìœ„ì— ìˆëŠ” ì• ë“¤ì€ í™œì„±í™”ê°€ ë˜ì–´ìˆì–´ì•¼í•˜ê³  ì•„ë‹Œ ì• ë“¤ì€ ë¹„í™œì„±í™” ë˜ì–´ìˆì–´ì•¼ í•¨
+		// ê·¸ë˜ì„œ sizeë¥¼ ì¶œë ¥í•´ ì¤„ ìˆ˜ ìˆëŠ” boardSelectAllì´ í•„ìš”í•¨!
 		model.addAttribute("sData", sVO);
 		
-		List<ReviewVO> rDatas = rDAO.selectAllReview(rVO);  //¸®ºäµé ÀüºÎ Ãâ·Â
+		List<ReviewVO> rDatas = rDAO.selectAllReview(rVO);   //ë¦¬ë·°ë“¤ ì „ë¶€ ì¶œë ¥
 		model.addAttribute("rDatas", rDatas);
 		return "shoesOne.do";
 	}
 	
-	@RequestMapping(value="/filterSearch.do", method=RequestMethod.POST)		//ÇÊÅÍ°Ë»ö
+	@RequestMapping(value="/filterSearch.do", method=RequestMethod.POST)		//í•„í„°ê²€ìƒ‰
 	public String filterSearch(ShoesVO sVO, ShoesDAO sDAO, Model model) {
-		int[] size = {220, 230, 240, 250, 260, 270};  //VO¿¡ ¸¸µé¾îÁÖ¸é ÁÁÀ»²¨ °°Àºµ¥? ¸â¹öº¯¼ö·Î ÀÎÀÚ¿¡ ³Ö°Ô
+		int[] size = {220, 230, 240, 250, 260, 270};  //VOì— ë§Œë“¤ì–´ì£¼ë©´ ì¢‹ì„êº¼ ê°™ì€ë°? ë©¤ë²„ë³€ìˆ˜ë¡œ ì¸ìì— ë„£ê²Œ
 		sDAO.filterSearch(sVO, size);
 		return "shoesOne.do";
 	}

@@ -13,20 +13,20 @@ import com.ss.biz.address.impl.AddressDAO;
 @Controller
 public class AddressController {
 	
-	@RequestMapping(value="/insertA.do", method=RequestMethod.POST)  //¹è¼ÛÁö Ãß°¡
-	public String insertAddress(AddressVO aVO, AddressDAO aDAO) { //¸¶ÀÌÆäÀÌÁö¿¡¼­ ¹è¼ÛÁö¸¦ Ãß°¡ÇÑ´Ù±¸ °¡Á¤
+	@RequestMapping(value="/insertA.do", method=RequestMethod.POST)  //ë°°ì†¡ì§€ ì¶”ê°€
+	public String insertAddress(AddressVO aVO, AddressDAO aDAO) { //ë§ˆì´í˜ì´ì§€ì—ì„œ ë°°ì†¡ì§€ë¥¼ ì¶”ê°€í•œë‹¤êµ¬ ê°€ì •
 		aDAO.insertAddress(aVO);
-		return "myPage.do";	//¹è¼ÛÁö¸¦ Ãß°¡ÇÏ¸é ¸¶ÀÌÆäÀÌÁö·Î ÀÌµ¿
+		return "myPage.do";	//ë°°ì†¡ì§€ë¥¼ ì¶”ê°€í•˜ë©´ ë§ˆì´í˜ì´ì§€ë¡œ ì´ë™
 	}
 	
-	@RequestMapping(value="/deleteA.do", method=RequestMethod.POST) //¹è¼ÛÁö »èÁ¦
-	public String deleteAddress(AddressVO aVO, AddressDAO aDAO) {  //¸¶ÀÌÆäÀÌÁö¿¡¼­ ¹è¼ÛÁö¸¦ »èÁ¦ÇÑ´Ù±¸ °¡Á¤
+	@RequestMapping(value="/deleteA.do", method=RequestMethod.POST) //ë°°ì†¡ì§€ ì‚­ì œ
+	public String deleteAddress(AddressVO aVO, AddressDAO aDAO) {  //ë§ˆì´í˜ì´ì§€ì—ì„œ ë°°ì†¡ì§€ë¥¼ ì‚­ì œí•œë‹¤êµ¬ ê°€ì •
 		aDAO.deleteAddress(aVO);
 		return "myPage.do";
 	}
 	
-	@RequestMapping(value="/selectAllA.do", method=RequestMethod.POST) //¹è¼ÛÁö ÀüÃ¼ º¸±â
-	public String name(AddressVO aVO, AddressDAO aDAO, Model model) {	//¸¶ÀÌÆäÀÌÁö¿¡¼­ ¸ğµç ¹è¼ÛÁö ¸ğ¿©ÁÙ ¶§
+	@RequestMapping(value="/selectAllA.do", method=RequestMethod.POST) //ë°°ì†¡ì§€ ì „ì²´ ë³´ê¸°
+	public String name(AddressVO aVO, AddressDAO aDAO, Model model) {	//ë§ˆì´í˜ì´ì§€ì—ì„œ ëª¨ë“  ë°°ì†¡ì§€ ëª¨ì—¬ì¤„ ë•Œ
 		List<AddressVO> aDatas = aDAO.selectAllAddress(aVO);
 		model.addAttribute("aDatas", aDatas);
 		return "myPage.do";
