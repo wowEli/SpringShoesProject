@@ -87,6 +87,7 @@ public class ShoesDAO {
 	
 	// 필터검색 메서드
 	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size) {
+		//int[] size= {};
 		Object[] args = {vo.getFilterColor(),vo.getFilterBrand(),vo.getFilterLowPrice(),vo.getFilterHighPrice()};
 		
 		for (int i = 0; i < size.length; i++) {
@@ -96,7 +97,7 @@ public class ShoesDAO {
 				sql_FilterSearch = sql_FilterSearch + " OR SIZE=" + size[i];
 			}
 		}
-		sql_FilterSearch = sql_FilterSearch + ")";
+		sql_FilterSearch = sql_FilterSearch + ") GROUP BY SC.COLORPK";
 		
 		return jdbcTemplate.query(sql_FilterSearch,args, new ShoesRowMapper());
 	}
