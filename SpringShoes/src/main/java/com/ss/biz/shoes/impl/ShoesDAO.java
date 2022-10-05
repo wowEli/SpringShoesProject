@@ -94,7 +94,7 @@ public class ShoesDAO {
 	
 	
 	// 필터검색 메서드
-	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size) {
+	public List<ShoesVO> filterSearch(ShoesVO vo, Integer[] size) {
 		Object[] args = {vo.getFilterColor(),vo.getFilterBrand(),vo.getFilterLowPrice(),vo.getFilterHighPrice()};
 		
 		// int배열 size로그 몇개들어갔나
@@ -104,22 +104,22 @@ public class ShoesDAO {
 		}
 		
 //		 초기 sql 공백 초기화작업 (안하면 게속 SIZE 조건이 중첩되어 저장되어있음)
-		String sql = "";
+		String sql = sql_FilterSearch;
 		
 		for (int i = 0; i < size.length; i++) {
 			System.out.println("SIZE 조건을 만드는 for문 들어옴");
 			if (i == 0) {
 				System.out.println("i == 0 들어옴");
-				sql = sql_FilterSearch + " (SIZE=" + size[i];
+				sql += " (SIZE=" + size[i];
 				
 //				System.out.println("i == 0 이여서 만들어진 sql문 "+sql);
 			} else {
 				System.out.println("i == 0 이 아니여서 들어옴");
-				sql = sql_FilterSearch + " OR SIZE=" + size[i];
+				sql += " OR SIZE=" + size[i];
 //				System.out.println("i == 0 이 아니여서 만들어진 sql문 "+sql);
 			}
 		}
-		sql = sql + ")";
+		sql += ")";
 		
 		System.out.println("사용된 필터 sql문"+sql);
 		

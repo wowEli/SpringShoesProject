@@ -1,17 +1,18 @@
 ﻿package com.ss.biz.controller;
 
 import java.util.List;
+import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ss.biz.review.ReviewService;
 import com.ss.biz.review.ReviewVO;
-
 import com.ss.biz.shoes.ShoesService;
 import com.ss.biz.shoes.ShoesVO;
 
@@ -56,13 +57,27 @@ public class ShoesController {
 		
 		return "shoesOne.do";
 	}
-
+	
 	@RequestMapping(value = "/filterSearch.do", method = RequestMethod.POST) // 필터검색
-	public String filterSearch(ShoesVO sVO, Model model) {
+	public String filterSearch(ShoesVO sVO, Model model, HttpServletRequest request) {
 		System.out.println("필터검색에 들어온 VO 값"+sVO);
-		int[] size = { 220 }; // VO에 만들어주면 좋을꺼 같은데? 멤버변수로 인자에 넣게
-		shoesService.filterSearch(sVO, size);
+		
+		// view에서 받아온 여러개의 sizes 값을 배열로 받고, Integer배열로 변경하는 로직
+		String[] sizes=request.getParameterValues("size");
+		Integer[] size = Stream.of(sizes).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new);
+		
+		
+		List<ShoesVO> sDatas = shoesService.filterSearch(sVO, size);
+		
+		// 필터의 결과 로그
+		for(ShoesVO v : sDatas) {
+			System.out.println(v);
+		}
+		
+		model.addAttribute("sDatas", sDatas);
+		
 		return "main.jsp";
 	}
+	
 
 }

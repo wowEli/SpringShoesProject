@@ -148,8 +148,11 @@
 								<li class="filter-list"><input class="pixel-radio" value="adidas"type="radio" name="filterBrand" id="brandBax2">
 									<label for="brandBax2">아디다스</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="newBalance"type="radio" name="filterBrand" id="brandBax3">
+								<li class="filter-list"><input class="pixel-radio" value="new balance"type="radio" name="filterBrand" id="brandBax3">
 									<label for="brandBax3">뉴발란스</label>
+								</li>
+								<li class="filter-list"><input class="pixel-radio" value="vans"type="radio" name="filterBrand" id="brandBax4">
+									<label for="brandBax4">반스</label>
 								</li>
 							</ul>
 					</div>

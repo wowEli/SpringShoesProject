@@ -32,7 +32,7 @@ public class ShoesServiceImpl implements ShoesService{
 	}
 
 	@Override
-	public List<ShoesVO> filterSearch(ShoesVO vo, int[] size) {
+	public List<ShoesVO> filterSearch(ShoesVO vo, Integer[] size) {
 		return shoesDAO.filterSearch(vo, size);
 	} 
 	
