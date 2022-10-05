@@ -22,6 +22,7 @@ public class PayController {
 	
 	@Autowired
 	private PayService payService;
+	
 	@Autowired
 	private ShoesService shoesService;
 	
@@ -29,8 +30,10 @@ public class PayController {
 	public String insertS(ShoesVO sVO, ShoesSizeVO ssVO , PayVO pVO, Model model) {
 		payService.insertPay(pVO);	//구매 목록에 추가
 		shoesService.updateShoes(sVO, ssVO.getSize()); // 재고 -1
+		
 		List<PayVO> pDatas = payService.selectAllPay(pVO);
 		model.addAttribute("pDatas", pDatas);
+		
 		return "cart.do"; //구매한 뒤 어디로 갈것인가? 구매한 목록을 볼 수 있게 바로 카트로 이동
 	}
 	

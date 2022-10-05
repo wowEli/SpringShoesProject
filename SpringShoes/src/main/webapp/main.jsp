@@ -19,7 +19,6 @@
 	<meta charset="UTF-8">
 	<!-- Site Title -->
 	<title>Karma Shop</title>
-
 	<!--
             CSS
             ============================================= -->
@@ -143,13 +142,13 @@
 					<input type="hidden" id="filterLowPrice" name="filterLowPrice">
 						<div class="head">Brands</div>
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" value="nike" type="radio" name="brand" id="brandBax1" checked="checked">
+								<li class="filter-list"><input class="pixel-radio" value="nike" type="radio" name="filterBrand" id="brandBax1" checked="checked">
 									<label for="brandBax1">나이키</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="adidas"type="radio" name="brand" id="brandBax2">
+								<li class="filter-list"><input class="pixel-radio" value="adidas"type="radio" name="filterBrand" id="brandBax2">
 									<label for="brandBax2">아디다스</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="newBalance"type="radio" name="brand" id="brandBax3">
+								<li class="filter-list"><input class="pixel-radio" value="newBalance"type="radio" name="filterBrand" id="brandBax3">
 									<label for="brandBax3">뉴발란스</label>
 								</li>
 							</ul>
@@ -157,28 +156,28 @@
 					<div class="common-filter">
 						<div class="head">Color</div>
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" id="" value="grey" type="radio" name="color" id="colorBax1" checked="checked">
+								<li class="filter-list"><input class="pixel-radio" id="" value="grey" type="radio" name="filterColor" id="colorBax1" checked="checked">
 									<label for="colorBax1">GREY</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="black" type="radio" name="color" id="colorBax2">
+								<li class="filter-list"><input class="pixel-radio" value="black" type="radio" name="filterColor" id="colorBax2">
 									<label for="colorBax2">BLACK</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="white" type="radio" name="color" id="colorBax3">
+								<li class="filter-list"><input class="pixel-radio" value="white" type="radio" name="filterColor" id="colorBax3">
 									<label for="colorBax3">WHITE</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="brown" type="radio" name="color" id="colorBax4">
+								<li class="filter-list"><input class="pixel-radio" value="brown" type="radio" name="filterColor" id="colorBax4">
 									<label for="colorBax4">BROWN</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="navy" type="radio" name="color" id="colorBax5">
+								<li class="filter-list"><input class="pixel-radio" value="navy" type="radio" name="filterColor" id="colorBax5">
 									<label for="colorBax5">NAVY</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="red" type="radio" name="color" id="colorBax6">
+								<li class="filter-list"><input class="pixel-radio" value="red" type="radio" name="filterColor" id="colorBax6">
 									<label for="colorBax6">RED</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="green" type="radio" name="color" id="colorBax7">
+								<li class="filter-list"><input class="pixel-radio" value="green" type="radio" name="filterColor" id="colorBax7">
 									<label for="colorBax7">GREEN</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" value="yellow" type="radio" name="color" id="colorBax8">
+								<li class="filter-list"><input class="pixel-radio" value="yellow" type="radio" name="filterColor" id="colorBax8">
 									<label for="colorBax8">YELLOW</label>
 								</li>
 							</ul>
@@ -454,7 +453,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         noUiSlider.create(nonLinearSlider, {
             connect: true,
             behaviour: 'tap',
-            start: [ 200, 1000 ],
+            start: [ 100, 5000 ],
             range: {
                 // Starting at 500, step the value by 500,
                 // until 4000 is reached. From there, step by 1000.

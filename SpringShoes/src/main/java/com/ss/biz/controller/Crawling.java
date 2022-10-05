@@ -27,7 +27,6 @@ public class Crawling {
 	@RequestMapping("crawling.do")
 	private void crawling() {
 		System.out.println("모든 bean 생성 완료 후 실행될 메서드 크롤링 시작");
-	
 		
 		final String SampleUrl = "https://tmddhks2425.tistory.com/2";
 		final String ColorUrl = "https://tmddhks2425.tistory.com/3";

@@ -9,11 +9,20 @@ public class ShoesVO {
 	private String shoesImg;
 	private int colorpk;
 	
+	private String searchContent; // 일반 검색
+	
 	private String filterColor; //  필터 검색 신발 색상
 	private String filterBrand; // 필터 검색 신발 브랜드
 	private int filterLowPrice; // 필터 검색 낮은 가격 순
 	private int filterHighPrice; // 필터 검색 높은 가격 순
 
+	
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
 	public String getShoesName() {
 		return shoesName;
 	}
@@ -81,10 +90,11 @@ public class ShoesVO {
 	@Override
 	public String toString() {
 		return "ShoesVO [shoesName=" + shoesName + ", brand=" + brand + ", price=" + price + ", shoesColor="
-				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", filterColor=" + filterColor
-				+ ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice + ", filterHighPrice="
-				+ filterHighPrice + "]";
+				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", searchContent=" + searchContent
+				+ ", filterColor=" + filterColor + ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice
+				+ ", filterHighPrice=" + filterHighPrice + "]";
 	}
+	
 	
 	
 	
