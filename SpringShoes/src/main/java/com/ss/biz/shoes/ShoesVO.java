@@ -1,5 +1,7 @@
 package com.ss.biz.shoes;
 
+import java.util.Arrays;
+
 // 자바에서만 사용할 shoesVO
 public class ShoesVO {
 	private String shoesName;
@@ -7,9 +9,9 @@ public class ShoesVO {
 	private int price;
 	private String shoesColor;
 	private String shoesImg;
-	private int shoesSize;
-	private int ShoeCnt;
 	private int colorpk;
+	private int shoesSize;
+	private int shoesCnt;
 	
 	private String searchContent; // 일반 검색
 	
@@ -17,7 +19,33 @@ public class ShoesVO {
 	private String filterBrand; // 필터 검색 신발 브랜드
 	private int filterLowPrice; // 필터 검색 낮은 가격 순
 	private int filterHighPrice; // 필터 검색 높은 가격 순
-
+	private int[] filterSize; // 필터 검색 사이즈 여러개 값 가져오기
+	
+	
+	public int[] getFilterSize() {
+		return filterSize;
+	}
+	public void setFilterSize(int[] filterSize) {
+		this.filterSize = filterSize;
+	}
+	public int getShoesCnt() {
+		return shoesCnt;
+	}
+	public void setShoesCnt(int shoesCnt) {
+		this.shoesCnt = shoesCnt;
+	}
+	public int getShoesSize() {
+		return shoesSize;
+	}
+	public void setShoesSize(int shoesSize) {
+		this.shoesSize = shoesSize;
+	}
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
 	public String getShoesName() {
 		return shoesName;
 	}
@@ -48,10 +76,6 @@ public class ShoesVO {
 	public void setShoesColor(String shoesColor) {
 		this.shoesColor = shoesColor;
 	}
-	
-	
-	
-	
 	public int getColorpk() {
 		return colorpk;
 	}
@@ -82,34 +106,19 @@ public class ShoesVO {
 	public void setFilterHighPrice(int filterHighPrice) {
 		this.filterHighPrice = filterHighPrice;
 	}
-	public String getSearchContent() {
-		return searchContent;
-	}
-	public void setSearchContent(String searchContent) {
-		this.searchContent = searchContent;
-	}
-	public int getShoesSize() {
-		return shoesSize;
-	}
-	public void setShoesSize(int shoesSize) {
-		this.shoesSize = shoesSize;
-	}
-	public int getShoeCnt() {
-		return ShoeCnt;
-	}
-	public void setShoeCnt(int shoeCnt) {
-		ShoeCnt = shoeCnt;
-	}
 	@Override
 	public String toString() {
 		return "ShoesVO [shoesName=" + shoesName + ", brand=" + brand + ", price=" + price + ", shoesColor="
-				+ shoesColor + ", shoesImg=" + shoesImg + ", shoesSize=" + shoesSize + ", ShoeCnt=" + ShoeCnt
-				+ ", colorpk=" + colorpk + ", searchContent=" + searchContent + ", filterColor=" + filterColor
+				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", shoesSize=" + shoesSize
+				+ ", shoesCnt=" + shoesCnt + ", searchContent=" + searchContent + ", filterColor=" + filterColor
 				+ ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice + ", filterHighPrice="
-				+ filterHighPrice + "]";
+				+ filterHighPrice + ", filterSize=" + Arrays.toString(filterSize) + "]";
 	}
 	
-
+	
+	
+	
+	
 	
 	
 	

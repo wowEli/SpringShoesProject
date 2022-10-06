@@ -188,22 +188,22 @@
 					<div class="common-filter">
 						<div class="head">Size</div>
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="220" id="default-checkbox1" checked="checked">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="220" id="default-checkbox1" checked="checked">
 									<label for="default-checkbox1">220</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="230" id="default-checkbox2">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="230" id="default-checkbox2">
 									<label for="default-checkbox2">230</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="240" id="default-checkbox3">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="240" id="default-checkbox3">
 									<label for="default-checkbox3">240</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="250" id="default-checkbox4">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="250" id="default-checkbox4">
 									<label for="default-checkbox4">250</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="260" id="default-checkbox5">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="260" id="default-checkbox5">
 									<label for="default-checkbox5">260</label>
 								</li>
-								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="size" value="270" id="default-checkbox6">
+								<li class="filter-list"><input class="pixel-radio" type="checkbox" name="filterSize" value="270" id="default-checkbox6">
 									<label for="default-checkbox6">270</label>
 								</li>
 							</ul>
@@ -242,7 +242,14 @@
 						<c:forEach var="s" items="${sDatas}">
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product blog_right_sidebar">
-								<img class="img-fluid blog_right_sidebar" src="${s.shoesImg}" alt="" style="background-color:white; padding:0;">
+								<div style="position:relative;">
+									<div style="position:absolute; opacity:0.7;">
+									<c:if test="${s.shoesCnt == 0}">
+										<img class="img-fluid blog_right_sidebar" src="img/x.png" alt="품절">
+									</c:if>
+									</div>
+									<img class="img-fluid blog_right_sidebar" src="${s.shoesImg}" alt="" style="background-color:white; padding:0;">
+								</div>
 								<div class="product-details">
 									<h6>${s.shoesName }</h6>
 									<div class="price">
@@ -251,6 +258,10 @@
 										<h6>색상 : ${s.shoesColor }</h6>
 										<br>
 										<h6>가격 : ${s.price }원</h6>
+										<c:if test="${s.shoesCnt >= 0}">
+										<br>
+										<h6>사이즈 : ${s.shoesSize }</h6>
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -507,7 +518,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     form.onsubmit=function(){
 
     	// Name에 size라는 태그를 타겟 (size이름이 여러개이므로 배열로 받게됨 즉, checkBox들을 모두 타겟하게됨)
-        sizes = document.getElementsByName("size");
+        sizes = document.getElementsByName("filterSize");
         
         for (count = i = 0; i < sizes.length; i++){
         	// ture = 1 / false = 0 으로 작동한다

@@ -1,9 +1,6 @@
 ﻿package com.ss.biz.controller;
 
 import java.util.List;
-import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,9 +34,10 @@ public class ShoesController {
 		
 		List<ShoesVO> sDatas = shoesService.selectAllShoes(sVO);
 		
-//		for(int i =0; i < sDatas.size(); i++) {
-//			System.out.println(sDatas.get(i));
-//		}
+		// 로그
+		for(int i =0; i < sDatas.size(); i++) {
+			System.out.println(sDatas.get(i));
+		}
 		
 		model.addAttribute("sDatas", sDatas);
 		return "main.jsp"; // 기본 검색으로 쓸 searchContent(신발이름)이 VO에 필요함
@@ -58,16 +56,16 @@ public class ShoesController {
 		return "shoesOne.do";
 	}
 	
+	
 	@RequestMapping(value = "/filterSearch.do", method = RequestMethod.POST) // 필터검색
-	public String filterSearch(ShoesVO sVO, Model model, HttpServletRequest request) {
+	public String filterSearch(ShoesVO sVO, Model model) {
 		System.out.println("필터검색에 들어온 VO 값"+sVO);
 		
 		// view에서 받아온 여러개의 sizes 값을 배열로 받고, Integer배열로 변경하는 로직
-		String[] sizes=request.getParameterValues("size");
-		Integer[] size = Stream.of(sizes).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new);
+//		String[] sizes=request.getParameterValues("size");
+//		Integer[] size = Stream.of(sizes).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new);
 		
-		
-		List<ShoesVO> sDatas = shoesService.filterSearch(sVO, size);
+		List<ShoesVO> sDatas = shoesService.filterSearch(sVO);
 		
 		// 필터의 결과 로그
 		for(ShoesVO v : sDatas) {

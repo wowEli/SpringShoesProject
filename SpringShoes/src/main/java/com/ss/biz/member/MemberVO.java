@@ -6,9 +6,13 @@ public class MemberVO {
 	private String mname;
 	private String mphone;
 	private int shoesSize;
+	private String mpostcode;
 	private String maddress;
+	private String mdetailAddress;
+	private String mextraAddress;
 	private String tier;
 	private String role;
+	
 	public String getMid() {
 		return mid;
 	}
@@ -33,11 +37,11 @@ public class MemberVO {
 	public void setMphone(String mphone) {
 		this.mphone = mphone;
 	}
-	public int getShoesSize() {
-		return shoesSize;
+	public String getMpostcode() {
+		return mpostcode;
 	}
-	public void setShoesSize(int shoesSize) {
-		this.shoesSize = shoesSize;
+	public void setMpostcode(String mpostcode) {
+		this.mpostcode = mpostcode;
 	}
 	public String getMaddress() {
 		return maddress;
@@ -57,12 +61,29 @@ public class MemberVO {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public String getMdetailAddress() {
+		return mdetailAddress;
+	}
+	public void setMdetailAddress(String mdetailAddress) {
+		this.mdetailAddress = mdetailAddress;
+	}
+	public String getMextraAddress() {
+		return mextraAddress;
+	}
+	public void setMextraAddress(String mextraAddress) {
+		this.mextraAddress = mextraAddress;
+	}
+	public int getShoesSize() {
+		return shoesSize;
+	}
+	public void setShoesSize(int shoesSize) {
+		this.shoesSize = shoesSize;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", mphone=" + mphone + ", shoesSize="
-				+ shoesSize + ", maddress=" + maddress + ", tier=" + tier + ", role=" + role + "]";
+				+ shoesSize + ", mpostcode=" + mpostcode + ", maddress=" + maddress + ", mdetailAddress="
+				+ mdetailAddress + ", mextraAddress=" + mextraAddress + ", tier=" + tier + ", role=" + role + "]";
 	}
-	
-
 	
 }

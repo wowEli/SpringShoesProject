@@ -5,9 +5,7 @@ public class ReviewVO {
 	private String content; // 후기내용
 	private String writeday; //작성일
 	private String mid; //member pk
-	private int sizepk; //sizeShoes pk
-	private String reviewImg; //후기 이미지
-	
+	private String colorpk; //shoescolor pk
 	
 	public int getRpk() {
 		return rpk;
@@ -33,26 +31,17 @@ public class ReviewVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-
-	public int getSizepk() {
-		return sizepk;
+	public String getColorpk() {
+		return colorpk;
 	}
-	public void setSizepk(int sizepk) {
-		this.sizepk = sizepk;
-	}
-	public String getReviewImg() {
-		return reviewImg;
-	}
-	public void setReviewImg(String reviewImg) {
-		this.reviewImg = reviewImg;
+	public void setColorpk(String colorpk) {
+		this.colorpk = colorpk;
 	}
 	@Override
 	public String toString() {
-		return "ReviewVO [rpk=" + rpk + ", content=" + content + ", writeday=" + writeday + ", mid=" + mid + ", sizepk="
-				+ sizepk + ", reviewImg=" + reviewImg + "]";
+		return "ReviewVO [rpk=" + rpk + ", content=" + content + ", writeday=" + writeday + ", mid=" + mid
+				+ ", colorpk=" + colorpk + "]";
 	}
-
-
 	
 	
 }
