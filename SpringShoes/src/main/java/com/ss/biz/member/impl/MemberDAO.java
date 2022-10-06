@@ -21,16 +21,13 @@ public class MemberDAO {
 	//sql 문 
 	final String sql_selectOne="SELECT * FROM MEMBER WHERE MID=? AND MPW=?";
 	final String sql_selectAll="SELECT * FROM MEMBER";
-	final String sql_insert="INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	final String sql_insert="INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?)";
 //	-	mid VARCHAR(50) PRIMARY KEY – 아이디(이메일주소)
 //	-	mpw VARCHAR(20) – 비밀번호 (영문이나 특문추가 할 수 있음)
 //	-	mname VARCHAR(20) – 이름
 //	-	mphone VARCHAR(20) – 전화번호
 //	-	shoesSize INT – 신발사이즈
-//	-	mpostcode VARCHAR(20) – 우편번호 (0으로 시작 될 수도있음)
 //	-	maddress VARCHAR(100) – 주소
-//	-	mdetailAddress VARCHAR(100) – 상세주소
-//	-	mextraAddress VARCHAR(50) – 참고항목
 //	-	tier VARCHAR(20) –등급에따라 할인운영 제도
 //	-	role VARCHAR(10) – 개인OR운영자DB에서만 확인
 
@@ -38,7 +35,7 @@ public class MemberDAO {
 	final String sql_delete="DELETE FROM MEMBER WHERE MID=? AND MPW=?";
 	
 	public void insertMember(MemberVO vo) {
-		jdbcTemplate.update(sql_insert, vo.getMid(),vo.getMpw(),vo.getMname(),vo.getMphone(),vo.getShoesSize(),vo.getMpostcode(),vo.getMaddress(),vo.getMdetailAddress(),vo.getMextraAddress(),vo.getTier(),vo.getRole());
+		jdbcTemplate.update(sql_insert, vo.getMid(),vo.getMpw(),vo.getMname(),vo.getMphone(),vo.getShoesSize(),vo.getMaddress(),vo.getTier(),vo.getRole());
 	}
 
 	public void deleteMember(MemberVO vo) {
@@ -73,10 +70,7 @@ class MemberRowMapper implements RowMapper<MemberVO> {
 		data.setMname(rs.getString("MNAE"));
 		data.setMphone(rs.getString("MPHONE"));
 		data.setShoesSize(rs.getInt("SHOESSIZE"));
-		data.setMpostcode(rs.getString("MPOSTCODE"));
 		data.setMaddress(rs.getString("MADDRESS"));
-		data.setMdetailAddress(rs.getString("MDETAILADDRESS"));
-		data.setMextraAddress(rs.getString("MEXTRAADDRESS"));
 		data.setTier(rs.getString("TIER"));
 		data.setRole(rs.getString("ROLE"));
 		return data;
@@ -85,10 +79,7 @@ class MemberRowMapper implements RowMapper<MemberVO> {
 //		-	mname VARCHAR(20) – 이름
 //		-	mphone VARCHAR(20) – 전화번호
 //		-	shoesSize INT – 신발사이즈
-//		-	mpostcode VARCHAR(20) – 우편번호 (0으로 시작 될 수도있음)
 //		-	maddress VARCHAR(100) – 주소
-//		-	mdetailAddress VARCHAR(100) – 상세주소
-//		-	mextraAddress VARCHAR(50) – 참고항목
 //		-	tier VARCHAR(20) –등급에따라 할인운영 제도
 //		-	role VARCHAR(10) – 개인OR운영자DB에서만 확인
 	}

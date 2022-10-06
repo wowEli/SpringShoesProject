@@ -7,6 +7,8 @@ public class ShoesVO {
 	private int price;
 	private String shoesColor;
 	private String shoesImg;
+	private int shoesSize;
+	private int ShoeCnt;
 	private int colorpk;
 	
 	private String searchContent; // 일반 검색
@@ -16,13 +18,6 @@ public class ShoesVO {
 	private int filterLowPrice; // 필터 검색 낮은 가격 순
 	private int filterHighPrice; // 필터 검색 높은 가격 순
 
-	
-	public String getSearchContent() {
-		return searchContent;
-	}
-	public void setSearchContent(String searchContent) {
-		this.searchContent = searchContent;
-	}
 	public String getShoesName() {
 		return shoesName;
 	}
@@ -87,14 +82,34 @@ public class ShoesVO {
 	public void setFilterHighPrice(int filterHighPrice) {
 		this.filterHighPrice = filterHighPrice;
 	}
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
+	public int getShoesSize() {
+		return shoesSize;
+	}
+	public void setShoesSize(int shoesSize) {
+		this.shoesSize = shoesSize;
+	}
+	public int getShoeCnt() {
+		return ShoeCnt;
+	}
+	public void setShoeCnt(int shoeCnt) {
+		ShoeCnt = shoeCnt;
+	}
 	@Override
 	public String toString() {
 		return "ShoesVO [shoesName=" + shoesName + ", brand=" + brand + ", price=" + price + ", shoesColor="
-				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", searchContent=" + searchContent
-				+ ", filterColor=" + filterColor + ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice
-				+ ", filterHighPrice=" + filterHighPrice + "]";
+				+ shoesColor + ", shoesImg=" + shoesImg + ", shoesSize=" + shoesSize + ", ShoeCnt=" + ShoeCnt
+				+ ", colorpk=" + colorpk + ", searchContent=" + searchContent + ", filterColor=" + filterColor
+				+ ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice + ", filterHighPrice="
+				+ filterHighPrice + "]";
 	}
 	
+
 	
 	
 	

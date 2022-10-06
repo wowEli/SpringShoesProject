@@ -17,21 +17,18 @@ public class AddressDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	final String sql_insert="INSERT INTO ADDRESS(ANAME,POSTCODE,ADDRESS,DETAILADDRESS,EXTRAADDRESS,MID) VALUES(?,?,?,?,?,?)";
+	final String sql_insert="INSERT INTO ADDRESS(ANAME,MID,ADDRESS) VALUES(?,?,?)";
 //	-	apk INT PRIMARY KEY AUTO_INCREMENT
 //	-	aname VARCHAR(20) – 주소이름
 //	-	mid – FK (MEMBER PK)
-//	-	postcode VARCHAR(20) – 우편번호 (0으로 시작 될 수도있음)
 //	-	address VARCHAR(100) - 주소
-//	-	detailAddress VARCHAR(100) – 상세주소
-//	-	extraAddress VARCHAR(50) – 참고항목
 
 	final String sql_delete="DELETE FROM ADDRESS WHERE APK=?";
 	final String sql_selectAll="SELECT * FROM ADDRESS";
 	
 	
 	public void insertAddress(AddressVO vo) {
-		jdbcTemplate.update(sql_insert,vo.getAname(),vo.getPostcode(),vo.getAddress(),vo.getDetailAddress(),vo.getExtraAddress(),vo.getMid());
+		jdbcTemplate.update(sql_insert,vo.getAname(),vo.getMid(),vo.getAddress());
 	}
 	
 	public void deleteAddress(AddressVO vo) {
@@ -57,10 +54,7 @@ class AddressRowMapper implements RowMapper<AddressVO> {
 		data.setApk(rs.getInt("APK"));
 		data.setAname(rs.getString("ANAME"));
 		data.setMid(rs.getString("MID"));
-		data.setPostcode(rs.getString("POSTCODE"));
 		data.setAddress(rs.getString("ADDRESS"));
-		data.setDetailAddress(rs.getString("DETAILADDRESS"));
-		data.setExtraAddress(rs.getString("EXTRAADDRESS"));
 		return data;
 
 	}

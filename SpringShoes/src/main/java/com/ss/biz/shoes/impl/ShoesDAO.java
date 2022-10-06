@@ -30,12 +30,13 @@ public class ShoesDAO {
 	final String sql_selectAllColorShoes = "SELECT * FROM SHOESCOLOR";
 
 	//★ShoesVO에 저장할 selectAll
-	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
+	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK";
 		
 		
 	// ==========*selectOne 모음==========
 	//★shoesVO에 저장할 selectOne
 	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
+	
 	
 
 	// =============update 모음==========
@@ -43,10 +44,11 @@ public class ShoesDAO {
 	final String sql_updateSizeShoes = "UPDATE SHOESSIZE SET CNT=CNT-1 WHERE COLORPK=? AND SIZE=?";
 
 	// ★필터검색용 sql
-//	String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
-//			+ "INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE CONCAT('%',?,'%') AND BRAND LIKE CONCAT('%',?,'%') AND (PRICE>=? AND PRICE<=?) AND";
+//		String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
+//				+ "INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE CONCAT('%',?,'%') AND BRAND LIKE CONCAT('%',?,'%') AND (PRICE>=? AND PRICE<=?) AND";
 
-	String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE CONCAT('%',?,'%') AND BRAND LIKE CONCAT('%',?,'%') AND (PRICE>=? AND PRICE<=?) AND";
+		String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE CONCAT('%',?,'%') AND BRAND LIKE CONCAT('%',?,'%') AND (PRICE>=? AND PRICE<=?) AND";
+		
 	
 	// SampleShoes 크롤링할때 INSERT 메서드
 	public void insertSampleShoes(ShoesSampleVO vo) {
@@ -81,57 +83,48 @@ public class ShoesDAO {
 		return jdbcTemplate.queryForObject(sql_selectOneShoes, args, new ShoesRowMapper() );
 	}
 
-	// 신발 전체조회 + 검색로직
 	public List<ShoesVO> selectAllShoes(ShoesVO vo) {
-		// 브랜드나 신발이름에 동일한것이 있다면
-		System.out.println("DAO 검색로직"+vo.getSearchContent());
-		Object[] args = {vo.getSearchContent(), vo.getSearchContent()};
-		System.out.println("args0값"+args[0].toString());
-		System.out.println("args1값"+args[1].toString());
-		return jdbcTemplate.query(sql_selectAllShoes, args, new ShoesRowMapper());
+		return jdbcTemplate.query(sql_selectAllShoes, new ShoesRowMapper());
 	}
-	
-	
 	
 	// 필터검색 메서드
-	public List<ShoesVO> filterSearch(ShoesVO vo, Integer[] size) {
-		Object[] args = {vo.getFilterColor(),vo.getFilterBrand(),vo.getFilterLowPrice(),vo.getFilterHighPrice()};
-		
-		// int배열 size로그 몇개들어갔나
-		System.out.println("size.length="+size.length);
-		for(int i = 0; i < size.length; i++) {
-			System.out.println(size[i]);
-		}
-		
-//		 초기 sql 공백 초기화작업 (안하면 게속 SIZE 조건이 중첩되어 저장되어있음)
-		String sql = sql_FilterSearch;
-		
-		for (int i = 0; i < size.length; i++) {
-			System.out.println("SIZE 조건을 만드는 for문 들어옴");
-			if (i == 0) {
-				System.out.println("i == 0 들어옴");
-				sql += " (SIZE=" + size[i];
-				
-//				System.out.println("i == 0 이여서 만들어진 sql문 "+sql);
-			} else {
-				System.out.println("i == 0 이 아니여서 들어옴");
-				sql += " OR SIZE=" + size[i];
-//				System.out.println("i == 0 이 아니여서 만들어진 sql문 "+sql);
+		public List<ShoesVO> filterSearch(ShoesVO vo, Integer[] size) {
+			Object[] args = {vo.getFilterColor(),vo.getFilterBrand(),vo.getFilterLowPrice(),vo.getFilterHighPrice()};
+			
+			// int배열 size로그 몇개들어갔나
+			System.out.println("size.length="+size.length);
+			for(int i = 0; i < size.length; i++) {
+				System.out.println(size[i]);
 			}
+			
+//			 초기 sql 공백 초기화작업 (안하면 게속 SIZE 조건이 중첩되어 저장되어있음)
+			String sql = sql_FilterSearch;
+			
+			for (int i = 0; i < size.length; i++) {
+				System.out.println("SIZE 조건을 만드는 for문 들어옴");
+				if (i == 0) {
+					System.out.println("i == 0 들어옴");
+					sql += " (SIZE=" + size[i];
+					
+//					System.out.println("i == 0 이여서 만들어진 sql문 "+sql);
+				} else {
+					System.out.println("i == 0 이 아니여서 들어옴");
+					sql += " OR SIZE=" + size[i];
+//					System.out.println("i == 0 이 아니여서 만들어진 sql문 "+sql);
+				}
+			}
+			sql += ")";
+			
+			System.out.println("사용된 필터 sql문"+sql);
+			
+			System.out.println("args 내용 로그");
+			for(int i = 0; i < args.length; i++) {
+				System.out.println(args[i].toString());
+			}
+			
+			return jdbcTemplate.query(sql, args, new ShoesRowMapper());
 		}
-		sql += ")";
 		
-		System.out.println("사용된 필터 sql문"+sql);
-		
-		System.out.println("args 내용 로그");
-		for(int i = 0; i < args.length; i++) {
-			System.out.println(args[i].toString());
-		}
-		
-		return jdbcTemplate.query(sql, args, new ShoesRowMapper());
-	}
-	
-	
 //	for(int i=0; i<datas.size(); i++) {
 //		for(int j=i+1; j<datas.size(); j++) {
 //			if(datas.get(i).getColorPk()==datas.get(i).getColorPk()) {

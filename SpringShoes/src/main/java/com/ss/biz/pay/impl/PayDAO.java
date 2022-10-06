@@ -18,11 +18,11 @@ public class PayDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	final String sql_insert="INSERT INTO PAY(MID,SIZEPK,ADDRESS) VALUES(?,?,?)";
+	final String sql_insert="INSERT INTO PAY(MID,SIZEPK,ADDRESS,PNUM,PAYDAY) VALUES(?,?,?,?,?)";
 	final String sql_selectAll="SELECT * FROM PAY WHERE MID=?";
 	
 	public boolean insertPay(PayVO vo) {
-		jdbcTemplate.update(sql_insert,vo.getMid(),vo.getSizepk(),vo.getAddress());
+		jdbcTemplate.update(sql_insert,vo.getMid(),vo.getSizepk(),vo.getAddress(),vo.getPnum(),vo.getPayday());
 		return false;
 	}
 	
@@ -42,6 +42,8 @@ class PayRowMapper implements RowMapper<PayVO> {
 			data.setMid(rs.getString("MID"));
 			data.setSizepk(rs.getInt("SIZEPK"));
 			data.setAddress(rs.getString("ADDRESS"));
+			data.setPnum(rs.getInt("PNUM"));
+			data.setPayday(rs.getString("PAYDAY"));
 			return data;
 		}
 	
