@@ -8,6 +8,7 @@ public interface ReviewService {
 	public void updateReview(ReviewVO vo);
 	public void deleteReview(ReviewVO vo);
 	public ReviewVO selectOneReview(ReviewVO vo);
+	public ReviewVO selectOneReviewMS(ReviewVO vo);
 	public List<ReviewVO> selectAllReview(ReviewVO vo);
 	public List<ReviewVO> selectAllReviewM(ReviewVO vo);
 }

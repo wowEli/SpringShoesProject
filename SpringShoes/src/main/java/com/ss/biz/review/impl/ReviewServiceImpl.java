@@ -35,6 +35,10 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	public ReviewVO selectOneReviewMS(ReviewVO vo) {
+		return reviewDAO.selectOneReviewMS(vo);
+	}
+	@Override
 	public List<ReviewVO> selectAllReview(ReviewVO vo) {
 		return reviewDAO.selectAllReview(vo);
 	}

@@ -1,11 +1,9 @@
 package com.ss.biz.member.impl;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ss.biz.member.impl.MemberDAO;
 import com.ss.biz.member.MemberService;
 import com.ss.biz.member.MemberVO;
 
@@ -31,13 +29,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public MemberVO login(MemberVO vo) {
+		return memberDAO.login(vo);
+	}
+	
+	@Override
 	public MemberVO selectOneMember(MemberVO vo) {
 		return memberDAO.selectOneMember(vo);
 	}
-
-	@Override
-	public List<MemberVO> selectAllMember(MemberVO vo) {
-		return memberDAO.selectAllMember(vo);
-	}
+	
 
 }

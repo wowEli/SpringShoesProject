@@ -34,9 +34,10 @@ public class ShoesDAO {
 
 
 	// ==========*selectOne 모음==========
-	//★shoesVO에 저장할 selectOne
+	//★shoesVO에 저장할 selectOne >> colorpk를 이용한 조인
 	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
-
+	
+	
 
 	// =============update 모음==========
 	//★shoesSize update

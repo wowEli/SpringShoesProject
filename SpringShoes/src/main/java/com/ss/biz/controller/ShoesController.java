@@ -25,7 +25,7 @@ public class ShoesController {
 	
 	@RequestMapping("/selectAllS.do") // 모든 신발 출력
 	public String selectAllColorShoes(ShoesVO sVO, Model model) {
-		System.out.println("검색로직 들어옴"+sVO.getSearchContent());
+//		System.out.println("검색로직 들어옴"+sVO.getSearchContent());
 		
 		// 검색을 하지 않고 들어왔을 경우
 		if(sVO.getSearchContent() == null) {
@@ -35,9 +35,9 @@ public class ShoesController {
 		List<ShoesVO> sDatas = shoesService.selectAllShoes(sVO);
 		
 		// 로그
-		for(int i =0; i < sDatas.size(); i++) {
-			System.out.println(sDatas.get(i));
-		}
+//		for(int i =0; i < sDatas.size(); i++) {
+//			System.out.println(sDatas.get(i));
+//		}
 		
 		model.addAttribute("sDatas", sDatas);
 		return "main.jsp"; // 기본 검색으로 쓸 searchContent(신발이름)이 VO에 필요함
