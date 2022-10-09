@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ss.biz.review.ReviewService;
 import com.ss.biz.review.ReviewVO;
 import com.ss.biz.shoes.ShoesService;
+import com.ss.biz.shoes.ShoesSizeVO;
 import com.ss.biz.shoes.ShoesVO;
 
 @Controller
@@ -25,7 +26,7 @@ public class ShoesController {
 	
 	@RequestMapping("/selectAllS.do") // 모든 신발 출력
 	public String selectAllColorShoes(ShoesVO sVO, Model model) {
-		System.out.println("검색로직 들어옴"+sVO.getSearchContent());
+//		System.out.println("검색로직 들어옴"+sVO.getSearchContent());
 		
 		// 검색을 하지 않고 들어왔을 경우
 		if(sVO.getSearchContent() == null) {
@@ -35,9 +36,9 @@ public class ShoesController {
 		List<ShoesVO> sDatas = shoesService.selectAllShoes(sVO);
 		
 		// 로그
-		for(int i =0; i < sDatas.size(); i++) {
-			System.out.println(sDatas.get(i));
-		}
+//		for(int i =0; i < sDatas.size(); i++) {
+//			System.out.println(sDatas.get(i));
+//		}
 		
 		model.addAttribute("sDatas", sDatas);
 		return "main.jsp"; // 기본 검색으로 쓸 searchContent(신발이름)이 VO에 필요함
@@ -51,7 +52,7 @@ public class ShoesController {
 
 		// selectOne한 신발정보인 sVO를 이용하여 color와 size 정보를 가져옴
 		List<ShoesVO> colorDatas = shoesService.selectShoes_Color(sVO);
-		List<ShoesVO> sizeDatas = shoesService.selectShoes_Size(sVO);
+		List<ShoesSizeVO> sizeDatas = shoesService.selectShoes_Size(sVO);
 		
 		
 		model.addAttribute("sData", sVO);

@@ -111,7 +111,9 @@
                                     </div>
                                 
                                <c:if test="${p.flag == true }">
-                                    <a href="selectOneS.do?sizepk=${p.sizepk }" class="btn-reply text-uppercase">후기작성</a>
+                                  <div class="reply-btn">
+                                    <a href="review.do" class="btn-reply text-uppercase">후기작성</a>
+                                  </div>
                                 </c:if>
                                 
                                 <c:if test="${p.flag == false }">
@@ -128,31 +130,31 @@
                         <h2 style="text-align:center;">후기 목록</h2>
                         <br>
                         <div class="comment-list">
+                          <c:forEach var="r" items="${rDatas }">
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
                                 
-                                <c:forEach var="r" items="${rDatas }">
                                     <div class="thumb">
-                                        <img src="img/shoes1.png" alt="" style="width:150px">
+                                        <img src="${r.reviewImg }" alt="후기 이미지" style="width:200px">
                                     </div>
                                     <div class="desc">
-                                        <h5><a href="#">로그: 후기를 작성한 신발이름</a></h5>
-                                        <p class="date">로그: 후기 작성일</p>
-                                        <p class="comment">
-                                            로그: 후기 내용
+                                        <h3><a href="selectOneS.do?colorpk=${r.colorpk }">${r.shoesName}</a></h3>
+                                        <p>작성일: ${r.writeday}</p>
+                                        <p>
+                                            ${r.content }
                                         </p>
                                     </div>
                                 </div>
-                                <div class="reply-btn">
-                                    <a href="updateR.do" class="btn-reply text-uppercase">후기수정</a>
-                                    <a href="deleteR.do" class="btn-reply text-uppercase">후기삭제</a>
-                                </div>
-                                </c:forEach>
                                 
+                            <div class="reply-btn">
+                                <a href="review.do?rpk=${r.rpk }" class="btn-reply text-uppercase">후기수정</a>
+                                <a href="deleteR.do?rpk=${r.rpk }" class="btn-reply text-uppercase">후기삭제</a>
                             </div>
                         </div>
+                      </c:forEach>
                     </div>
                 </div>
+                
                 <div class="col-lg-4">
                     <br>
                     <br>

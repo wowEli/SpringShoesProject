@@ -31,7 +31,10 @@ public class ShoesDAO {
 
 	//★ShoesVO에 저장할 selectAll
 	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
-
+	
+	// 장바구니 sql문
+	final String sql_selectOneShoesBucket = "SELECT SS.SIZE, SC.SHOESIMG, SSP.SHOESNAME, SSP.PRICE FROM SHOESSIZE SS INNER JOIN SHOESCOLOR SC ON SS.COLORPK = SC.COLORPK INNER JOIN SHOESSAMPLE SSP ON SC.SAMPLEPK = SSP.SAMPLEPK WHERE SS.SIZEPK = ?";
+	
 
 	// ==========*selectOne 모음==========	
 	// 신발상세 페이지를 들어가기 위해서 필요한 3가지 ( 신발하나의 정보, 신발과 같은종류의 다른색상 신발이미지들, 신발하나정보의 사이즈와 갯수들 )
@@ -99,6 +102,15 @@ public class ShoesDAO {
 		return jdbcTemplate.query(sql_selectAllShoes, args, new ShoesRowMapper());
 	}
 	
+	public ShoesVO selectOneShoesBucket(ShoesSizeVO vo) { // 장바구니에서 쓸 selectOne
+		Object[] args = {vo.getSizepk()};
+		try {
+			return jdbcTemplate.queryForObject(sql_selectOneShoesBucket, args, new ShoesRowMapperBucket());
+		}catch(Exception e){
+			return null;
+		}
+	}
+	
 	// 신발 상세페이지 = 신발정보의 이름과 동일 모든 다른색상의 신발정보를 담아줌
 	public List<ShoesVO> selectShoes_Color(ShoesVO vo) {
 		Object[] args = {vo.getShoesName()};
@@ -107,7 +119,7 @@ public class ShoesDAO {
 	}
 	
 	// 신발 상세페이지 = 신발정보의 동일한 다른 Size + Cnt 신발정보를 담아줌
-	public List<ShoesVO> selectShoes_Size(ShoesVO vo) {
+	public List<ShoesSizeVO> selectShoes_Size(ShoesVO vo) {
 		
 		Object[] args = {vo.getColorpk()};
 		
@@ -237,18 +249,31 @@ class ShoesRowMapper implements RowMapper<ShoesVO> {
 	}
 	
 	// selectOne한 신발정보의 다른 사이즈 + 갯수 정보들을 담아줌
-	class ShoesRowMapperSize implements RowMapper<ShoesVO> {
+	class ShoesRowMapperSize implements RowMapper<ShoesSizeVO> {
 		
 		@Override
-		public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			ShoesVO data = new ShoesVO();
-			data.setColorpk(rs.getInt("SIZEPK"));
-			data.setShoesSize(rs.getInt("SIZE"));
-			data.setShoesCnt(rs.getInt("CNT"));
+		public ShoesSizeVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ShoesSizeVO data = new ShoesSizeVO();
+			data.setSizepk(rs.getInt("SIZEPK"));
+			data.setSize(rs.getInt("SIZE"));
+			data.setCnt(rs.getInt("CNT"));
 			
 			return data;
 		}
 		
+	}
+	
+	class ShoesRowMapperBucket implements RowMapper<ShoesVO>{
+		@Override
+		public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ShoesVO data = new ShoesVO();
+			data.setShoesSize(rs.getInt("SIZE"));
+			data.setShoesImg(rs.getString("SHOESIMG"));
+			data.setShoesName(rs.getString("SHOESNAME"));
+			data.setPrice(rs.getInt("PRICE"));
+			
+			return data;
+		}
 	}
 	
 	

@@ -18,14 +18,9 @@ public class AddressDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	final String sql_insert="INSERT INTO ADDRESS(ANAME,ADDRESS,MID) VALUES(?,?,?)";
-//	-	apk INT PRIMARY KEY AUTO_INCREMENT
-//	-	aname VARCHAR(20) – 주소이름
-//	-	mid – FK (MEMBER PK)
-//	-	address VARCHAR(100) - 주소
-//	-	memo VARCHAR(100) – 배송메모
 
 	final String sql_delete="DELETE FROM ADDRESS WHERE APK=?";
-	final String sql_selectAll="SELECT * FROM ADDRESS";
+	final String sql_selectAll="SELECT * FROM ADDRESS WHERE MID = ?";
 	
 	
 	public void insertAddress(AddressVO vo) {
@@ -35,8 +30,10 @@ public class AddressDAO {
 	public void deleteAddress(AddressVO vo) {
 		jdbcTemplate.update(sql_delete,vo.getApk());
 	}
+	
 	public List<AddressVO> selectAllAddress(AddressVO vo) {
-		return jdbcTemplate.query(sql_selectAll, new AddressRowMapper());
+		Object[] args = { vo.getMid()};
+		return jdbcTemplate.query(sql_selectAll,args, new AddressRowMapper());
 	}
 }
 
@@ -44,11 +41,6 @@ class AddressRowMapper implements RowMapper<AddressVO> {
 
 	@Override
 	public AddressVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//		-	apk INT PRIMARY KEY AUTO_INCREMENT
-//		-	aname VARCHAR(20) – 주소이름
-//		-	mid – FK (MEMBER PK)
-//		-	address VARCHAR(100) - 주소
-//		-	memo VARCHAR(100) – 배송 메모
 		AddressVO data = new AddressVO();
 		data.setApk(rs.getInt("APK"));
 		data.setAname(rs.getString("ANAME"));

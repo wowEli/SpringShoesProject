@@ -1,11 +1,21 @@
 package com.ss.biz.shoes;
 
+import java.util.Arrays;
+
 public class ShoesSizeVO {
 	private int sizepk;	// pk
 	private int colorpk; // shoescoloer pk
 	private int size; // 신발 사이즈
 	private int cnt; //신발재고
 	
+	private int[] sizeArray;
+	
+	public int[] getSizeArray() {
+		return sizeArray;
+	}
+	public void setSizeArray(int[] sizeArray) {
+		this.sizeArray = sizeArray;
+	}
 	public int getSizepk() {
 		return sizepk;
 	}
@@ -32,8 +42,8 @@ public class ShoesSizeVO {
 	}
 	@Override
 	public String toString() {
-		return "ShoesSizeVO [sizepk=" + sizepk + ", colorpk=" + colorpk + ", size=" + size + ", cnt=" + cnt + "]";
+		return "ShoesSizeVO [sizepk=" + sizepk + ", colorpk=" + colorpk + ", size=" + size + ", cnt=" + cnt
+				+ ", sizeArray=" + Arrays.toString(sizeArray) + "]";
 	}
-	
 	
 }

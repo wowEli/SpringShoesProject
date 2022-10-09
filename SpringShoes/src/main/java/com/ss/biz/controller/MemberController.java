@@ -1,5 +1,6 @@
 ﻿package com.ss.biz.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,10 +46,15 @@ public class MemberController {
 		
 		mVO = memberService.selectOneMember(mVO);	
 		
+		
 		if(mVO==null) {		// 로그인 실패시
 			return "login.jsp"; // 다시 로그인 화면으로 이동
 		}
-		else {
+		else { // 로그인 성공시
+			// 장바구니 생성
+			ArrayList<String> bDatas = new ArrayList<String>();
+			session.setAttribute("bDatas", bDatas); 
+			
 			// 세션에 mid만 저장
 			session.setAttribute("mid", mVO.getMid());
 			return "redirect:selectAllS.do";	// 메인페이지 이동
