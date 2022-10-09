@@ -5,12 +5,8 @@ public class AddressVO {
 	private int apk;
 	private String aname;
 	private String mid;
-	private String postcode;
 	private String address;
-	private String detailAddress;
-	private String extraAddress;
-	
-	
+	private String memo;
 	public int getApk() {
 		return apk;
 	}
@@ -29,36 +25,22 @@ public class AddressVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public String getPostcode() {
-		return postcode;
-	}
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getDetailAddress() {
-		return detailAddress;
+	public String getMemo() {
+		return memo;
 	}
-	public void setDetailAddress(String detailAddress) {
-		this.detailAddress = detailAddress;
-	}
-	public String getExtraAddress() {
-		return extraAddress;
-	}
-	public void setExtraAddress(String extraAddress) {
-		this.extraAddress = extraAddress;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 	
 	@Override
 	public String toString() {
-		return "AddressVO [apk=" + apk + ", aname=" + aname + ", mid=" + mid + ", postcode=" + postcode + ", address="
-				+ address + ", detailAddress=" + detailAddress + ", extraAddress=" + extraAddress + "]";
-	}
-	
-	
+		return "AddressVO [apk=" + apk + ", aname=" + aname + ", mid=" + mid + ", address=" + address + ", memo=" + memo
+				+ "]";
+	}	
 }
