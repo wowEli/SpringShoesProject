@@ -182,7 +182,7 @@
 										<img class="img-fluid blog_right_sidebar" src="img/x.png" alt="품절">
 									</c:if>
 									</div>
-									<img class="img-fluid blog_right_sidebar" src="${s.shoesImg}" alt="" style="background-color:white; padding:0;">
+									<a href="selectOneS.do?colorpk=${s.colorpk}"><img class="img-fluid blog_right_sidebar" src="${s.shoesImg}" alt="" style="background-color:white; padding:0;"></a>
 								</div>
 								<div class="product-details">
 									<h6>${s.shoesName }</h6>

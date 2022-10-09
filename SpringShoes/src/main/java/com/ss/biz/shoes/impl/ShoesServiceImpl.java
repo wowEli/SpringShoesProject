@@ -30,10 +30,20 @@ public class ShoesServiceImpl implements ShoesService{
 	public List<ShoesVO> selectAllShoes(ShoesVO vo) {
 		return shoesDAO.selectAllShoes(vo);
 	}
-
+	
 	@Override
 	public List<ShoesVO> filterSearch(ShoesVO vo) {
 		return shoesDAO.filterSearch(vo);
+	}
+	
+	@Override
+	public List<ShoesVO> selectShoes_Color(ShoesVO vo) {
+		return shoesDAO.selectShoes_Color(vo);
+	}
+
+	@Override
+	public List<ShoesVO> selectShoes_Size(ShoesVO vo) {
+		return shoesDAO.selectShoes_Size(vo);
 	} 
 	
 

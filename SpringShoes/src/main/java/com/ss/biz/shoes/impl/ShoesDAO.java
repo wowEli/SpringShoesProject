@@ -33,12 +33,19 @@ public class ShoesDAO {
 	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
 
 
-	// ==========*selectOne 모음==========
-	//★shoesVO에 저장할 selectOne >> colorpk를 이용한 조인
-	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
-	
-	
+	// ==========*selectOne 모음==========	
+	// 신발상세 페이지를 들어가기 위해서 필요한 3가지 ( 신발하나의 정보, 신발과 같은종류의 다른색상 신발이미지들, 신발하나정보의 사이즈와 갯수들 )
 
+	//신발 하나의 정보
+	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
+
+	//신발 하나의 정보의 동일한 신발의 여러 색상이미지들 + COLORPK값
+	final String sql_selectOneShoes_Color = "SELECT COLORPK, SHOESIMG FROM SHOESCOLOR SC inner join SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK WHERE SHOESNAME = ?";
+	
+	//신발 하나의 정보의 동일한 신발의 여러 SIZE들과 해당 CNT들 + SIZEPK값
+	final String sql_selectOneShoes_Size ="SELECT SIZEPK, SIZE, CNT FROM SHOESCOLOR SC inner join SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK inner join SHOESSIZE S ON S.COLORPK = SC.COLORPK WHERE SC.COLORPK = ?;";
+	
+	
 	// =============update 모음==========
 	//★shoesSize update
 	final String sql_updateSizeShoes = "UPDATE SHOESSIZE SET CNT=CNT-1 WHERE COLORPK=? AND SIZE=?";
@@ -90,6 +97,21 @@ public class ShoesDAO {
 //		System.out.println("args0값"+args[0].toString());
 //		System.out.println("args1값"+args[1].toString());
 		return jdbcTemplate.query(sql_selectAllShoes, args, new ShoesRowMapper());
+	}
+	
+	// 신발 상세페이지 = 신발정보의 이름과 동일 모든 다른색상의 신발정보를 담아줌
+	public List<ShoesVO> selectShoes_Color(ShoesVO vo) {
+		Object[] args = {vo.getShoesName()};
+		
+		return jdbcTemplate.query(sql_selectOneShoes_Color, args, new ShoesRowMapperColor());
+	}
+	
+	// 신발 상세페이지 = 신발정보의 동일한 다른 Size + Cnt 신발정보를 담아줌
+	public List<ShoesVO> selectShoes_Size(ShoesVO vo) {
+		
+		Object[] args = {vo.getColorpk()};
+		
+		return jdbcTemplate.query(sql_selectOneShoes_Size, args, new ShoesRowMapperSize());
 	}
 
 
@@ -199,4 +221,35 @@ class ShoesRowMapper implements RowMapper<ShoesVO> {
 		}
 		
 	}
+	
+	// selectOne한 신발정보의 다른 색의 정보들을 담아줌
+	class ShoesRowMapperColor implements RowMapper<ShoesVO> {
+		
+		@Override
+		public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ShoesVO data = new ShoesVO();
+			data.setColorpk(rs.getInt("COLORPK"));
+			data.setShoesImg(rs.getString("SHOESIMG"));
+			
+			return data;
+		}
+		
+	}
+	
+	// selectOne한 신발정보의 다른 사이즈 + 갯수 정보들을 담아줌
+	class ShoesRowMapperSize implements RowMapper<ShoesVO> {
+		
+		@Override
+		public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ShoesVO data = new ShoesVO();
+			data.setColorpk(rs.getInt("SIZEPK"));
+			data.setShoesSize(rs.getInt("SIZE"));
+			data.setShoesCnt(rs.getInt("CNT"));
+			
+			return data;
+		}
+		
+	}
+	
+	
 
