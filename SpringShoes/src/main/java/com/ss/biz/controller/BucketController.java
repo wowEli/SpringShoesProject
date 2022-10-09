@@ -1,6 +1,7 @@
 package com.ss.biz.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,10 +75,11 @@ public class BucketController {
 	return "장바구니 출력 페이지 경로";
    }
  
+   
    @ResponseBody
    @SuppressWarnings("unchecked")
-   @RequestMapping("insertBucket.do")
-   public String insertBucket(@RequestParam(value="sizepkArray") ArrayList<String> sizepkArray, HttpSession session) {
+   @RequestMapping("/insertBucket.do")
+   public String insertBucket(@RequestParam(value="sizes[]") List<String> sizepkArray, HttpSession session) {
 	   System.out.println("ajax들어옴");
 	   
 	   for(String s: sizepkArray) {
@@ -87,6 +89,10 @@ public class BucketController {
 	   ArrayList<String> sizepkArray2 = (ArrayList<String>) session.getAttribute("bDatas");
 	   sizepkArray2.addAll(sizepkArray);
 	   session.setAttribute("bDatas", sizepkArray2);
+	   
+	   for(String s : sizepkArray2) {
+		   System.out.println("세션에 저장된 sizeArray로그:["+s+"]");		   
+	   }
 	   
 	   return "1";
    }

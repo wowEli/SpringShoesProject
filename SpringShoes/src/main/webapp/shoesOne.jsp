@@ -37,8 +37,6 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
    crossorigin="anonymous"></script>
-<script type="text/javascript"
-   src="https://code.jquery.com/jquery-3.4.0.js"></script>
 <style type="text/css">
 .modal {
    position: absolute;
@@ -194,29 +192,31 @@ h6 {
          for (var i = 0; i < size; i++) {
             sizes[i] = $("input[name=sizepk]").eq(i).val();
             console.log(sizes[i]);
-         }
-
-         //배열 선언
-        /*  var sizepkArray = document.getElementsByName("sizepk");
-
-         console.log(sizepkArray); */
-
-         //sizepkArray로 사용이 안된다면, sizes로 해보기 (int값 배열로 잘 들어옴)
-
-         //ajax 호출
-         $.ajax({
-             type:"POST",
-             url:"insertBucket.do",
-           dataType : sizes,
-           success : function(result) {
-           if (result == 1) {
-              alert("장바구니 추가가 완료되었습니다.")
-           }
-        },
-        error : function(request, status, error) {
-           console.log("장바구니ajax Error");
-        }
-         });
+         }         
+         
+ 		$.ajax({
+			type: 'POST',
+			url: '${pageContext.request.contextPath}/insertBucket.do',
+			data: {sizes:sizes},
+			success: function(result){
+				console.log("로그: ["+result+"]");
+				if(result == 1){
+					console.log("로그: 성공")
+				}
+				else{
+					console.log("로그: 실패")
+				}
+				
+			},
+			
+			error: function(request, status, error){ // 요청 보낸 곳(서블릿)에서 에러가 발생할 시 실행
+				console.log("code: "+request.status);
+				console.log("message: "+request.responseText);
+				console.log("error: "+error);
+				console.log("ajax오류")
+			}
+			
+		});
 
       }
    </script>
