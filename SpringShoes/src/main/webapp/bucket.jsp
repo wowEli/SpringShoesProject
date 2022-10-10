@@ -73,16 +73,16 @@ li {
 						</thead>
 						<tbody>
 						<form action="deleteBucket.do">
-							<tr>
 								
-								<c:forEach var="b" items="${bucket}">
+								<c:forEach var="b" items="${sDatas}">
+							<tr>
 									<td><input type="checkbox" name="colorpk" id="my_checkbox"
 										value="${b.colorpk}"></td>
 
 									<td style="padding-top: 15px; padding-bottom: 15px;">
 										<div class="d-flex">
 											<img class="img-fluid blog_right_sidebar"
-												src="img/${b.shoesImg}" alt=""
+												src="${b.shoesImg}" alt=""
 												style="background-color: white; padding: 0;">
 										</div>
 									</td>
@@ -103,6 +103,7 @@ li {
 									<td>
 										<p>1</p>
 									</td>
+									</tr>
 								</c:forEach>
 								
 						<tr class="out_button_area">
@@ -132,13 +133,13 @@ li {
 			<p>할인 금액</p>
 			<ul>
 				<li>내 등급</li>
-				<li><c:when test="${mData.tier<=200000}">
+				<%-- <li><c:when test="${mData.tier<=200000}">
 						<img alt="Bronze" src="img/3rd.png">
 					</c:when> <c:when test="${mData.tier<=400000}">
 						<img alt="Silver" src="img/2rd.png">
 					</c:when> <c:when test="${mData.tier<=600000}">
 						<img alt="Gold" src="img/1rd.png">
-					</c:when></li>
+					</c:when></li> --%>
 			</ul>
 		</div>
 		<br>
@@ -146,13 +147,13 @@ li {
 		<div class="container">
 			<ul>
 				<li>할인률</li>
-				<li><c:when test="${mData.tier<=200000}">
+				<%-- <li><c:when test="${mData.tier<=200000}">
 						<p>5%</p>
 					</c:when> <c:when test="${mData.tier<=400000}">
 						<p>10%</p>
 					</c:when> <c:when test="${mData.tier<=600000}">
 						<p>20%</p>
-					</c:when></li>
+					</c:when></li> --%>
 			</ul>
 		</div>
 		<br>

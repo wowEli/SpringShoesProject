@@ -36,14 +36,15 @@ public class BucketController {
       //세션에 저장되어있는 장바구니 불러오기
 	  model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
       
-      ArrayList<Integer> bDatas = (ArrayList<Integer>) session.getAttribute("bDatas");
+      ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
       
       ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>();
       
-      for(int b: bDatas) {
-    	  sVO.setSizepk(b);
+      for(String b: bDatas) {
+    	  sVO.setSizepk(Integer.parseInt(b));
     	  ShoesVO vo = new ShoesVO();
     	  vo = shoesService.selectOneShoesBucket(sVO);
+    	  System.out.println("장바구니 로그: ["+vo+"]");
     	  sDatas.add(vo);
       }
       
