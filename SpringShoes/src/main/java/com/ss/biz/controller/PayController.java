@@ -1,12 +1,19 @@
 ﻿package com.ss.biz.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ss.biz.address.AddressService;
+import com.ss.biz.address.AddressVO;
+import com.ss.biz.member.MemberService;
+import com.ss.biz.member.MemberVO;
 import com.ss.biz.pay.PayService;
 import com.ss.biz.pay.PayVO;
 import com.ss.biz.review.ReviewService;
@@ -20,10 +27,16 @@ import com.ss.biz.shoes.ShoesVO;
 public class PayController {
 	
 	@Autowired
-	private PayService payService;
+	ShoesService shoesService;
 	
 	@Autowired
-	private ShoesService shoesService;
+	MemberService memberService;
+	
+	@Autowired
+	PayService payService;
+	
+	@Autowired
+	AddressService addressSevice;
 	
 	@RequestMapping("/insertP.do")		//구매하기-> 재고-1
 	public String insertPay(ShoesVO sVO, ShoesSizeVO ssVO , PayVO pVO, Model model) {
@@ -34,6 +47,31 @@ public class PayController {
 		model.addAttribute("pDatas", pDatas);
 		
 		return "영수증 페이지"; 
+	}
+	
+	@RequestMapping("/pay.do")
+	public String insertAddress(HttpSession session, MemberVO mVO, AddressVO aVO, ShoesSizeVO sVO ,Model model ) {
+		
+		//주소 목록을 불러오기 위한 로직
+		  aVO.setMid((String)session.getAttribute("mid"));
+	      List<AddressVO> aDatas = addressSevice.selectAllAddress(aVO);
+	      model.addAttribute("aDatas",aDatas);
+	     //아래는 버킷.jsp 상품 불러오기와 동일
+		  model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
+	      
+	      ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
+	      ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>();
+	      
+	      for(String b: bDatas) {
+	    	  sVO.setSizepk(Integer.parseInt(b));
+	    	  ShoesVO vo = new ShoesVO();
+	    	  vo = shoesService.selectOneShoesBucket(sVO);
+	    	  System.out.println("장바구니 로그: ["+vo+"]");
+	    	  sDatas.add(vo);
+	      }
+	      model.addAttribute("sDatas", sDatas);
+		 
+		return "pay.jsp";
 	}
 	
 }

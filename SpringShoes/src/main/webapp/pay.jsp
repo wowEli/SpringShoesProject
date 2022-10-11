@@ -88,8 +88,9 @@
    
    
    <section class="cart_area">
+   	<form action="insertP.do" method="post">
          <div class="container">
-            <form>
+            
                   <div class="sidebar-categories">
                        <div class="head" style="background-color:black;">배송지 입력란</div>
                        </div>
@@ -97,6 +98,7 @@
                   <tr class = "tr01">
                      <td class="td01">배송지 선택</td>
                      <td class ="td02"> <input type="radio" class="arrive-select" name="arriveSelect" value="old" checked/>기본 배송지&nbsp;&nbsp;
+                     <!-- C에서 기본배송지(value="old"일 경우) member의 address값을 보내주는 메서드 필요 -->
                       <input type="radio" class="arrive-select" name="arriveSelect" value="new" />신규 배송지&nbsp;&nbsp;
                       <input type="radio" class="arrive-select" name="arriveSelect" value="other"/>다른 배송지
                       
@@ -106,15 +108,14 @@
                   <tr class="tr01">
                   <td class="td01">배송지 입력</td>
                   
-                  <td class ="td02"><input type="text" id="sample2_address" name="inputarrive" class="radio-value-detail" placeholder="신규 배송지를 입력해주세요." value=""/>
+                  <td class ="td02"><input type="text" id="sample2_address" name="inputarrive" class="radio-value-detail" placeholder="신규 배송지를 입력해주세요."/>
                   <input type="button" name="inputarrivebutton"onclick="sample2_execDaumPostcode()" value="우편번호 찾기" >
+                	<c:forEach var="ad" items="${aDatas}">
                 	<div id="checkbox">
-                   <input type="radio" name="address" value="" checked> 서울특별시 관악구 어쩌구 저쩌구
+                   <input type="radio" name="address" value="" checked> "${ad.address}"
                    <br>
-                   <input type="radio" name="address" value=""> 서울특별시 강남구 어쩌구 저쩌구 IT아카데미
-                   <br>
-                   <input type="radio" name="address" value=""> 미국특별시 워싱턴구 어쩌구 저쩌구
                    </div>
+                   </c:forEach>
                      </td>
                   </tr>
                   
@@ -129,12 +130,12 @@
                           <option value='3'>부재시 집앞에 놔주세요</option>
                           <option value='4'>배송전 연락 바랍니다</option>
                           <option value='5'>&nbsp;&nbsp;&nbsp;&nbsp;직접 입력&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                          <input type="text" id="selboxDirect" name="selboxDirect"/>
-                     </select></td>
+                     </select>
+                     <input type="text" id="selboxDirect" name="selboxDirect"/></td>
                   </tr>
                   
                </table>
-            </form>
+            
          </div>
          <br>
          
@@ -153,33 +154,32 @@
                      </tr>
                   </thead>
                   <tbody>
+ 						<tr>
+                        <c:forEach var="b" items="${bucket}">
+                           <td><input type="checkbox" name="colorpk"
+                              value="${b.colorpk}"></td>
 
-                     <tr>
+                           <td style="padding-top: 15px; padding-bottom: 15px;">
+                              <div class="d-flex">
+                                 <img class="img-fluid blog_right_sidebar"
+                                    src="img/${b.shoesImg}" alt=""
+                                    style="background-color: white; padding: 0;">
+                              </div>
+                           </td>
 
-                        <td><input type="checkbox" name="colorpk" value="">1
-                        </td>
+                           <td>
+                              <p>${b.shoesName}</p>
+                           </td>
 
-                        <td style="padding-top: 15px; padding-bottom: 15px;">
-                           <div class="d-flex">
-                              <img class="img-fluid blog_right_sidebar" src="img/abc.PNG"
-                                 alt="" style="background-color: white; padding: 0;">
-                           </div>
-                        </td>
+                           <td>
+                              <h5>${b.price}</h5>
+                           </td>
 
-                        <td>
-                           <p>조던 1</p>
-                        </td>
-
-                        <td>
-                           <h5>129000</h5>
-
-                        </td>
-
-                        <td>
-                           <p>1</p>
-                        </td>
-                 
-
+                           <td>
+                              <p>1</p>
+                           </td>
+                        </c:forEach>
+                      </tr>
                   </tbody>
                </table>
             </div>
@@ -193,15 +193,37 @@
          <table style ="width:1100px; height:100px; border:1px solid gray; text-align:center;">
          <tr class="tr01">
             <td class="td01">내 등급</td>
-            <td class="td02">골드</td>
+            <td class="td02">
+			<ul>
+          	  <li><c:when test="${mData.tier<=200000}">
+                  <img alt="Bronze" src="img/3rd.png">
+               </c:when> <c:when test="${mData.tier<=400000}">
+                  <img alt="Silver" src="img/2rd.png">
+               </c:when> <c:when test="${mData.tier<=600000}">
+                  <img alt="Gold" src="img/1rd.png">
+               </c:when></li>
+         	</ul>
+			</td>
          </tr>
          <tr class="tr01">
             <td class="td01">할인율</td>
-            <td class="td02">15%</td>
+            <td class="td02">
+             <ul>
+          		  <li><c:when test="${mData.tier<=200000}">
+                  <p>5%</p>
+               </c:when> <c:when test="${mData.tier<=400000}">
+                  <p>10%</p>
+               </c:when> <c:when test="${mData.tier<=600000}">
+                  <p>20%</p>
+               </c:when></li>
+         </ul>
+            </td>
          </tr>
          <tr class="tr01">
             <td class="td01">총금액</td>
-            <td class="td02">100000</td>
+            <td class="td02"><span id="resultprice" name ="resultprice" >"${resultprice}"</span></td>
+
+           
          </tr>
       </table>
       </div>
@@ -209,7 +231,9 @@
       <div class="container">
       <a class="primary-btn" href="#">결제하기</a></div>
       
+     
       
+      </form>
       <script type="text/javascript">
 
       $(document).ready(function(){      //기존 배송지 선택시 입력 비활성화
