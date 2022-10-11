@@ -18,8 +18,8 @@ public class ShoesServiceImpl implements ShoesService{
 	private ShoesDAO shoesDAO;
 
 	@Override
-	public void updateShoes(ShoesVO vo, int size) {
-		shoesDAO.updateShoes(vo, size);
+	public void updateShoes(ShoesSizeVO vo) {
+		shoesDAO.updateShoes(vo);
 	}
 
 	@Override
