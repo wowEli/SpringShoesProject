@@ -16,8 +16,6 @@ import com.ss.biz.member.MemberService;
 import com.ss.biz.member.MemberVO;
 import com.ss.biz.pay.PayService;
 import com.ss.biz.pay.PayVO;
-import com.ss.biz.review.ReviewService;
-import com.ss.biz.review.ReviewVO;
 import com.ss.biz.shoes.ShoesService;
 import com.ss.biz.shoes.ShoesSizeVO;
 import com.ss.biz.shoes.ShoesVO;
@@ -49,8 +47,9 @@ public class PayController {
 		return "영수증 페이지"; 
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/pay.do")
-	public String insertAddress(HttpSession session, MemberVO mVO, AddressVO aVO, ShoesSizeVO sVO ,Model model ) {
+	public String insertAddress(HttpSession session, MemberVO mVO, AddressVO aVO,Model model ) {
 		
 		//주소 목록을 불러오기 위한 로직
 		  aVO.setMid((String)session.getAttribute("mid"));
@@ -61,6 +60,8 @@ public class PayController {
 	      
 	      ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
 	      ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>();
+	     
+	      ShoesSizeVO sVO = new ShoesSizeVO();
 	      
 	      for(String b: bDatas) {
 	    	  sVO.setSizepk(Integer.parseInt(b));

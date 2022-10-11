@@ -21,7 +21,13 @@ public class ShoesDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	// ========== 필터검색 메서드 시작 =========
-		String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK WHERE COLOR LIKE CONCAT('%',?,'%') AND BRAND LIKE CONCAT('%',?,'%') AND (PRICE>=? AND PRICE<=?) AND";
+		String sql_FilterSearch = "SELECT SC.COLORPK,COLOR,SHOESIMG,SHOESNAME,PRICE,BRAND,SIZE,CNT "
+				+ "FROM SHOESCOLOR SC "
+				+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
+				+ "INNER JOIN SHOESSIZE S ON SC.COLORPK = S.COLORPK "
+				+ "WHERE COLOR LIKE CONCAT('%',?,'%') AND "
+				+ "BRAND LIKE CONCAT('%',?,'%') AND "
+				+ "(PRICE>=? AND PRICE<=?) AND";
 
 		// 필터검색 메서드
 		public List<ShoesVO> filterSearch(ShoesVO vo) {
@@ -83,7 +89,8 @@ public class ShoesDAO {
 		
 
 	// =========== 신발전체조회 + 일반검색 메서드 시작 ===========
-	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC "
+	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND "
+			+ "FROM SHOESCOLOR SC "
 			+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
 			+ "WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
 	
@@ -114,7 +121,11 @@ public class ShoesDAO {
 	
 	
 	// ========== 장바구니 메서드 시작 =========
-	final String sql_selectOneShoes_Bucket = "SELECT SS.SIZE, SC.SHOESIMG, SSP.SHOESNAME, SSP.PRICE FROM SHOESSIZE SS INNER JOIN SHOESCOLOR SC ON SS.COLORPK = SC.COLORPK INNER JOIN SHOESSAMPLE SSP ON SC.SAMPLEPK = SSP.SAMPLEPK WHERE SS.SIZEPK = ?";
+	final String sql_selectOneShoes_Bucket = "SELECT SS.SIZEPK, SS.SIZE, SC.SHOESIMG, SSP.SHOESNAME, SSP.PRICE "
+			+ "FROM SHOESSIZE SS "
+			+ "INNER JOIN SHOESCOLOR SC ON SS.COLORPK = SC.COLORPK "
+			+ "INNER JOIN SHOESSAMPLE SSP ON SC.SAMPLEPK = SSP.SAMPLEPK "
+			+ "WHERE SS.SIZEPK = ?";
 	
 	public ShoesVO selectOneShoesBucket(ShoesSizeVO vo) { // 장바구니에서 쓸 selectOne
 		Object[] args = {vo.getSizepk()};
@@ -129,6 +140,7 @@ public class ShoesDAO {
 		@Override
 		public ShoesVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			ShoesVO data = new ShoesVO();
+			data.setSizepk(rs.getInt("SIZEPK"));
 			data.setShoesSize(rs.getInt("SIZE"));
 			data.setShoesImg(rs.getString("SHOESIMG"));
 			data.setShoesName(rs.getString("SHOESNAME"));
@@ -144,13 +156,21 @@ public class ShoesDAO {
 	// 신발상세 페이지를 들어가기 위해서 필요한 3가지 ( 신발하나의 정보, 신발과 같은이름의 다른색상 신발이미지들, 신발하나정보의 사이즈와 갯수들 )
 
 	//신발 하나의 정보
-	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND FROM SHOESCOLOR SC INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK WHERE COLORPK=?";
+	final String sql_selectOneShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND "
+			+ "FROM SHOESCOLOR SC "
+			+ "INNER JOIN SHOESSAMPLE SS ON SC.SAMPLEPK = SS.SAMPLEPK "
+			+ "WHERE COLORPK=?";
 
 	//신발 하나의 정보의 동일한 신발의 여러 색상이미지들 + COLORPK값 
-	final String sql_selectOneShoes_Color = "SELECT COLORPK, SHOESIMG FROM SHOESCOLOR SC inner join SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK WHERE SHOESNAME = ?";
+	final String sql_selectOneShoes_Color = "SELECT COLORPK, SHOESIMG FROM SHOESCOLOR SC "
+			+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
+			+ "WHERE SHOESNAME = ?";
 	
 	//신발 하나의 정보의 동일한 신발의 여러 SIZE들과 해당 CNT들 + SIZEPK값 
-	final String sql_selectOneShoes_Size ="SELECT SIZEPK, SIZE, CNT FROM SHOESCOLOR SC inner join SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK inner join SHOESSIZE S ON S.COLORPK = SC.COLORPK WHERE SC.COLORPK = ?;";
+	final String sql_selectOneShoes_Size ="SELECT SIZEPK, SIZE, CNT FROM SHOESCOLOR SC "
+			+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
+			+ "INNER JOIN SHOESSIZE S ON S.COLORPK = SC.COLORPK "
+			+ "WHERE SC.COLORPK = ?;";
 	
 	public ShoesVO selectOneShoes(ShoesVO vo) {
 		Object[] args = {vo.getColorpk()};

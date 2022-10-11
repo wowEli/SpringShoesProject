@@ -10,6 +10,7 @@ public class ShoesVO {
 	private String shoesColor;
 	private String shoesImg;
 	private int colorpk;
+	private int sizepk;
 	private int shoesSize;
 	private int shoesCnt;
 	
@@ -22,6 +23,12 @@ public class ShoesVO {
 	private int[] filterSize; // 필터 검색 사이즈 여러개 값 가져오기
 	
 	
+	public int getSizepk() {
+		return sizepk;
+	}
+	public void setSizepk(int sizepk) {
+		this.sizepk = sizepk;
+	}
 	public int[] getFilterSize() {
 		return filterSize;
 	}
@@ -109,21 +116,9 @@ public class ShoesVO {
 	@Override
 	public String toString() {
 		return "ShoesVO [shoesName=" + shoesName + ", brand=" + brand + ", price=" + price + ", shoesColor="
-				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", shoesSize=" + shoesSize
-				+ ", shoesCnt=" + shoesCnt + ", searchContent=" + searchContent + ", filterColor=" + filterColor
-				+ ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice + ", filterHighPrice="
-				+ filterHighPrice + ", filterSize=" + Arrays.toString(filterSize) + "]";
+				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", sizepk=" + sizepk + ", shoesSize="
+				+ shoesSize + ", shoesCnt=" + shoesCnt + ", searchContent=" + searchContent + ", filterColor="
+				+ filterColor + ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice
+				+ ", filterHighPrice=" + filterHighPrice + ", filterSize=" + Arrays.toString(filterSize) + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
 }
