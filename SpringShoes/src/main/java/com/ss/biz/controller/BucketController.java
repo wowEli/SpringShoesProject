@@ -36,16 +36,18 @@ public class BucketController {
       //세션에 저장되어있는 장바구니 불러오기
 	  model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
       
+	  // String 타입으로 sizepk 들이 저장되어 있음
       ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
       
+      // 결과값을 저장할 신발 배열 생성
       ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>();
       
       for(String b: bDatas) {
-    	  sVO.setSizepk(Integer.parseInt(b));
+    	  sVO.setSizepk(Integer.parseInt(b)); // String 타입의 sizepk를 int로 변환하여 ShoesSizeVO에 setter
     	  ShoesVO vo = new ShoesVO();
-    	  vo = shoesService.selectOneShoesBucket(sVO);
+    	  vo = shoesService.selectOneShoesBucket(sVO); // sizepk를 이용해서 selectOne
     	  System.out.println("장바구니 로그: ["+vo+"]");
-    	  sDatas.add(vo);
+    	  sDatas.add(vo); // 결과 값을 신발배열에 저장
       }
       
       model.addAttribute("sDatas", sDatas);

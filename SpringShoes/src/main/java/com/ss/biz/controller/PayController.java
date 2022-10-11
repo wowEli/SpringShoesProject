@@ -41,7 +41,7 @@ public class PayController {
 	@RequestMapping("/insertP.do")		//구매하기-> 재고-1
 	public String insertPay(ShoesVO sVO, ShoesSizeVO ssVO , PayVO pVO, Model model) {
 		payService.insertPay(pVO);	//구매 목록에 추가
-		shoesService.updateShoes(sVO, ssVO.getSize()); // 재고 -1
+		shoesService.updateShoes(ssVO); // 재고 -1
 		
 		List<PayVO> pDatas = payService.selectAllPay(pVO);
 		model.addAttribute("pDatas", pDatas);
