@@ -68,12 +68,13 @@
                     	<div class="sidebar-categories">
                     	<div class="head" style="background-color:black;">계정정보 입력</div>
                     	</div>
-                        <form class="row contact_form" action="insertM.do" method="post">
+                        <form class="row contact_form" action="insertM.do" id="signup" method="post">
                             <div class="col-md-7 form-group p_star">
 							<br><br>
                             	<span>아이디</span>
-                                <input type="email" class="form-control" id="mid" name="mid" placeholder="사용하실 아이디를 입력해 주세요">
+                                <input type="email" class="form-control" id="mid" name="mid" onchange="idCheck()" placeholder="사용하실 아이디를 입력해 주세요">
                            	<br>
+                           	<div id="result"></div>
                             </div>
                             <div class="col-md-7 form-group p_star">
                             	<span>비밀번호</span>
@@ -83,6 +84,7 @@
                             	<br>
                             	<span>비밀번호 재입력</span>
                                 <input type="password" class="form-control" id="mpw2" placeholder="비밀번호를 재 입력해 주세요">
+                                <p id="warn" style="color:red">입력하신 비밀번호와 일치하지 않습니다. 확인 후 다시 입력해주세요</p>
                          	<br><br>
                             </div>
                             <div class="col-lg-12">
@@ -175,8 +177,87 @@
 </body>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
 
-<script>
+function idCheck(){
+	var check = $("#mid").val();
+	console.log("ajax들어옴" +mid)
+	$.ajax({
+		type: 'POST',
+		url: '${pageContext.request.contextPath}/idCheck.do',
+		data:{check:check},
+		success: function(result){
+			console.log("로그: ["+result+"]")
+			if(result == 1){
+				$("#result").text("중복되지 않은 아이디 입니다!");
+				$("#result").css("color","blue");						
+			}
+			else{
+				$("#result").text("중복된 아이디가 존재합니다...");
+				$("#result").css("color","red");
+			}
+			
+		},
+		
+		error: function(request, status, error){
+			console.log("code: "+request.status);
+			console.log("message: "+request.responseText);
+			console.log("error: "+error);
+		}
+		
+	});
+	
+
+}
+
+const tmp1 = document.getElementById("warn");
+tmp1.style.visibility = 'hidden';
+
+var form=document.forms['signup'];
+
+form.onsubmit=function(){
+	
+	var pwd = document.getElementById("mpw");
+	var check = document.getElementById("mpw2");
+	
+	if (document.getElementById("mid").value == "") {
+		alert("아이디를 입력하세요.");
+		return false;
+	}
+	if (pwd.value== "" ) {
+		alert("비밀번호를 입력하세요.");
+		return false;
+	}
+	if(pwd.value.length<8){
+		alert("비밀번호를 8자리 이상 입력하세요")
+		return false;
+	}
+	
+	if (pwd.value != check.value) {
+		alert("비밀번호 불일치");
+		tmp1.style.visibility = 'visible';
+		return false;
+	}
+	if (document.getElementById("mname").value == "") {
+		alert("이름을 입력하세요.");
+		return false;
+	}
+	if (document.getElementById("mphone").value == "") {
+		alert("휴대폰 번호를 입력하세요.");
+		return false;
+	}
+	if(document.getElementById("sample2_address").value == ""){
+		alert("주소를 입력해 주세요");
+		return false;
+	}
+
+	if(pwd.value == check.value){
+		tmp1.style.visibility = 'hidden';
+	}
+}
+
+
+
     // 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');
 
