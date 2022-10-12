@@ -51,6 +51,9 @@
     	color: black;
     	font-size: 15px;
     }
+    label{
+    	display : block;
+    }
     </style>
 </head>
 
@@ -59,8 +62,46 @@
     <t:header/>
     <t:banner/>
 
-    <!--================Checkout Area =================-->
+    <!--================Checkout Area =================-->   
     <section class="checkout_area section_gap">
+    	
+    	<div class="container">
+    		<div class="billing_details">
+    			 <div class="row">
+    				<div class="col-lg-8">
+    					<div class="sidebar-categories">
+    					<div class="head" style="background-color:black;">이용약관 동의</div>
+    					<br>
+    					</div>
+    						<label for="agree_all">
+  								<input type="checkbox" name="agree_all" id="agree_all">
+  									<span>모두 동의합니다</span>
+							</label>
+							<label for="agree">
+ 								 <input type="checkbox" name="agree" value="1">
+ 									 <span>이용약관 동의<strong>(필수)</strong></span>
+							</label>
+							<label for="agree">
+  								<input type="checkbox" name="agree" value="2">
+  									<span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
+							</label>
+							<label for="agree">
+  								<input type="checkbox" name="agree" value="3">
+  									<span>개인정보 이용 동의<strong>(필수)</strong></span>
+							</label>
+							<label for="agree">
+ 								<input type="checkbox" name="agree" value="4">
+  									<span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
+							</label>	
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	
+    	<br>
+    	<br>
+    	<br>
+    
         <div class="container">
             <div class="billing_details">
                 <div class="row">
@@ -179,6 +220,17 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
+
+//이용 약관
+const agreeChkAll = document.querySelector('input[name=agree_all]');
+agreeChkAll.addEventListener('change', (event) => { let agreeChk = document.querySelectorAll('input[name=agree]');
+//모두동의 체크박스(agree_all)를 체크하면 change 이벤트가 발생 -> name값이 agree인 모든 데이터를 찾아 속성값을 전체 선택된 true값으로 변경
+for(let i = 0; i < agreeChk.length; i++){
+  agreeChk[i].checked = event.target.checked;
+}
+});
+
+//아이디 중복검사
 function idCheck(){
 	var check = $("#mid").val();
 	console.log("ajax들어옴" +mid)
