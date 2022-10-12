@@ -35,6 +35,15 @@ public class BucketController {
       //세션에 저장되어있는 장바구니 불러오기
 	  model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
       
+	   //세션에 장바구니가 있는지 확인하는 배열 생성
+	   ArrayList<String> sessionTestArr = (ArrayList<String>) session.getAttribute("bDatas");
+	   
+	   //만약 세션에서 불러온 장바구니가 Null이면 새로 세션에 저장하고 selectAll 진행
+	   if(sessionTestArr==null) {
+		   sessionTestArr = new ArrayList<String>();
+		   session.setAttribute("bDatas", sessionTestArr);
+	   }
+	   
 	  // String 타입으로 sizepk 들이 저장되어 있음
       ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
       
@@ -95,6 +104,14 @@ public class BucketController {
    public String insertBucket(@RequestParam(value="sizes[]") List<String> sizepkArray, HttpSession session) {
 	   System.out.println("ajax들어옴");
 	   
+	   //세션에 장바구니가 있는지 확인하는 배열 생성
+	   ArrayList<String> sessionTestArr = (ArrayList<String>) session.getAttribute("bDatas");
+	   
+	   //만약 세션에서 불러온 장바구니가 Null이면 새로 세션에 저장하고 insert 진행
+	   if(sessionTestArr==null) {
+		   sessionTestArr = new ArrayList<String>();
+		   session.setAttribute("bDatas", sessionTestArr);
+	   }
 //	   로그
 	   for(String s: sizepkArray) {
 		   System.out.println("sizeArray로그: ["+s+"]");

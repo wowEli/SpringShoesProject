@@ -69,7 +69,7 @@ public class ShoesController {
 	
 	@RequestMapping(value = "/filterSearch.do", method = RequestMethod.POST) // 필터검색
 	public String filterSearch(ShoesVO sVO, Model model) {
-		System.out.println("필터검색에 들어온 VO 값"+sVO);
+//		System.out.println("필터검색에 들어온 VO 값"+sVO);
 		
 		// view에서 받아온 여러개의 sizes 값을 배열로 받고, Integer배열로 변경하는 로직
 //		String[] sizes= request.getParameterValues("size");
@@ -78,9 +78,9 @@ public class ShoesController {
 		List<ShoesVO> sDatas = shoesService.filterSearch(sVO);
 		
 		// 필터의 결과 로그
-		for(ShoesVO v : sDatas) {
-			System.out.println(v);
-		}
+//		for(ShoesVO v : sDatas) {
+//			System.out.println(v);
+//		}
 		
 		model.addAttribute("sDatas", sDatas);
 		

@@ -62,314 +62,205 @@
 <body>
 
 
-   <!--    <t:header /> -->
-
-   <!-- Start Banner Area -->
-   <section class="banner-area organic-breadcrumb">
-      <div class="container">
-         <div
-            class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-               <h1>Shopping Cart</h1>
-               <nav class="d-flex align-items-center">
-                  <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                  <a href="category.html">Cart</a>
-               </nav>
-            </div>
-         </div>
-      </div>
-   </section>
-   <!-- End Banner Area -->
+	<t:header/>
+	<t:banner/>
 
    <!--================Cart Area =================-->
-   
-   
-   
-   
-   
    <section class="cart_area">
-   	<form action="insertP.do" method="post">
-         <div class="container">
-            
-                  <div class="sidebar-categories">
-                       <div class="head" style="background-color:black;">배송지 입력란</div>
-                       </div>
-               <table style ="width:1100px; height:100px; text-align:center;">
-                  <tr class = "tr01">
-                     <td class="td01">배송지 선택</td>
-                     <td class ="td02"> <input type="radio" class="arrive-select" name="arriveSelect" value="old" checked/>기본 배송지&nbsp;&nbsp;
-                     <!-- C에서 기본배송지(value="old"일 경우) member의 address값을 보내주는 메서드 필요 -->
-                      <input type="radio" class="arrive-select" name="arriveSelect" value="new" />신규 배송지&nbsp;&nbsp;
-                      <input type="radio" class="arrive-select" name="arriveSelect" value="other"/>다른 배송지
-                      
-                      </td>
-                  </tr>
-                
-                  <tr class="tr01">
-                  <td class="td01">배송지 입력</td>
-                  
-                  <td class ="td02"><input type="text" id="sample2_address" name="inputarrive" class="radio-value-detail" placeholder="신규 배송지를 입력해주세요."/>
-                  <input type="button" name="inputarrivebutton"onclick="sample2_execDaumPostcode()" value="우편번호 찾기" >
-                	<c:forEach var="ad" items="${aDatas}">
-                	<div id="checkbox">
-                   <input type="radio" name="address" value="" checked> "${ad.address}"
-                   <br>
-                   </div>
-                   </c:forEach>
-                     </td>
-                  </tr>
-                  
-                  
-                  <tr class="tr01">
-                  <td class="td01">배송 메모</td>
-                  <td class ="td02"> 
-                     <select id="requestArrive" name='requestArrive'>
-                          <option value='' selected>-- 배송시 요청사항을 선택해주세요 --</option>
-                          <option value='1'>부재시 경비실에 맡겨주세요</option>
-                          <option value='2'>부재시 택배함에 넣어주세요</option>
-                          <option value='3'>부재시 집앞에 놔주세요</option>
-                          <option value='4'>배송전 연락 바랍니다</option>
-                          <option value='5'>&nbsp;&nbsp;&nbsp;&nbsp;직접 입력&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                     </select>
-                     <input type="text" id="selboxDirect" name="selboxDirect"/></td>
-                  </tr>
-                  
-               </table>
-            
-         </div>
-         <br>
-         
-
-      <div class="container">
+       
+       <div class="container">
          <div class="cart_inner">
             <div class="table-responsive">
                <table class="table">
                   <thead>
-                     <tr>
-                        <th scope="col" style="width: 194px;">체크박스</th>
-                        <th scope="col" style="width: 204px;">상품이미지</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">가격</th>
-                        <th scope="col">갯수</th>
+                     <tr style="background-color:black;">
+                     
+                        <th scope="col" style="width: 204px; color:white;">상품이미지</th>
+                        <th scope="col" style="color:white;">이름</th>
+                        <th scope="col" style="color:white;">사이즈</th>
+                        <th scope="col" style="color:white;">갯수</th>
+                        <th scope="col" style="color:white;">가격</th>
                      </tr>
                   </thead>
                   <tbody>
+                        <c:forEach var="s" items="${sDatas}">
  						<tr>
-                        <c:forEach var="b" items="${bucket}">
-                           <td><input type="checkbox" name="colorpk"
-                              value="${b.colorpk}"></td>
-
                            <td style="padding-top: 15px; padding-bottom: 15px;">
                               <div class="d-flex">
                                  <img class="img-fluid blog_right_sidebar"
-                                    src="img/${b.shoesImg}" alt=""
+                                    src="${s.shoesImg}" alt=""
                                     style="background-color: white; padding: 0;">
                               </div>
                            </td>
 
                            <td>
-                              <p>${b.shoesName}</p>
+                              <p>${s.shoesName}</p>
                            </td>
 
-                           <td>
-                              <h5>${b.price}</h5>
-                           </td>
+							<td>
+								<p>${s.shoesSize}</p>
+							</td>
 
-                           <td>
+						   <td>
                               <p>1</p>
                            </td>
-                        </c:forEach>
+
+                           <td>
+                              <h5>${s.price}</h5>
+                           </td>
+
                       </tr>
+                        </c:forEach>
                   </tbody>
                </table>
             </div>
          </div>
       </div>
-      
+         
        <div class="container">
-         <div class="sidebar-categories">
-                       <div class="head" style="background-color:black;">내 등급 할인</div>
-                       </div>
-         <table style ="width:1100px; height:100px; border:1px solid gray; text-align:center;">
-         <tr class="tr01">
-            <td class="td01">내 등급</td>
-            <td class="td02">
-			<ul>
-          	  <li><c:when test="${mData.tier<=200000}">
-                  <img alt="Bronze" src="img/3rd.png">
-               </c:when> <c:when test="${mData.tier<=400000}">
-                  <img alt="Silver" src="img/2rd.png">
-               </c:when> <c:when test="${mData.tier<=600000}">
-                  <img alt="Gold" src="img/1rd.png">
-               </c:when></li>
-         	</ul>
-			</td>
-         </tr>
-         <tr class="tr01">
-            <td class="td01">할인율</td>
-            <td class="td02">
-             <ul>
-          		  <li><c:when test="${mData.tier<=200000}">
-                  <p>5%</p>
-               </c:when> <c:when test="${mData.tier<=400000}">
-                  <p>10%</p>
-               </c:when> <c:when test="${mData.tier<=600000}">
-                  <p>20%</p>
-               </c:when></li>
-         </ul>
-            </td>
-         </tr>
-         <tr class="tr01">
-            <td class="td01">총금액</td>
-            <td class="td02"><span id="resultprice" name ="resultprice" >"${resultprice}"</span></td>
+         <div class="cart_inner">
+            <div class="table-responsive">
+               <table class="table">
+                  <thead>
+                     <tr style="background-color:black;">
+                     	<th scope="col" style="width: 194px; color:white;">체크박스</th>
+                        <th scope="col" style="color:white;">배송지 이름</th>
+                        <th scope="col" style="color:white;">주소</th>
+                        <th scope="col" style="color:white;"><input type="button" onclick="getShow()" value="+ 신규 배송지" ></th>
+                     </tr>
+                  </thead>
+                  
+                  <tbody>
+                  		<!-- 회원의 기본 배송지 출력 시작 -->
+                  		<tr>
+                  		<td>
+                        	  <input type="radio" name="address" id="my_checkbox" value="${mData.maddress}" checked/>
+						   </td>
+                           <td>
+                              <p>기본 배송지</p>
+                           </td>
 
-           
-         </tr>
-      </table>
+							<td>
+								<p>${mData.maddress}</p>
+							</td>
+							<td>
+								<p>&nbsp;</p>
+							</td>
+                  		</tr>
+                  		<!-- 회원의 기본 배송지 출력 종료 -->
+                  		
+                  		<!-- 회원의 다른 배송지 목록 출력 시작 -->
+                        <c:forEach var="a" items="${aDatas}">
+ 						<tr>
+                       	   <td>
+                        	  <input type="radio" name="address" id="my_checkbox" value="${a.address}">
+						   </td>
+                           <td>
+                              <p>${a.aname}</p>
+                           </td>
+
+							<td>
+								<p>${a.address}</p>
+							</td>
+							<td>
+								<p><a href="deleteA.do?apk=${a.apk }">삭제</a></p>
+							</td>
+                        </tr>
+                        </c:forEach>
+                        <!-- 회원의 다른 배송지 목록 출력 종료 -->
+                        
+                  </tbody>
+             </table>
+                        
+                        <!-- 신규 배송지 시작 -->
+             <form action="insertA.do?mid=${mid }">
+             <table class="table" id="newAddress">
+                   <thead>
+                        <tr style="background-color:black;">
+                     	<th scope="col" style="width: 194px;color:white;">수령인</th>
+                        <th scope="col" style="color:white;">주소</th>
+                        <th scope="col" style="color:white;">상세주소</th>
+                        <th scope="col" style="color:white;"> <input type="submit" value="배송지 등록" ></th>
+                  	    </tr>
+                  </thead>
+                        <tr>
+                           <td>
+                              <input type="text" name="aname" class="form-control" placeholder="ex) 집, 회사">
+                           </td>
+
+							<td>
+							  <input type="text" name="address" class="form-control" id="addressAPI" placeholder="신규 주소 등록" readonly/>
+							</td>
+							<td>
+							  <input type="text" name="detailAddress" class="form-control" placeholder="상세주소 입력"/>
+							</td>
+							<td>
+                			  <input type="button" onclick="sample2_execDaumPostcode()" value="주소 찾기" >
+							</td>
+                      	</tr>
+             </table>
+             </form>
+                      	<!-- 신규 배송지 종료 -->
+                      	
+                      	<!-- 결제정보 시작 -->
+                     
+            <table class="table">
+                   <thead>
+                        <tr style="background-color:black;">
+                     	<th scope="col" style="width: 194px;color:white;">회원 등급</th>
+                        <th scope="col" style="color:white;">총 금액 - 할인 금액</th>
+                        <th scope="col" style="color:white;">결제 금액</th>
+                        <th scope="col" style="color:white;">&nbsp;</th>
+                  	    </tr>
+                  </thead>
+                        <tr>
+                        <!-- 티어 이미지 -->
+                           <td>
+                              <c:if test="${mData.tier < 200000 }">
+                            <img src="img/3rd.png" alt="" style="width:100px">
+                            </c:if>
+                            <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
+                            <img src="img/2nd.png" alt="" style="width:100px">
+                            </c:if>
+                            <c:if test="${400000 < mData.tier }">
+                            <img src="img/1st.png" alt="" style="width:100px">
+                            </c:if>
+                           </td>
+
+
+							<td>
+							  <p style="font-size:40px">500000 원 - 50000 원</p>
+							</td>
+							<td>
+							  <p style="font-size:40px">450000 원</p>
+							</td>
+							<td>
+                			  <input type="button" onclick="" value="결제 하기" >
+							</td>
+							
+                      	</tr>
+             </table>
+             <!-- 결제정보 종료 -->
+              	
+            </div>
+         </div>
       </div>
       
-      <div class="container">
-      <a class="primary-btn" href="#">결제하기</a></div>
-      
-     
-      
-      </form>
-      <script type="text/javascript">
+   <script type="text/javascript">
 
-      $(document).ready(function(){      //기존 배송지 선택시 입력 비활성화
-    	     $("#checkbox").hide();
-    	      $("input:button[name=inputarrivebutton]").hide(); // 주소버튼 가리기
-    	      $("input:text[name=inputarrive]").attr("disabled",true);  //기존이면 비활성화
-    	      
-    	       $("input:radio[name=arriveSelect]").click(function(){
-    	    
-    	           if($("input[name=arriveSelect]:checked").val() == "old"){
-    	              $("#checkbox").hide();
-    	              $("input:text[name=inputarrive]").show();
-    	              $("input:text[name=inputarrive]").attr("disabled",true);  //기존이면 비활성화
-    	               $("input:button[name=inputarrivebutton]").hide();
-    	           }else if($("input[name=arriveSelect]:checked").val() == "new"){
-    	              $("#checkbox").hide();
-    	              $("input:text[name=inputarrive]").show();
-    	                 $("input:button[name=inputarrivebutton]").show();
-    	                 $("input:text[name=inputarrive]").attr("disabled",false); //새로운 배송지면 활성화
-    	           }else if($("input[name=arriveSelect]:checked").val() == "other"){
-    	              $("input:button[name=inputarrivebutton]").hide();
-    	              $("input:text[name=inputarrive]").hide();
-    	              $("#checkbox").show();
-
-    	           }
-    	       });
-    	   });
-   $(function(){      //직접 입력 숨기기
-   $("#selboxDirect").hide();
-   $("#requestArrive").change(function() {
-                   //직접입력을 누를 때 나타남
-         if($("#requestArrive").val() == "5") {
-            $("#selboxDirect").show();
-         }  else {
-            $("#selboxDirect").hide();
-         }
-      }) 
-   });
+   
+   document.getElementById("newAddress").style.display = "none";
+  
+   function getShow(){
+		document.getElementById("newAddress").style.display = "";
+		
+	}
+   
    </script>
       
-
-      
    </section>
-   <!--================End Cart Area =================-->
-
-   <!-- start footer Area -->
-   <footer class="footer-area section_gap">
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-3  col-md-6 col-sm-6">
-               <div class="single-footer-widget">
-                  <h6>About Us</h6>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                     sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
-               </div>
-            </div>
-            <div class="col-lg-4  col-md-6 col-sm-6">
-               <div class="single-footer-widget">
-                  <h6>Newsletter</h6>
-                  <p>Stay update with our latest</p>
-                  <div class="" id="mc_embed_signup">
-
-                     <form target="_blank" novalidate="true"
-                        action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                        method="get" class="form-inline">
-
-                        <div class="d-flex flex-row">
-
-                           <input class="form-control" name="EMAIL"
-                              placeholder="Enter Email" onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Enter Email '" required=""
-                              type="email">
-
-
-                           <button class="click-btn btn btn-default">
-                              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                           </button>
-                           <div style="position: absolute; left: -5000px;">
-                              <input name="b_36c4fd991d266f23781ded980_aefe40901a"
-                                 tabindex="-1" value="" type="text">
-                           </div>
-
-                           <!-- <div class="col-lg-4 col-md-4">
-                                       <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-                                    </div>  -->
-                        </div>
-                        <div class="info"></div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-3  col-md-6 col-sm-6">
-               <div class="single-footer-widget mail-chimp">
-                  <h6 class="mb-20">Instragram Feed</h6>
-                  <ul class="instafeed d-flex flex-wrap">
-                     <li><img src="img/i1.jpg" alt=""></li>
-                     <li><img src="img/i2.jpg" alt=""></li>
-                     <li><img src="img/i3.jpg" alt=""></li>
-                     <li><img src="img/i4.jpg" alt=""></li>
-                     <li><img src="img/i5.jpg" alt=""></li>
-                     <li><img src="img/i6.jpg" alt=""></li>
-                     <li><img src="img/i7.jpg" alt=""></li>
-                     <li><img src="img/i8.jpg" alt=""></li>
-                  </ul>
-               </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-               <div class="single-footer-widget">
-                  <h6>Follow Us</h6>
-                  <p>Let us be social</p>
-                  <div class="footer-social d-flex align-items-center">
-                     <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-                        class="fa fa-twitter"></i></a> <a href="#"><i
-                        class="fa fa-dribbble"></i></a> <a href="#"><i
-                        class="fa fa-behance"></i></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div
-            class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-            <p class="footer-text m-0">
-               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-               Copyright ©
-               <script>
-                  document.write(new Date().getFullYear());
-               </script>
-               2022 All rights reserved | This template is made with <i
-                  class="fa fa-heart-o" aria-hidden="true"></i> by <a
-                  href="https://colorlib.com" target="_blank">Colorlib</a>
-               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-         </div>
-      </div>
-   </footer>
-   <!-- End footer Area -->
+	
+	<t:footer/>  
 
    <script src="js/vendor/jquery-2.2.4.min.js"></script>
    <script
@@ -441,7 +332,7 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("sample2_address").value = addr;
+                document.getElementById("addressAPI").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

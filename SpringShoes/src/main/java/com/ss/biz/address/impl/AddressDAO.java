@@ -46,7 +46,6 @@ class AddressRowMapper implements RowMapper<AddressVO> {
 		data.setAname(rs.getString("ANAME"));
 		data.setMid(rs.getString("MID"));
 		data.setAddress(rs.getString("ADDRESS"));
-		data.setMemo(rs.getString("MEMO"));
 		return data;
 
 	}

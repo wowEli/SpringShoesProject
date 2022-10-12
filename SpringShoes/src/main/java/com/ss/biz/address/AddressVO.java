@@ -6,7 +6,6 @@ public class AddressVO {
 	private String aname;
 	private String mid;
 	private String address;
-	private String memo;
 	public int getApk() {
 		return apk;
 	}
@@ -31,16 +30,9 @@ public class AddressVO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getMemo() {
-		return memo;
-	}
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-	
 	@Override
 	public String toString() {
-		return "AddressVO [apk=" + apk + ", aname=" + aname + ", mid=" + mid + ", address=" + address + ", memo=" + memo
-				+ "]";
-	}	
+		return "AddressVO [apk=" + apk + ", aname=" + aname + ", mid=" + mid + ", address=" + address + "]";
+	}
+	
 }

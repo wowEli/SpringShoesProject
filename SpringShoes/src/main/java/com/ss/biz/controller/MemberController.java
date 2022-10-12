@@ -44,16 +44,13 @@ public class MemberController {
 		
 		System.out.println("로그인 로그 mVO ["+mVO+"]");
 		
-		mVO = memberService.selectOneMember(mVO);	
+		mVO = memberService.login(mVO);
 		
 		
 		if(mVO==null) {		// 로그인 실패시
 			return "login.jsp"; // 다시 로그인 화면으로 이동
 		}
 		else { // 로그인 성공시
-			// 장바구니 생성
-			ArrayList<String> bDatas = new ArrayList<String>();
-			session.setAttribute("bDatas", bDatas); 
 			
 			// 세션에 mid만 저장
 			session.setAttribute("mid", mVO.getMid());
