@@ -92,11 +92,12 @@ public class ShoesDAO {
 	final String sql_selectAllShoes = "SELECT SC.COLORPK,SC.COLOR,SC.SHOESIMG,SS.SHOESNAME,SS.PRICE,SS.BRAND "
 			+ "FROM SHOESCOLOR SC "
 			+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
-			+ "WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
+			+ "WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%') LIMIT ?, 9";
+
 	
 	// 신발 전체조회 + 검색로직(신발명이나 브랜드명 검색)
 	public List<ShoesVO> selectAllShoes(ShoesVO vo) {
-		Object[] args = {vo.getSearchContent(), vo.getSearchContent()};
+		Object[] args = {vo.getSearchContent(), vo.getSearchContent(),vo.getPage()};
 		return jdbcTemplate.query(sql_selectAllShoes, args, new ShoesRowMapper());
 	}
 	
@@ -118,6 +119,24 @@ public class ShoesDAO {
 		}
 	}
 	// =========== 신발전체조회 + 일반검색 메서드 종료 ===========
+
+	
+	// =========== 신발 전체조회 COUNT 결과값 메서드 =============
+	final String sql_selectAllShoesCount = "SELECT COUNT(*) AS PAGESIZE "
+			+ "FROM SHOESCOLOR SC "
+			+ "INNER JOIN SHOESSAMPLE SS ON SS.SAMPLEPK = SC.SAMPLEPK "
+			+ "WHERE SHOESNAME LIKE CONCAT ('%',?,'%') OR BRAND LIKE CONCAT ('%',?,'%')";
+	
+
+	// 신발 전체조회 + 검색로직(신발명이나 브랜드명 검색)
+	public int selectAllShoesPageSize(ShoesVO vo) {
+		Object[] args = {vo.getSearchContent(), vo.getSearchContent()};
+		return jdbcTemplate.queryForObject(sql_selectAllShoesCount, args,Integer.class);
+		// integer.class 를 사용하면 count 값을 int로 리턴 받을 수 있음
+		// rowmapper를 사용하지 않아도 됨으로 출력할 데이터개수를 담았던 변수를 하나 줄일 수 있음
+	}
+	// =========== 신발 전체조회 COUNT 결과값 메서드 종료 =============
+	
 	
 	
 	// ========== 장바구니 메서드 시작 =========

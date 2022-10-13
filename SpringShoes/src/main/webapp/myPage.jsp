@@ -53,138 +53,256 @@
     <!--================Blog Area =================-->
     <section class="blog_area single-post-area section_gap">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 posts-list">
-                	<div class="comment-form">
-                        <h2>내 정보</h2>
-                        <form action="updateM.do" method="post" ><!-- 회원 정보 변경 -->
-                        	<p class="textAlignLeft">아이디</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="mid" value="${mData.mid }" readonly>
-                            </div><br>
-                            <p class="textAlignLeft">비밀번호 (변경가능)</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="mpw" value="${mData.mpw }">
-                            </div><br>
-                            <p class="textAlignLeft">이름</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="mname" value="${mData.mname }" readonly>
-                            </div><br>
-                            <p class="textAlignLeft">전화번호</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="mphone" value="${mData.mphone }" readonly>
-                            </div><br>
-                            <p class="textAlignLeft">발 사이즈</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="shoesSize" value="${mData.shoesSize }" readonly>
-                            </div><br>
-                            <p class="textAlignLeft">주소</p><hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="maddress" value="${mData.maddress }" readonly>
-                            </div><br>
-                            
-                            <input type="submit" class="genric-btn primary e-large" value="비밀번호 수정" style="font-size:20px; background:black">
-                        </form>
-                         <br>
-                         <a href="deleteM.do?mid=${mData.mid }" class="genric-btn primary small" style="font-size:15px; background:black">회원탈퇴</a>
-                    </div>
-                    
-                    <div class="comments-area">
-                        <h2 style="text-align:center;">구매 목록</h2>
-                        <br>
-                        <div class="comment-list">
-                        	  <c:forEach var="p" items="${pDatas}">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                
-                                    <div class="thumb">
-                                        <img src="${p.shoesImg}" alt="신발 이미지" style="width:200px">
-                                    </div>
-                                    <div class="desc">
-                                        <h3><a href="selectOneS.do?colorpk=${p.colorpk }">${p.shoesName}</a></h3>
-                                        <p style="font-size:20px">구매일: ${p.payday}<br><br>
-                                        브랜드: ${p.shoesBrand}<br>
-                                        색상: ${p.shoesColor}<br>
-                                        사이즈: ${p.shoesSize}<br>
-                                        배송지: ${p.address }</p>
-                                        
-                                    </div>
-                                
-                               <c:if test="${p.flag == true }">
-                                  <div class="reply-btn">
-                                    <a href="review.do" class="btn-reply text-uppercase">후기작성</a>
-                                  </div>
+                
+                <!-- 개인정보 배너 시작 -->
+                <table class="table">
+                   <thead>
+                      <tr>
+                     	<th scope="col">
+                     		<c:if test="${mData.tier < 200000 }">
+                            <img class="author_img rounded-circle" src="img/3rd.png" alt="" style="width:150px">
+                            </c:if>
+                            <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
+                            <img class="author_img rounded-circle" src="img/2nd.png" alt="" style="width:150px">
+                            </c:if>
+                            <c:if test="${400000 < mData.tier }">
+                            <img class="author_img rounded-circle" src="img/1st.png" alt="" style="width:150px">
+                            </c:if>
+                        </th>
+                         <th scope="col" style="font-size:70px; color:black;">${mData.mname}
+                         <br><br><br><br>
+                         </th>
+                        <th scope="col" style="font-size:50px; color:gray;">$ 전체 구매 금액:
+                        <br><br><br><br>
+                        </th>
+                        
+                        <th scope="col" style="font-size:50px; color:gray;">${mData.tier } 원
+                        <br><br><br><br>
+                        </th>
+                        
+                  	  </tr>
+                  </thead>
+             	</table>
+             	<!-- 개인정보 배너 종료 -->
+             	<br><br><br><br>
+             	
+             	<!-- 개인정보 출력 시작 -->
+             	<table class="table">
+                   <thead>
+                      <tr style="background-color:white;">
+                         <th scope="col" style="font-size:50px; color:black;"><br>회원 정보
+                         <br><br>
+                         </th>
+                  	  </tr>
+                  </thead>
+             	</table>
+             	
+                <table class="table">
+                <tHead>
+                      <tr>
+                     	<th scope="col">
+                     		<p>아이디</p>
+                     		<input type="text" class="form-control" name="mid" value="${mData.mid }" readonly>
+                        </th>
+                     	<th scope="col">
+                     		<p>비밀번호</p>
+                     		<input type="text" class="form-control" name="mpw" value="${mData.mpw }" readonly>
+                        </th>
+                        <th style="width: 20px">
+                     		<input type="button" onclick="getShow()" value="비밀번호 변경" >
+                        </th>
+                     </tr>
+                      <tr>
+                     	<th scope="col">
+                     		<p>전화번호</p>
+                     		<input type="text" class="form-control" name="mphone" value="010${mData.mphone }" readonly>
+                        </th>
+                     	<th scope="col">
+                     		<p>주소</p>
+                     		<input type="text" class="form-control" name="maddress" value="${mData.maddress }" readonly>
+                        </th>
+                        <th style="width: 20px">
+                        	<p>발 사이즈</p>
+                     		<input type="text" class="form-control" name="shoesSize" value="${mData.shoesSize }" readonly>
+                        </th>
+                     </tr>
+                     </tHead>
+             	</table>
+             	<!-- 개인정보 출력 종료 -->
+             	
+             	<!-- 새로운비밀번호 출력 시작 -->
+             	<form action="updateM.do?mid=${mid }">
+             	<table class="table" id="updatePassword">
+             		<tr>
+             			<th scope="col">
+                     		<p>새로운 비밀번호</p>
+                     		<input type="password" class="form-control" name="mpw">
+                        </th>
+             			<th scope="col">
+                     		<p>비밀번호 확인</p>
+                     		<input type="password" class="form-control">
+                        </th>
+                        <th style="width: 20px">
+                     		<input type="submit" value="비밀번호 변경" >
+                        </th>
+                	</tr>
+             	</table>
+             	</form>
+             	<!-- 새로운비밀번호 출력 종료 -->
+             	
+             	<br><br><br><br>
+             	
+             	<!-- 구매목록 출력 시작 -->
+             	<table class="table">
+                   <thead>
+                      <tr style="background-color:white;">
+                         <th scope="col" style="font-size:50px; color:black;"><br>구매 목록
+                         <br><br>
+                         </th>
+                  	  </tr>
+                  </thead>
+             	</table>
+             	
+             	<table class="table">
+                  <thead>
+                     <tr style="background-color:black;">
+                     
+                        <th scope="col" style="width: 204px; color:white;">상품이미지</th>
+                        <th scope="col" style="color:white;">상품명</th>
+                        <th scope="col" style="color:white;">사이즈</th>
+                        <th scope="col" style="color:white;">가격</th>
+                        <th scope="col" style="color:white;">배송지</th>
+                        <th scope="col" style="color:white;">구매 날짜</th>
+                        <th scope="col" style="color:white;">후기 작성</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                        <c:forEach var="p" items="${pDatas}">
+ 						<tr>
+                           <td>
+                                 <img class="img-fluid blog_right_sidebar"
+                                    src="${p.shoesImg}" alt="신발이미지"
+                                    style="background-color: white; padding: 0; width:120px;">
+                           </td>
+
+                           <td>
+                              <p><br><br>${p.shoesName}</p>
+                           </td>
+
+							<td>
+								<p><br><br>${p.shoesSize}</p>
+							</td>
+							
+                           <td>
+                              <p><br><br>${p.shoesPrice}</p>
+                           </td>
+
+						   <td>
+                              <p><br><br>${p.address}</p>
+                           </td>
+
+                           
+                           <td>
+                              <p><br><br>${p.payday}</p>
+                           </td>
+                           <td>
+                            	<c:if test="${p.flag == true }">
+                                    <a href="review.do" class="btn-reply text-uppercase"><br><br>후기작성</a>
                                 </c:if>
                                 
                                 <c:if test="${p.flag == false }">
-                                    <p>후기 작성 완료</p>
+                                    <p><br><br>후기 작성 완료</p>
                                 </c:if>
-                                
-                                </div>
-                            </div>
-                      		 </c:forEach>
-                        </div>
-                    </div>
-                    
-                    <div class="comments-area">
-                        <h2 style="text-align:center;">후기 목록</h2>
-                        <br>
-                        <div class="comment-list">
-                          <c:forEach var="r" items="${rDatas }">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                
-                                    <div class="thumb">
-                                        <img src="${r.reviewImg }" alt="후기 이미지" style="width:200px">
-                                    </div>
-                                    <div class="desc">
-                                        <h3><a href="selectOneS.do?colorpk=${r.colorpk }">${r.shoesName}</a></h3>
-                                        <p>작성일: ${r.writeday}</p>
-                                        <p>
-                                            ${r.content }
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                            <div class="reply-btn">
-                                <a href="review.do?rpk=${r.rpk }" class="btn-reply text-uppercase">후기수정</a>
-                                <a href="deleteR.do?rpk=${r.rpk }" class="btn-reply text-uppercase">후기삭제</a>
-                            </div>
-                        </div>
-                      </c:forEach>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <br>
-                    <br>
-                    <div class="blog_right_sidebar">
-                        <aside class="single_sidebar_widget author_widget">
-                            <c:if test="${mData.tier < 200000 }">
-                            <img class="author_img rounded-circle" src="img/3rd.png" alt="" style="width:200px">
-                            <h3>회원 등급: 브론즈</h3>
-                            </c:if>
-                            <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
-                            <img class="author_img rounded-circle" src="img/2nd.png" alt="" style="width:200px">
-                            <h3>회원 등급: 실버</h3>
-                            </c:if>
-                            <c:if test="${400000 < mData.tier }">
-                            <img class="author_img rounded-circle" src="img/1st.png" alt="" style="width:200px">
-                            <h3>회원 등급: 골드</h3>
-                            </c:if>
-                            <p>[등급 혜택]</p>
-                            <p>골드: 전 상품 20% 할인</p>
-                            <p>브론즈: 전 상품 5% 할인</p>
-                            <p>실버: 전 상품 10% 할인</p>
-                          
-                        </aside>
-                    </div>
-                </div>
+                           </td>
+
+                      </tr>
+                        </c:forEach>
+                  </tbody>
+               </table>
+               <!-- 구매목록 출력 종료 -->
+             	
+             	<br><br><br><br>
+             	
+             	<!-- 후기목록 출력 시작 -->
+             	<table class="table">
+                   <thead>
+                      <tr style="background-color:white;">
+                         <th scope="col" style="font-size:50px; color:black;"><br>후기 목록
+                         <br><br>
+                         </th>
+                  	  </tr>
+                  </thead>
+             	</table>
+             	
+             	<table class="table">
+                  <thead>
+                     <tr style="background-color:black;">
+                     
+                        <th scope="col" style="width: 204px; color:white;">후기이미지</th>
+                        <th scope="col" style="color:white;">상품명</th>
+                        <th scope="col" style="color:white;">내용</th>
+                        <th scope="col" style="color:white;">사이즈</th>
+                        <th scope="col" style="color:white;">작성 날짜</th>
+                        <th scope="col" style="color:white;">수정</th>
+                        <th scope="col" style="color:white;">삭제</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                        <c:forEach var="r" items="${rDatas}">
+ 						<tr>
+                           <td>
+                                 <a href="selectOneS.do?colorpk=${r.colorpk }"><img class="img-fluid blog_right_sidebar"
+                                    src="${r.reviewImg}" alt="신발이미지"
+                                    style="background-color: white; padding: 0; width:120px;"></a>
+                           </td>
+
+                           <td>
+                              <p><br><br><a href="selectOneS.do?colorpk=${r.colorpk }">${r.shoesName}</a></p>
+                           </td>
+
+							<td>
+								<p><br><br>${r.size}</p>
+							</td>
+							
+                           <td>
+                              <p><br><br>${r.content}</p>
+                           </td>
+                           
+                           <td>
+                              <p><br><br>${r.writeday}</p>
+                           </td>
+
+                           <td>
+                              <a href="updateR.do?sizepk=${r.sizepk }" class="btn-reply text-uppercase"><br><br>후기 수정</a>
+                           </td>
+                           <td>
+                              <a href="deleteR.do?rpk=${r.rpk }" class="btn-reply text-uppercase"><br><br>후기 삭제</a>
+                           </td>
+
+                      </tr>
+                        </c:forEach>
+                  </tbody>
+               </table>
+               <!-- 후기목록 출력 종료 -->
+             	
             </div>
-        </div>
     </section>
 
     <t:footer/>
+
+	<script type="text/javascript">
+
+   
+   document.getElementById("updatePassword").style.display = "none";
+  
+   function getShow(){
+		document.getElementById("updatePassword").style.display = "";
+		
+	}
+   
+   </script>
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
@@ -200,6 +318,8 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
+	
+	
 </body>
 
 </html>

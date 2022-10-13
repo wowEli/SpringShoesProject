@@ -1,9 +1,7 @@
 ﻿package com.ss.biz.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +44,13 @@ public class MemberController {
 		
 		System.out.println("로그인 로그 mVO ["+mVO+"]");
 		
-		mVO = memberService.selectOneMember(mVO);	
+		mVO = memberService.login(mVO);
 		
 		
 		if(mVO==null) {		// 로그인 실패시
 			return "login.jsp"; // 다시 로그인 화면으로 이동
 		}
 		else { // 로그인 성공시
-			// 장바구니 생성
-			ArrayList<String> bDatas = new ArrayList<String>();
-			session.setAttribute("bDatas", bDatas); 
 			
 			// 세션에 mid만 저장
 			session.setAttribute("mid", mVO.getMid());
@@ -133,8 +128,9 @@ public class MemberController {
 		return "myPage.jsp"; // 메인페이지 > 마이페이지 이동이므로 redirect
 	}
 	
-	@RequestMapping("/idCheck.do")
+
 	@ResponseBody
+	@RequestMapping("/idCheck.do")
 	public String idCheck(MemberVO mVO, @RequestParam(value="check")String mid) {
 		System.out.println("ajax 컨트롤러 들오옴");
 		mVO.setMid(mid);

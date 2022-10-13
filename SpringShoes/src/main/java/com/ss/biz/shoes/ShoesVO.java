@@ -22,7 +22,30 @@ public class ShoesVO {
 	private int filterHighPrice; // 필터 검색 높은 가격 순
 	private int[] filterSize; // 필터 검색 사이즈 여러개 값 가져오기
 	
+	// 페이징처리 변수
+	private int page; // 페이지관련 사용변수
+	private int pageButton; // 왼쪽 오른쪽 버튼을 이용할 변수
+	private String pageCondition; // 현재 필터상태인지 일반검색상태인지
 	
+	
+	public String getPageCondition() {
+		return pageCondition;
+	}
+	public void setPageCondition(String pageCondition) {
+		this.pageCondition = pageCondition;
+	}
+	public int getPageButton() {
+		return pageButton;
+	}
+	public void setPageButton(int pageButton) {
+		this.pageButton = pageButton;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public int getSizepk() {
 		return sizepk;
 	}
@@ -119,6 +142,9 @@ public class ShoesVO {
 				+ shoesColor + ", shoesImg=" + shoesImg + ", colorpk=" + colorpk + ", sizepk=" + sizepk + ", shoesSize="
 				+ shoesSize + ", shoesCnt=" + shoesCnt + ", searchContent=" + searchContent + ", filterColor="
 				+ filterColor + ", filterBrand=" + filterBrand + ", filterLowPrice=" + filterLowPrice
-				+ ", filterHighPrice=" + filterHighPrice + ", filterSize=" + Arrays.toString(filterSize) + "]";
+				+ ", filterHighPrice=" + filterHighPrice + ", filterSize=" + Arrays.toString(filterSize) + ", page="
+				+ page + ", pageButton=" + pageButton + ", pageCondition=" + pageCondition + "]";
 	}
+	
 }
+	

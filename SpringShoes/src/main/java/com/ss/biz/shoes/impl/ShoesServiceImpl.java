@@ -52,6 +52,14 @@ public class ShoesServiceImpl implements ShoesService{
 		return shoesDAO.selectOneShoesBucket(vo);
 	}
 
+	@Override
+	public int selectAllShoesPageSize(ShoesVO vo) {
+		// TODO Auto-generated method stub
+		return shoesDAO.selectAllShoesPageSize(vo);
+	}
+	
+	
+
 	
 	
 

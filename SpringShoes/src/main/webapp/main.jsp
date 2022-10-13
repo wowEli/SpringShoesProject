@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
-
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -39,12 +39,40 @@
 	.pixel-radio:checked::after{
 	background: black;
 	}
+	.price-range-area .noUi-horizontal .noUi-handle:hover{
+	border: 3px solid black;
+	}
 	.price-range-area .noUi-horizontal .noUi-handle{
 	background: black;
 	}
 	.organic-breadcrumb{
 	background: linear-gradient(90deg, #black 0%, #white 100%);
 	}
+	.head.p{
+	text-align:center;
+	background-color: white;
+	}
+	.page:hover{
+	background-color: black;
+	}
+	.page{
+	border:2px solid black;
+	padding:8px;
+	color: black;
+	}
+	.pagebutton{
+	font-size:25px;
+	}
+	.pagebutton:hover{
+	color: red;
+	}
+	
+	.page.active{
+	padding:8px;
+	color: white;
+	background-color: black;
+	}
+	
 	</style>
 </head>
 
@@ -63,6 +91,7 @@
 					<div class="common-filter">
 						<div class="head" style="position: relative;">
 							<form action="selectAllS.do">
+							<input type="hidden" name="pageCondition" value="nomal">
 							검색하기 <span class="lnr lnr-magnifier" id="search"></span>
 							<input type="text" class="form-control" name="searchContent">
 							<input type="submit" style="display:none;">
@@ -72,11 +101,12 @@
 					<div>
 					<form action="filterSearch.do" method="post" id="filter">
 					<div class="common-filter">
+					<input type="hidden" name="pageCondition" value="filter">
 					<input type="hidden" id="filterHighPrice" name="filterHighPrice">
 					<input type="hidden" id="filterLowPrice" name="filterLowPrice">
 						<div class="head">Brands</div>
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" value="nike" type="radio" name="filterBrand" id="brandBax1" checked="checked">
+								<li class="filter-list"><input class="pixel-radio" value="nike" type="radio" name="filterBrand" id="brandBax1">
 									<label for="brandBax1">나이키</label>
 								</li>
 								<li class="filter-list"><input class="pixel-radio" value="adidas"type="radio" name="filterBrand" id="brandBax2">
@@ -93,7 +123,7 @@
 					<div class="common-filter">
 						<div class="head">Color</div>
 							<ul>
-								<li class="filter-list"><input class="pixel-radio" id="" value="grey" type="radio" name="filterColor" id="colorBax1" checked="checked">
+								<li class="filter-list"><input class="pixel-radio" id="" value="grey" type="radio" name="filterColor" id="colorBax1">
 									<label for="colorBax1">GREY</label>
 								</li>
 								<li class="filter-list"><input class="pixel-radio" value="black" type="radio" name="filterColor" id="colorBax2">
@@ -202,11 +232,95 @@
 						</div>
 						</c:forEach>
 					</div>
+					<div class="sidebar-categories">
+						
+						<div class="head p">
+						<c:if test="${pageButton - 1 != 0 }">
+						<button class ="pagebutton" onclick="pageButtonDown()">◀</button>
+						</c:if>
+						
+						<c:forEach var="n" items="${pageNum}"><!-- 사용자가 누른 page번호에 active css 넣기위한 로직 -->
+							<c:if test="${pageNow == n}">
+								<a class ="page active">${n}</a>
+							</c:if>
+							<c:if test="${pageNow != n}">
+								<a class ="page" onclick="page(this)" >${n}</a>
+							</c:if>
+						</c:forEach>
+						
+						<c:if test="${fn:length(pageNum) == 5 }"> <!-- length는 el식으로만 하면 오류가 나옴 -->
+						<button class ="pagebutton" onclick="pageButtonUp()">▶</button>	
+						</c:if>
+						
+						</div>
+						<form id="pageForm">
+							<input id="pageCondition" type="hidden" name="pageCondition" value="${pageCondition }">
+							<input type='hidden' name='searchContent' value='${searchContent }'>
+							<input id="pageButton" type="hidden" name="pageButton" value="${pageButton }">
+						</form>
+					</div>
 				</section>
 			</div>
 		</div>
 	</div>
 	<br><br>
+	
+	<script type="text/javascript">
+	function pageButtonUp(){
+		console.log("페이지 눌렀어");
+		
+		if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
+			console.log("일반검색페이지");
+			
+			$('#pageButton').val('${pageButton +1}');
+			console.log("pageButton값:"+$('#pageButton').val());
+            
+            $("#pageForm").attr("action", "selectAllS.do");
+            $('#pageForm').submit();
+		}
+		else{
+			console.log("필터검색페이지");
+		}
+	}
+	function pageButtonDown(){
+		console.log("페이지 눌렀어");
+		
+		if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
+			console.log("일반검색페이지");
+            
+			$('#pageButton').val('${pageButton -1}');
+			console.log("pageButton값:"+$('#pageButton').val());
+			
+            $("#pageForm").attr("action", "selectAllS.do");
+            $('#pageForm').submit();
+		}
+		else{
+			console.log("필터검색페이지");
+		}
+	}
+	
+	function page(e){
+		console.log("페이지 눌렀어");
+		console.log($(e).html());
+		
+		if($("#pageCondition").val() == "nomal"){
+			console.log("일반검색페이지");
+			
+			
+            var $input = $("<input type='hidden' name='page' value='"+$(e).html()+"'>");
+            
+            $('#pageForm').append($input);
+			
+            $("#pageForm").attr("action", "selectAllS.do");
+            $('#pageForm').submit();
+		}
+		else{
+			console.log("필터검색페이지");
+		}
+		
+	}
+	</script>
+	
 
 	<t:footer/>
 
