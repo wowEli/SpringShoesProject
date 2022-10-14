@@ -63,8 +63,9 @@
     <t:banner/>
 
     <!--================Checkout Area =================-->   
+    
     <section class="checkout_area section_gap">
-    	
+    	<form class="row contact_form" action="insertM.do" id="signup" method="post">
     	<div class="container">
     		<div class="billing_details">
     			 <div class="row">
@@ -78,26 +79,28 @@
   									<span>모두 동의합니다</span>
 							</label>
 							<label for="agree">
- 								 <input type="checkbox" name="agree" value="1">
+ 								 <input type="checkbox" name="agree" id="newCheck1" " >
  									 <span>이용약관 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
-  								<input type="checkbox" name="agree" value="2">
+  								<input type="checkbox" name="agree" id="newCheck2" " >
   									<span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
-  								<input type="checkbox" name="agree" value="3">
+  								<input type="checkbox" name="agree" id="newCheck3" ">
   									<span>개인정보 이용 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
  								<input type="checkbox" name="agree" value="4">
   									<span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
 							</label>	
+							
     				</div>
     			</div>
     		</div>
     	</div>
     	
+    	<br>
     	<br>
     	<br>
     	<br>
@@ -109,7 +112,7 @@
                     	<div class="sidebar-categories">
                     	<div class="head" style="background-color:black;">계정정보 입력</div>
                     	</div>
-                        <form class="row contact_form" action="insertM.do" id="signup" method="post">
+                        
                             <div class="col-md-7 form-group p_star">
 							<br><br>
                             	<span>아이디</span>
@@ -124,8 +127,8 @@
                             <div class="col-md-7 form-group p_star">
                             	<br>
                             	<span>비밀번호 재입력</span>
-                                <input type="password" class="form-control" id="mpw2" placeholder="비밀번호를 재 입력해 주세요">
-                                <p id="warn" style="color:red">입력하신 비밀번호와 일치하지 않습니다. 확인 후 다시 입력해주세요</p>
+                                <input type="password" class="form-control" id="mpw2" onchange="pwCheck()" placeholder="비밀번호를 재 입력해 주세요">
+                               <div id="result2"></div>
                          	<br><br>
                             </div>
                             <div class="col-lg-12">
@@ -181,11 +184,12 @@
                             <br>
                             	<input type="submit" class="genric-btn primary-border e-large ss" value="회원가입">
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </section>
     
     <!-- 주소찾기 레이어 -->
@@ -224,16 +228,18 @@
 //이용 약관
 const agreeChkAll = document.querySelector('input[name=agree_all]');
 agreeChkAll.addEventListener('change', (event) => { let agreeChk = document.querySelectorAll('input[name=agree]');
-//모두동의 체크박스(agree_all)를 체크하면 change 이벤트가 발생 -> name값이 agree인 모든 데이터를 찾아 속성값을 전체 선택된 true값으로 변경
+//모두동의 체크박스(agree_all)를 체크하면 change 이벤트가 발생 => name값이 agree인 모든 데이터를 찾아 속성값을 전체 선택된 true값으로 변경
 for(let i = 0; i < agreeChk.length; i++){
-  agreeChk[i].checked = event.target.checked;
-}
+  agreeChk[i].checked = event.target.checked; 
+	}
 });
+
+
 
 //아이디 중복검사
 function idCheck(){
 	var check = $("#mid").val();
-	console.log("ajax들어옴" +mid)
+	console.log("ajax들어옴" +check);
 	$.ajax({
 		type: 'POST',
 		url: '${pageContext.request.contextPath}/idCheck.do',
@@ -256,14 +262,52 @@ function idCheck(){
 			console.log("message: "+request.responseText);
 			console.log("error: "+error);
 		}
-		
 	});
+}
+</script>
+
+<script type="text/javascript">
+function is_checked() {
+	  
 	
 
-}
+	}
+</script>
 
-const tmp1 = document.getElementById("warn");
-tmp1.style.visibility = 'hidden';
+
+<script type="text/javascript">
+//비밀번호, 비밀번호 확인 검사
+function pwCheck(){
+	var check1 = $("#mpw").val();
+	var check2 = $("#mpw2").val();
+	console.log("ajax들어옴" +check1+","+check2);
+	$.ajax({
+		type: 'POST',
+		url: '${pageContext.request.contextPath}/pwCheck.do',
+		data:{check1:check1,check2:check2},
+		success: function(result2){
+			console.log("로그: ["+result2+"]")
+			if(result2 == 1){
+				$("#result2").text("비밀번호 일치!");
+				$("#result2").css("color","blue");						
+			}
+			else{
+				$("#result2").text("입력하신 비밀번호와 일치하지 않습니다. 확인 후 다시 입력해주세요");
+				$("#result2").css("color","red");
+			}
+			
+		},
+		
+		error: function(request, status, error){
+			console.log("code: "+request.status);
+			console.log("message: "+request.responseText);
+			console.log("error: "+error);
+		}
+	});
+}
+</script>
+
+<script type="text/javascript">
 
 var form=document.forms['signup'];
 
@@ -271,11 +315,21 @@ form.onsubmit=function(){
 	
 	var pwd = document.getElementById("mpw");
 	var check = document.getElementById("mpw2");
+	const is_newCheck1 = document.getElementById("newCheck1").checked;
+	const is_newCheck2 = document.getElementById("newCheck2").checked;
+	const is_newCheck3 = document.getElementById("newCheck3").checked;
+
+	
+	if(is_newCheck1==false||is_newCheck2==false||is_newCheck3==false){
+		alert("이용약관(필수)에 모두 동의해주세요")
+		return false;
+	}
 	
 	if (document.getElementById("mid").value == "") {
 		alert("아이디를 입력하세요.");
 		return false;
 	}
+	
 	if (pwd.value== "" ) {
 		alert("비밀번호를 입력하세요.");
 		return false;
@@ -287,7 +341,6 @@ form.onsubmit=function(){
 	
 	if (pwd.value != check.value) {
 		alert("비밀번호 불일치");
-		tmp1.style.visibility = 'visible';
 		return false;
 	}
 	if (document.getElementById("mname").value == "") {
@@ -303,8 +356,9 @@ form.onsubmit=function(){
 		return false;
 	}
 
-	if(pwd.value == check.value){
-		tmp1.style.visibility = 'hidden';
+	if(pwd.value != check.value){
+		alert("비밀번호와 재입력이 다릅니다")
+		return false;
 	}
 }
 

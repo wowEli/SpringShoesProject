@@ -142,6 +142,17 @@ public class MemberController {
 		}		
 		return result;		
 	}
+	
+	@RequestMapping("/pwCheck.do")
+	@ResponseBody
+	public String pwCheck(@RequestParam(value="check1")String check1, @RequestParam(value="check2")String check2) {
+		System.out.println("ajax 컨트롤러 들오옴2");
+		String result="0";
+		if(check1.equals(check2)) {
+			result ="1";
+		}
+		return result;
 		
+	}	
 	
 }
