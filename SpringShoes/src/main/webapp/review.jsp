@@ -31,6 +31,12 @@
     <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
+    
+    <style type="text/css">
+    .fontBlack{
+    	color:black;
+    }
+    </style>
 </head>
 
 <body>
@@ -109,9 +115,9 @@
         <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                 <div class="col-first">
-                    <h1>Review</h1>
+                    <h1 style="color:black;font-size:60px;">Spring Shoes</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="selectAllS.do">Home<span class="lnr lnr-arrow-right"></span></a>
                         <a href="category.html">Review</a>
                     </nav>
                 </div>

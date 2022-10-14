@@ -19,7 +19,7 @@
 <!-- meta character set -->
 <meta charset="UTF-8">
 <!-- Site Title -->
-<title>Karma Shop</title>
+<title>Spring Shoes</title>
 <!--
          CSS
          ============================================= -->
@@ -67,24 +67,24 @@ h6 {
 .close1:after {content: "\00d7"; font-size:15pt;}
 }
 
-	.billing_details .contact_form .form-group a{
-    	border-radius: 8px;
-    	color: black;
+   .billing_details .contact_form .form-group a{
+       border-radius: 8px;
+       color: black;
     }
     .billing_details .contact_form .form-group a.ss:hover{
-    	color:white;
+       color:white;
     }
     .genric-btn.primary-border{
-    	border:1px solid black;
-    	font-size:20px;
+       border:1px solid black;
+       font-size:20px;
     }
     .genric-btn.primary-border:hover{
-    	background: black;
-    	color: white;
+       background: black;
+       color: white;
     }
     span{
-    	color: black;
-    	font-size: 15px;
+       color: black;
+       font-size: 15px;
     }
 </style>
 </head>
@@ -220,6 +220,10 @@ h6 {
    <script type="text/javascript">
       function payform() {
          
+        if($(".slist").html() == ""){
+           alert("사이즈를 선택해주세요");
+           return;
+        }
          //값들의 갯수 -> 배열 길이를 지정
          var size = $("input[name=sizepk]").length;
          console.log(size);
@@ -262,6 +266,10 @@ h6 {
    <script type="text/javascript">
       function result() {
          
+        if($(".slist").html() == ""){
+            alert("사이즈를 선택해주세요");
+            return;
+         }
          //값들의 갯수 -> 배열 길이를 지정
          var size = $("input[name=sizepk]").length;
          console.log(size);
@@ -282,6 +290,7 @@ h6 {
             console.log("로그: ["+result+"]");
             if(result == 1){
                console.log("로그: 성공");
+               alert("장바구니에 저장되었습니다");
             }
             else{
                console.log("로그: 실패");

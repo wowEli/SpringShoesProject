@@ -42,7 +42,21 @@
     text-align:left;
     font-size:20px;
     }
-    
+    .black{
+    color:black;
+    }
+	.shopping:hover{
+	color:red;
+	}
+	.genric-btn.primary-border{
+	   color:black;
+       border:1px solid black;
+       font-size:20px;
+    }
+    .genric-btn.primary-border:hover{
+       background: black;
+       color: white;
+    }
     </style>
 </head>
 
@@ -109,7 +123,7 @@
                      		<input type="text" class="form-control" name="mpw" value="${mData.mpw }" readonly>
                         </th>
                         <th style="width: 20px">
-                     		<input type="button" onclick="getShow()" value="비밀번호 변경" >
+                     		<input type="button" class="genric-btn primary-border e-large ss" onclick="getShow()" value="비밀번호 변경" >
                         </th>
                      </tr>
                       <tr>
@@ -143,7 +157,8 @@
                      		<input type="password" class="form-control">
                         </th>
                         <th style="width: 20px">
-                     		<input type="submit" value="비밀번호 변경" >
+                        	<p>&nbsp;</p>
+                     		<input class="genric-btn primary-border e-large ss" type="submit" value="비밀번호 변경" >
                         </th>
                 	</tr>
              	</table>
@@ -220,6 +235,12 @@
                         </c:forEach>
                   </tbody>
                </table>
+              			<c:if test="${pDatas.size() == 0 }">
+                  		<div class="head black" style="text-align:center; width:100%; height:250px;">
+                  		<br>
+                     		<span style="font-size:30px;">구매하신 상품이 없습니다. <a class="genric-btn primary-border e-large ss" href="selectAllS.do">쇼핑하러가기</a></span>
+                   		</div>
+                  		</c:if>
                <!-- 구매목록 출력 종료 -->
              	
              	<br><br><br><br>
@@ -285,6 +306,12 @@
                         </c:forEach>
                   </tbody>
                </table>
+                  		<c:if test="${rDatas.size() == 0 }">
+                  		<div class="head black" style="text-align:center; width:100%; height:250px;">
+                  		<br>
+                     		<span style="font-size:30px;">작성하신 후기가 없습니다. <a class="genric-btn primary-border e-large ss" href="selectAllS.do">쇼핑하러가기</a></span>
+                   		</div>
+                  		</c:if>
                <!-- 후기목록 출력 종료 -->
              	
             </div>

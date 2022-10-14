@@ -57,6 +57,12 @@ public class ShoesServiceImpl implements ShoesService{
 		// TODO Auto-generated method stub
 		return shoesDAO.selectAllShoesPageSize(vo);
 	}
+	@Override
+	public int filterSearchPageSize(ShoesVO vo) {
+		// TODO Auto-generated method stub
+		return shoesDAO.filterSearchPageSize(vo);
+	}
+	
 	
 	
 

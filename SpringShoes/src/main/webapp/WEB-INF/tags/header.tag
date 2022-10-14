@@ -37,7 +37,7 @@
 						
 							<c:if test="${mid == null }">
 							<li class="nav-item submenu dropdown">
-								<a href="login.jsp" class="nav-link dropdown-toggle sizeUp"  >로그인</a>
+								<a href="login.do" class="nav-link dropdown-toggle sizeUp"  >로그인</a>
 							</li>
 							
 							<li class="nav-item submenu dropdown">
@@ -56,7 +56,7 @@
 							</c:if>
 							
 							<li class="nav-item submenu dropdown">
-								<a href="cart.jsp" class="nav-link dropdown-toggle sizeUp">장바구니</a>
+								<a href="bucket.do?mid=${mid}" class="nav-link dropdown-toggle sizeUp">장바구니</a>
 							</li>
 						
 						</ul>

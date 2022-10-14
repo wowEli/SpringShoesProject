@@ -44,7 +44,7 @@ color:white;
                         <a href="selectOneM.do" class="fontWhite sizeUp">마이페이지</a><br>
                         </c:if>
                         
-                        <a href="cart.do" class="fontWhite sizeUp">장바구니</a><br>
+                        <a href="bucket.do?mid=${mid}" class="fontWhite sizeUp">장바구니</a><br>
                         
                     </div>
                 </div>

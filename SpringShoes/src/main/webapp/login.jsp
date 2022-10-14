@@ -72,13 +72,12 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3>로그인</h3>
 						<form class="row login_form" action="login.do" method="post">
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="mid" name="mid" placeholder="아이디를 입력하세요">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="mpw" name="mpw" placeholder="비밀번호를 입력하세요">
+								<input type="password" class="form-control" id="mpw" name="mpw" placeholder="비밀번호를 입력하세요">
 							</div>
 								<div class="col-md-12 form-group">
 							</div>

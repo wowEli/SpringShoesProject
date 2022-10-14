@@ -11,4 +11,5 @@ public interface ShoesService {
 	public List<ShoesVO> filterSearch(ShoesVO vo);
 	public ShoesVO selectOneShoesBucket(ShoesSizeVO vo);
 	public int selectAllShoesPageSize (ShoesVO vo);
+	public int filterSearchPageSize(ShoesVO vo);
 }

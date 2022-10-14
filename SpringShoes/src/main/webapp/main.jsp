@@ -48,7 +48,7 @@
 	.organic-breadcrumb{
 	background: linear-gradient(90deg, #black 0%, #white 100%);
 	}
-	.head.p{
+.head.p{
 	text-align:center;
 	background-color: white;
 	}
@@ -57,8 +57,8 @@
 	}
 	.page{
 	border:2px solid black;
-	padding:8px;
-	color: black;
+	padding:8px;	
+	color: black;	
 	}
 	.pagebutton{
 	font-size:25px;
@@ -202,7 +202,12 @@
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						<!-- single product -->
+						<c:if test="${sDatas.size() == 0}">
+                 			<div class="head" style="text-align:center; width:100%; height:250px;">
+                  			<br><br><br><br><br><br>
+                     			<span style="font-size:30px;">검색하신 상품이 존재하지 않습니다...</span>
+                   			</div>
+                  		</c:if>
 						<c:forEach var="s" items="${sDatas}">
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product blog_right_sidebar">
@@ -236,7 +241,7 @@
 						
 						<div class="head p">
 						<c:if test="${pageButton - 1 != 0 }">
-						<button class ="pagebutton" onclick="pageButtonDown()">◀</button>
+						<a class ="pagebutton" onclick="page(this)" href="javascript:void(0);">◀</a>
 						</c:if>
 						
 						<c:forEach var="n" items="${pageNum}"><!-- 사용자가 누른 page번호에 active css 넣기위한 로직 -->
@@ -244,20 +249,22 @@
 								<a class ="page active">${n}</a>
 							</c:if>
 							<c:if test="${pageNow != n}">
-								<a class ="page" onclick="page(this)" >${n}</a>
+								<a class ="page" onclick="page(this)" href="javascript:void(0);" >${n}</a>
 							</c:if>
 						</c:forEach>
 						
-						<c:if test="${fn:length(pageNum) == 5 }"> <!-- length는 el식으로만 하면 오류가 나옴 -->
-						<button class ="pagebutton" onclick="pageButtonUp()">▶</button>	
+						<c:if test="${pageNum[fn:length(pageNum)-1] < endPageNum }"> <!-- length는 el식으로만 하면 오류가 나옴 -->
+						<a class ="pagebutton" onclick="page(this)" href="javascript:void(0);">▶</a>	
 						</c:if>
 						
 						</div>
-						<form id="pageForm">
+						
+						<form id="pageForm"><!-- 검색조건을 유지하면서 페이지 이동을 위해 사용되는 form -->
 							<input id="pageCondition" type="hidden" name="pageCondition" value="${pageCondition }">
 							<input type='hidden' name='searchContent' value='${searchContent }'>
 							<input id="pageButton" type="hidden" name="pageButton" value="${pageButton }">
 						</form>
+						
 					</div>
 				</section>
 			</div>
@@ -265,61 +272,51 @@
 	</div>
 	<br><br>
 	
-	<script type="text/javascript">
-	function pageButtonUp(){
-		console.log("페이지 눌렀어");
-		
-		if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
-			console.log("일반검색페이지");
-			
-			$('#pageButton').val('${pageButton +1}');
-			console.log("pageButton값:"+$('#pageButton').val());
-            
+	   <script type="text/javascript">
+   
+   function page(e){
+      if($(e).attr('class') == "pagebutton"){
+         //console.log("Up Down 버튼 이용중");
+         if($(e).html() == "◀"){
+         //console.log("Down 버튼 이용");
+         $('#pageButton').val('${pageButton -1}');            
+         }
+         else if($(e).html() == "▶"){
+         //console.log("UP 버튼 이용");
+         $('#pageButton').val('${pageButton +1}');            
+         }
+      }
+      else if($(e).attr('class') == "page"){
+          //console.log("페이지 버튼을 이용하여 들어옴")
+          $('#pageForm').append("<input type='hidden' name='page' value='"+$(e).html()+"'>");
+      }
+         
+      //console.log("pageButton값: "+$('#pageButton').val());
+         
+      if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
+         //console.log("일반검색페이지");
+         
             $("#pageForm").attr("action", "selectAllS.do");
             $('#pageForm').submit();
-		}
-		else{
-			console.log("필터검색페이지");
-		}
-	}
-	function pageButtonDown(){
-		console.log("페이지 눌렀어");
-		
-		if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
-			console.log("일반검색페이지");
+      }
+      else{
+         //console.log("필터검색페이지");
             
-			$('#pageButton').val('${pageButton -1}');
-			console.log("pageButton값:"+$('#pageButton').val());
-			
-            $("#pageForm").attr("action", "selectAllS.do");
-            $('#pageForm').submit();
-		}
-		else{
-			console.log("필터검색페이지");
-		}
-	}
-	
-	function page(e){
-		console.log("페이지 눌렀어");
-		console.log($(e).html());
-		
-		if($("#pageCondition").val() == "nomal"){
-			console.log("일반검색페이지");
-			
-			
-            var $input = $("<input type='hidden' name='page' value='"+$(e).html()+"'>");
+         $('#pageForm').append("<input type='hidden' name='filterBrand' value='${filterBrand}'>");
+            $('#pageForm').append("<input type='hidden' name='filterColor' value='${filterColor}'>");
+            $('#pageForm').append("<input type='hidden' name='filterLowPrice' value='${filterLowPrice}'>");
+            $('#pageForm').append("<input type='hidden' name='filterHighPrice' value='${filterHighPrice}'>");
             
-            $('#pageForm').append($input);
-			
-            $("#pageForm").attr("action", "selectAllS.do");
+            <c:forEach items="${filterSize}" var="s">
+                 $('#pageForm').append("<input type='hidden' name='filterSize' value='${s}'>");
+            </c:forEach>
+            
+            $("#pageForm").attr("action", "filterSearch.do");
             $('#pageForm').submit();
-		}
-		else{
-			console.log("필터검색페이지");
-		}
-		
-	}
-	</script>
+      }
+   }
+   
+   </script>
 	
 
 	<t:footer/>
