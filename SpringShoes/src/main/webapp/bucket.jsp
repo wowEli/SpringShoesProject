@@ -73,19 +73,29 @@ li {
    <t:header/>
    <t:banner/>
 
-   
-
    <!--================Cart Area =================-->
    <section class="cart_area">
       <div class="container">
          <div class="cart_inner">
             <div class="table-responsive">
-            
-            
+            	
+            	<!-- 장바구니 목록이 없을 경우 -->
+            	<c:if test="${sDatas.size() == 0 }">
+            		 <table class="table">
+            			 <tr class="out_button_area">
+            		 		<th style="text-align:center;"><h1>장바구니에 상품이 없습니다.</h1></th>
+            		 	</tr>
+            		 </table>
+            		   <center>	<a class="genric-btn primary-border login" href="selectAllS.do">쇼핑하러 가기</a>	</center>
+            	</c:if>
+            	<!-- ===================== -->
+            	
+            	<!-- 장바구니 목록 출력 시작 -->
+            	<c:if test="${sDatas.size() != 0 }">
                <form action="deleteB.do?mid=${mid }">
                <table class="table">
                   <thead>
-                  <label><input type='checkbox' name='selectall' value='selectall' onclick="selectAll(this); checkSelectAll();"/>Select All</label>
+                  <label class="genric-btn primary-border login"><input type='checkbox' name='selectall' value='selectall' onclick="selectAll(this); checkSelectAll();"/>전체 선택</label>
                      <tr>
                         <th scope="col" style="width: 194px;">체크박스</th>
                         <th scope="col" style="width: 204px;">상품이미지</th>
@@ -99,7 +109,7 @@ li {
                         
                   <c:forEach var="s" items="${sDatas}">
                      <tr>
-                           <td><input type="checkbox" name="sizepk" id="my_checkbox" onclick="is_checked(event); checkSelectAll();"
+                           <td><input type="checkbox" name="sizepk" id="my_checkbox" onclick="selectAll(this); checkSelectAll();"
                               value="${s.sizepk}"></td>
 
                            <td style="padding-top: 15px; padding-bottom: 15px;">
@@ -130,13 +140,21 @@ li {
                      </tr>
                   </c:forEach>
                   
-                  <c:if test="${mData !=null}">
+                  
+                  </table>
+                  <!-- 장바구니 목록 출력 종료 -->
+                  
+                  
+                  <!-- 결제 정보 출력 시작 -->
+                  <table class="table">
                   
                   <tr class="out_button_area">
                         <td>
                            <h5>내 등급</h5>
                         </td>
-                        
+                        <td style="width:170px">
+                        <h5>&nbsp;</h5>
+                        </td>
                         <td>
                           <h5>총 금액</h5>
                         </td>
@@ -152,7 +170,10 @@ li {
                         <td></td>
                         <td></td>
                   </tr>
+                  </table>
+                  <table class="table">
                 		
+                  <c:if test="${mData !=null}">
                          <tr class="out_button_area">
                          
                         <td>
@@ -168,6 +189,7 @@ li {
                         </td>
                         <td>
                           <h1 id="resultPrice">0</h1>
+                          <input type="hidden" name="resultPrice" value="">
                         </td>
                         <td>
                        		<c:if test="${mData.tier < 200000 }">
@@ -186,39 +208,44 @@ li {
                             </c:if>
                         </td>
                         <td>
-                        	<h1 id="finalPrice">0</h1>
+                        	<h1 id="finalPrice" >0</h1>
+                        	<input type="hidden" name="finalPrice" value="">
                         </td>
                         <td></td>
                         <td></td>
                   </tr>
                   </c:if>
+                  </table>
+                  <!-- 결제 정보 출력 종료 -->
                   
+                  <!-- 결제 버튼 출력 시작 -->
+                  <table class="table">
                   <tr class="out_button_area">
                         <td>
-                           
-                           		<c:if test="${mData !=null }">
-                           			<input type="submit"  class="genric-btn primary-border login" value="선택 삭제 ">
-                           		</c:if>
-                           		<c:if test="${mData ==null }">
-                           			<a class="genric-btn primary-border login" href="login.do">로그인 후 구매하기</a>
-                           		</c:if>
-                           
-                          
+                        </td>
+                        <td>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        	<input type="submit"  class="genric-btn primary-border login" value="선택 삭제 ">
                         </td>
                         <td>
                         	<c:if test="${mData !=null }">
                           	 	<input type="button" class="genric-btn primary-border login"  value="구매하기" onclick="return payLocation(this.form)">
                        		</c:if>
+                       		<c:if test="${mData ==null }">
+                           			<a class="genric-btn primary-border login" href="login.do">로그인 후 구매하기</a>
+                           		</c:if>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                   </tr>
                      
                   </tbody>
                </table>
+               <!-- 결제 버튼 출력 종료 -->
+               
             </form>
+            </c:if>
             </div>
          </div>
       </div>
@@ -228,143 +255,111 @@ li {
    <script type="text/javascript">
          var sum =0;
          var discount=0;
-         function payLocation(frm){
-            frm.action="pay.do";
-            frm.submit();
-            return true;
-            
-         }
-         function checkSelectAll()  {
-              // 전체 체크박스
-              const checkboxes = document.querySelectorAll('input[name="sizepk"]');
-              // 선택된 체크박스
-              const checked  = document.querySelectorAll('input[name="sizepk"]:checked');
-              // select all 체크박스
-              const selectAll  = document.querySelector('input[name="selectall"]');
-              
-              if(checkboxes.length == checked.length)  {
-                selectAll.checked = true;
-              }else {
-                selectAll.checked = false;
-              }
 
-            }
-
-           function selectAll(selectAll)  {
+           // 체크를 클릭했을 경우 실행
+           function selectAll(tag)  {
+        	   
+        	   // 상품을 하나 체크를 하나 했을 경우
+        	   if($(tag).attr('name') == "sizepk"){
+        		// 가격 태그를 찾는 과정
+                   var pt=tag.parentNode.parentNode.childNodes[11].childNodes[1];
+                   // 이벤트가 발생한 태그에 부모태그의 부모태그의 자식태드글중 11번째의 자식태그들중 1번째
+                   console.log(pt);
+                      
+                   // console.log(pt.innerText);
+                   // console.log(parseInt(pt.innerText));
+                      
+                   if(tag.checked==true){ // 이벤트가 발생된 태그가 체크가 된 상태라면
+                   	
+                      // sum에 금액을 저장
+                      sum+=parseInt(pt.innerText); // 인트형으로 형변환 하면 "원"은 제외 되고 금액값만 형변환 됨
+                      
+                   }else{ // 이벤트가 발생된 태그가 체크가 해제된 상태라면
+                   	
+                   	// sum에 금액 제외
+                   	sum-=parseInt(pt.innerText); // 인트형으로 형변환 하면 "원"은 제외 되고 금액값만 형변환 됨
+                   }
+        	   }
+        	   
+        	  // 전체체크를 했을 경우
+        	  if($(tag).attr('name') == "selectall"){
+        	   
               const checkboxes = document.getElementsByName('sizepk');
               
               checkboxes.forEach((checkbox) => {
                    
-                 if(selectAll.checked==true){
-                      if(checkbox.checked==false){
-                      var parent=checkbox.parentNode;
+                 if(tag.checked==true){ // 모두체크박스가 체크된 상태라면
+                      if(checkbox.checked==false){ // 체크박스들중 체크가 안된 박스의
+                      var pt=checkbox.parentNode.parentNode.childNodes[11].childNodes[1]; // 가격을
                       
-                      var grandparent=parent.parentNode;
+                      sum+=parseInt(pt.innerText); // sum에 더하고
 
-                      var lastch=grandparent.childNodes;
-
-                      var price=lastch[11].childNodes;
-
-                      var pt=price[1];
-
-                      sum+=parseInt(pt.innerText);
-
-
-                      checkbox.checked = selectAll.checked;
+                      checkbox.checked = tag.checked; // 체크된 상태로 바꾸기
                    }
                  }
-                   else if(selectAll.checked==false){
-
-                      if(checkbox.checked==true){
-                         checkbox.checked = selectAll.checked;
-                      }
-
-                      sum=0;
-                      
-                   }
-                      
-                
+                 else{ // 모두체크박스가 체크가 안된 상태라면
+                	 if(checkbox.checked==true){ // 체크박스들중 체크가 된 박스는
+                		 
+                		 checkbox.checked = tag.checked; // 체크를 해제하고
+                		 }
+                	 
+                	 sum=0; // 합계 금액은 0으로 초기화
+                	 }
+                 
                  })
+        	  }
               
-             document.getElementById("resultPrice").innerHTML=sum;
+               document.getElementById("resultPrice").innerHTML=sum; // id가 resultPriced인 태그바디 안에 총금액을 출력
+               document.getElementsByName("resultPrice").value=sum; // 총금액을 C에게 전달하기 위해 value값 변경
+              
+               discount = parseFloat(document.getElementsByName("discount")[0].value);
+               // name이 discount인 태그들중 0번째 인덱스의 value값을 실수형으로 형변환
+               
+               // console.log(sum * discount);
+               
+               document.getElementById("finalPrice").innerHTML=sum * discount; // id가 finalPriced인 태그바디 안에 최종금액을 출력
+               document.getElementsByName("finalPrice").value=sum * discount; // 최종금액을 C에게 전달하기 위해 value값 변경
+              
+            }
+           
+           
+           // 개별 체크에 따른 모두체크 true / false 설정 메서드
+           function checkSelectAll()  {
+                // 전체 체크박스
+                const checkboxes = document.querySelectorAll('input[name="sizepk"]'); // name이 sizepk인 모든태그들을 저장
+                
+                // 선택된 체크박스
+                const checked  = document.querySelectorAll('input[name="sizepk"]:checked'); // name이 sizepk인 태그중 체크된 것만 저장
+                
+                // select all 체크박스
+                const selectAll  = document.querySelector('input[name="selectall"]'); // name이 selectAll인 태그를 저장
+                
+                
+                if(checkboxes.length == checked.length)  { // 모든 sizepk 태그의 개수와 체크된 sizepk태그의 개수가 같다면
+                  selectAll.checked = true; // selectAll이란 태그의 체크 값을 true로 설정
+                  // ex) 하나하나 상품들을 모두 체크하면 모두체크에도 체크
+                }else { // 같지 않다면
+                  selectAll.checked = false; // selectAll이란 태그의 체크 값을 false로 설정
+                  // ex) 모두 체크된 상태에서 체크를 하나 해제하면 모두체크에도 체크 해제
+                }
+
+              }
+           
+       	 
+       	 // 구매하기 버튼을 누를 경우
+         function payLocation(frm){
+        	 const checked  = document.querySelectorAll('input[name="sizepk"]:checked');
+        	 
+        	 if(checked.length==0){ // 체크를 하나도 안하고 구매하기 버튼을 누를 경우
+        		 alert("구매할 상품을 선택해주세요");
+        		 return false;
+        	 }
+        	 
+             frm.action="pay.do";
+             frm.submit();
+             return true;
              
-              discount = document.getElementsByName("discount");
-              
-              
-              discount = parseFloat(discount[0].value);
-              
-//               console.log(sum * discount);
-              
-              document.getElementById("finalPrice").innerHTML=sum * discount;
-              
-            }
-            
-      
-         
-         
-         function is_checked(event){
-            
-            if(event.target.checked){
-               
-               var parent=event.target.parentNode;
-//                console.log(parent);
-               
-               var grandparent=parent.parentNode;
-//                console.log(grandparent);
-               
-               var lastch=grandparent.childNodes;
-               
-//                console.log(lastch);
-//                console.log(lastch[11]);
-
-               var price=lastch[11].childNodes;
-               
-//                console.log(price); 
-
-               var pt=price[1];
-               console.log(parseInt(pt.innerText)); 
-               sum+=parseInt(pt.innerText)
-               
-               document.getElementById("resultPrice").innerHTML=sum;
-               
-               discount = document.getElementsByName("discount");
-               
-               
-               discount = parseFloat(discount[0].value);
-               console.log(sum * discount);
-               document.getElementById("finalPrice").innerHTML=sum * discount;
-                
-
-            }
-            if(event.target.checked==false){
-               var parent=event.target.parentNode;
-//                console.log(parent);
-               
-               var grandparent=parent.parentNode;
-//                console.log(grandparent);
-               
-               var lastch=grandparent.childNodes;
-//                console.log(lastch);
-               console.log(lastch[11]);
-               var price=lastch[11].childNodes;
-               console.log(price); 
-               var pt=price[1];
-               console.log(parseInt(pt.innerText)); 
-               sum-=parseInt(pt.innerText)
-               
- 			   document.getElementById("resultPrice").innerHTML=sum;
-               
-               discount = document.getElementsByName("discount");
-               
-               
-               discount = parseFloat(discount[0].value);
-               console.log(sum * discount);
-               document.getElementById("finalPrice").innerHTML=sum * discount;
-                
-            }
-            
-         }
-
+          }
 
 
 </script>
