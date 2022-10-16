@@ -27,6 +27,10 @@ public class MemberServiceImpl implements MemberService{
 	public void updateMember(MemberVO vo) {
 		memberDAO.updateMember(vo);
 	}
+	@Override
+	public void updateTierMember(MemberVO vo) {
+		memberDAO.updateTierMember(vo);
+	}
 
 	@Override
 	public MemberVO login(MemberVO vo) {

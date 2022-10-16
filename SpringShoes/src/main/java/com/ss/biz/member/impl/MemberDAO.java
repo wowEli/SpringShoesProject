@@ -25,18 +25,22 @@ public class MemberDAO {
 	final String sql_insert="INSERT INTO MEMBER(MID,MPW,MNAME,MPHONE,SHOESSIZE,MADDRESS) VALUES(?,?,?,?,?,?)";
 	
 	final String sql_update="UPDATE MEMBER SET MPW=? WHERE MID=?";
-	final String sql_delete="DELETE FROM MEMBER WHERE MID=? AND MPW=?";
+	final String sql_updateTier = "UPDATE MEMBER SET TIER=TIER+? WHERE MID=?";
+	final String sql_delete="DELETE FROM MEMBER WHERE MID=?";
 	
 	public void insertMember(MemberVO vo) {
 		jdbcTemplate.update(sql_insert, vo.getMid(),vo.getMpw(),vo.getMname(),vo.getMphone(),vo.getShoesSize(),vo.getMaddress());
 	}
 
 	public void deleteMember(MemberVO vo) {
-		jdbcTemplate.update(sql_delete, vo.getMid(), vo.getMpw());
+		jdbcTemplate.update(sql_delete, vo.getMid());
 	}
 
 	public void updateMember(MemberVO vo) {
 		jdbcTemplate.update(sql_update, vo.getMpw(), vo.getMid());
+	}
+	public void updateTierMember(MemberVO vo) {
+		jdbcTemplate.update(sql_updateTier, vo.getTier(), vo.getMid());
 	}
 
 	public MemberVO login(MemberVO vo) {

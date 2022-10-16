@@ -37,15 +37,54 @@ public class PayController {
 	@Autowired
 	AddressService addressSevice;
 	
-	@RequestMapping("/insertP.do")		//구매하기-> 재고-1
-	public String insertPay(ShoesVO sVO, ShoesSizeVO ssVO , PayVO pVO, Model model) {
-		payService.insertPay(pVO);	//구매 목록에 추가
-		shoesService.updateShoes(ssVO); // 재고 -1
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/insertP.do") // 구매하기 (구매목록에 추가)
+	public String insertPay(HttpSession session, HttpServletRequest request,MemberVO mVO, Model model) {
 		
-		List<PayVO> pDatas = payService.selectAllPay(pVO);
-		model.addAttribute("pDatas", pDatas);
+		model.addAttribute("resultPrice", session.getAttribute("resultPrice")); // 총 금액
+	    model.addAttribute("finalPrice", session.getAttribute("finalPrice")); // 최종 금액
+	    mVO.setTier(Integer.valueOf((String)session.getAttribute("finalPrice"))); // 결제 금액을 티어에 저장
+	    session.removeAttribute("resultPrice"); // 위에서 모델에 저장해주고 세션에선 삭제
+	    session.removeAttribute("finalPrice"); // 위에서 모델에 저장해주고 세션에선 삭제
 		
-		return "영수증 페이지"; 
+	    mVO.setMid((String)session.getAttribute("mid"));
+		model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
+		
+		memberService.updateTierMember(mVO); // 티어 정보 업데이트
+		
+		ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>(); // 영수증페이지에서 보여줄 신발 데이터를 저장할 배열
+		ShoesSizeVO sVO = new ShoesSizeVO();
+		
+		ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas"); // 현재 장바구니
+
+		for(String p: (String [])session.getAttribute("payList")) { // 구매할 상품 개수 만큼 반복
+			// 구매한 신발 정보를 영수증 페이지에 보여주기 위해 하나씩 배열에 저장
+			sVO.setSizepk(Integer.parseInt(p)); // 세션에 저장되어 있는 sizepk들을 하나씩 꺼내서 set
+			ShoesVO vo = new ShoesVO();
+			vo = shoesService.selectOneShoesBucket(sVO); // sizepk에 해당하는 신발정보를 저장
+			sDatas.add(vo); // 배열에 저장
+			
+			// 구매한 신발 정보를 구매목록에 하나씩 저장
+			PayVO pVO = new PayVO();
+			pVO.setMid((String)session.getAttribute("mid")); // 구매한 사용자 저장
+			pVO.setAddress(request.getParameter("address")); // 배송지 저장
+			pVO.setSizepk(Integer.parseInt(p)); // 구매할 신발의 sizepk를 저장
+			payService.insertPay(pVO);	// 구매 목록에 추가
+			shoesService.updateShoes(sVO); // 재고 -1
+			
+			// 구매한 신발은 장바구니에서 하나씩 제거
+			for(int i=0;i<bDatas.size();i++) {
+				if(bDatas.get(i).equals(p)) {
+					bDatas.remove(i);
+				}
+			}
+		}
+		
+		session.setAttribute("bDatas", bDatas); // 구매한 상품들은 삭제된 장바구니 목록을 다시 저장
+		
+		model.addAttribute("sDatas", sDatas);
+
+		return "receipt.jsp"; 
 	}
 	
 	@RequestMapping("/pay.do")
@@ -78,6 +117,15 @@ public class PayController {
 	      }
 	      
 	      model.addAttribute("sDatas", sDatas);
+	      
+	      // 총 합계 금액 , 최종 금액 저장 로직
+	      if(session.getAttribute("resultPrice") == null) {
+	    	  session.setAttribute("resultPrice", request.getParameter("resultPrice"));
+	      }
+	      if(session.getAttribute("finalPrice") == null) {
+	    	  session.setAttribute("finalPrice", request.getParameter("finalPrice"));
+	      }
+	      // session에 저장한 이유는 배송지 추가, 삭제를 할 때 위 두 값을 유지시키기 위함
 		 
 		return "pay.jsp";
 	}

@@ -40,6 +40,7 @@
     	color:white;
     }
     .genric-btn.primary-border{
+    	color:black;
     	border:1px solid black;
     	font-size:20px;
     }
@@ -69,7 +70,7 @@
     	<div class="container">
     		<div class="billing_details">
     			 <div class="row">
-    				<div class="col-lg-8">
+    				<div class="col-lg-8" style="background-color:#E6E6E6;">
     					<div class="sidebar-categories">
     					<div class="head" style="background-color:black;">이용약관 동의</div>
     					<br>
@@ -79,21 +80,22 @@
   									<span>모두 동의합니다</span>
 							</label>
 							<label for="agree">
- 								 <input type="checkbox" name="agree" id="newCheck1" " >
+ 								 <input type="checkbox" name="agree" id="newCheck1">
  									 <span>이용약관 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
-  								<input type="checkbox" name="agree" id="newCheck2" " >
+  								<input type="checkbox" name="agree" id="newCheck2">
   									<span>개인정보 수집, 이용 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
-  								<input type="checkbox" name="agree" id="newCheck3" ">
+  								<input type="checkbox" name="agree" id="newCheck3">
   									<span>개인정보 이용 동의<strong>(필수)</strong></span>
 							</label>
 							<label for="agree">
  								<input type="checkbox" name="agree" value="4">
   									<span>이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></span>
 							</label>	
+							<br>
 							
     				</div>
     			</div>
@@ -108,7 +110,7 @@
         <div class="container">
             <div class="billing_details">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8" style="background-color:#E6E6E6;">
                     	<div class="sidebar-categories">
                     	<div class="head" style="background-color:black;">계정정보 입력</div>
                     	</div>
@@ -141,8 +143,7 @@
                             	<span>이름</span>
                                 <input type="text" class="form-control" id="mname" name="mname" placeholder="이름을 입력해 주세요">
                             </div>
-                            <div class="col-md-8 form-group p_star">
-                            </div>
+                            <br>
                             <div class="col-md-2 form-group p_star">
                             <br>
                             	<span>전화번호</span>
@@ -150,12 +151,12 @@
                             </div>
                             <div class="col-md-4 form-group p_star">
                             	<br><br>
-                                <input type="text" class="form-control" id="mphone" name="mphone">
+                                <input type="text" class="form-control" id="mphone" name="mphone" placeholder="ex)12345678">
                             </div>
-                            <div class="col-md-4 form-group p_star"></div>
+                            <br><br>
                             <div class="col-md-4 form-group p_star">
-                            <br>
                             	<span>신발 사이즈</span>
+                            <br>
                                 <select class="country_select" name="shoesSize">
                                     <option value="220">220</option>
                                     <option value="230">230</option>
@@ -235,7 +236,6 @@ for(let i = 0; i < agreeChk.length; i++){
 });
 
 
-
 //아이디 중복검사
 function idCheck(){
 	var check = $("#mid").val();
@@ -265,15 +265,6 @@ function idCheck(){
 	});
 }
 </script>
-
-<script type="text/javascript">
-function is_checked() {
-	  
-	
-
-	}
-</script>
-
 
 <script type="text/javascript">
 //비밀번호, 비밀번호 확인 검사

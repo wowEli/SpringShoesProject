@@ -30,11 +30,11 @@ public class ShoesController {
 
 
 		if(sVO.getPageCondition() == null) { // 검색을 이용하지 않고 들어올경우 null임
-			sVO.setPageCondition("nomal"); // 기본값으로 일반검색(nomal) 사용
+			sVO.setPageCondition("nomal"); // 기본 값으로 일반검색(nomal) 사용
 		}
 
 		// 페이징처리시 nomal인지 filter인지 알려주는 데이터 저장
-		System.out.println("pageCondition :"+sVO.getPageCondition());
+//		System.out.println("pageCondition :"+sVO.getPageCondition());
 		model.addAttribute("pageCondition", sVO.getPageCondition());
 		// page번호를 누를때 현재 무슨 검색을 사용하는지 데이터를 유지하기 위해 뷰로 데이터 전송
 
@@ -43,7 +43,7 @@ public class ShoesController {
 			sVO.setSearchContent("");
 		}		
 
-		System.out.println("검색어로그 ["+sVO.getSearchContent()+"]");
+//		System.out.println("검색어로그 ["+sVO.getSearchContent()+"]");
 		model.addAttribute("searchContent", sVO.getSearchContent());
 		// page번호를 누를때 현재 무슨 검색 내용을 사용하는지 데이터를 유지하기 위해 뷰로 데이터 전송
 
@@ -54,7 +54,7 @@ public class ShoesController {
 		} 
 
 		// 페이지버튼변수
-		System.out.println("pageButton 값 ="+sVO.getPageButton());
+//		System.out.println("pageButton 값 ="+sVO.getPageButton());
 		model.addAttribute("pageButton", sVO.getPageButton());
 		// page번호를 누를때 현재 무슨 배열을 보고있는지 배열데이터를 유지하기 위해 뷰로 데이터 전송
 		// ex) 1: 1~5 , 2: 6~10, 3: 11~15
@@ -70,13 +70,13 @@ public class ShoesController {
 		}
 
 		// 현재페이지 넘버
-		System.out.println("page변수 로그:"+sVO.getPage());
+//		System.out.println("page변수 로그:"+sVO.getPage());
 		model.addAttribute("pageNow", sVO.getPage()); // 현재 누른 페이지가 몇번인지 알려주는 값 저장
 		// 혹시라도 사용자가 페이지를 안눌렀을경우 위 if문을 통해 특정 값이 저장됨
 
 
 		// 현제페이지 넘버에서 *9 하여 Limit에 들어갈 숫자
-		System.out.println("page변수에 x9 로그"+(sVO.getPage()-1)*9);
+//		System.out.println("page변수에 x9 로그"+(sVO.getPage()-1)*9);
 		sVO.setPage((sVO.getPage()-1)*9); // sql문 limit은 ? 부터 9개를 보여줌 ?는 0부터 시작되니 현재페이지 넘버에 -1을 해줘야함
 
 		// 출력물의 갯수를 담아주는 코드
@@ -94,7 +94,7 @@ public class ShoesController {
 			endPageNum = (count / 9)+1; // 나머지가 있을경우 +1해서 page하나 더 보여주기				
 		}
 
-		System.out.println("Count를 이용하여 마지막 페이지 번호로그"+endPageNum);
+//		System.out.println("Count를 이용하여 마지막 페이지 번호로그"+endPageNum);
 		model.addAttribute("endPageNum", endPageNum);
 
 		// 보여줄 페이지번호를 배열로 만드는 코드
@@ -107,7 +107,7 @@ public class ShoesController {
 		}
 
 
-		System.out.println("start["+start+"] end["+end+"]");
+//		System.out.println("start["+start+"] end["+end+"]");
 		int[] pages = new int[(end-start)+1]; // page시작 번호 ~ page끝 번호 만큼의 크기를 가진 배열이 생성
 
 		int j = 0; // 배열의 인덱스 번호를 표현하기 위한 변수

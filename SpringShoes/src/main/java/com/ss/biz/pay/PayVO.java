@@ -5,7 +5,6 @@ public class PayVO {
 	private String mid; // member pk
 	private int sizepk; // shoessize pk
 	private String address; // 배송지
-	private int pnum; // 영수증 번호
 	private String payday; // 구매 날짜
 	
 	// JAVA에서만 쓸 변수
@@ -62,12 +61,6 @@ public class PayVO {
 	public void setShoesBrand(String shoesBrand) {
 		this.shoesBrand = shoesBrand;
 	}
-	public int getPnum() {
-		return pnum;
-	}
-	public void setPnum(int pnum) {
-		this.pnum = pnum;
-	}
 	public String getPayday() {
 		return payday;
 	}
@@ -106,10 +99,10 @@ public class PayVO {
 	}
 	@Override
 	public String toString() {
-		return "PayVO [ppk=" + ppk + ", mid=" + mid + ", sizepk=" + sizepk + ", address=" + address + ", pnum=" + pnum
-				+ ", payday=" + payday + ", flag=" + flag + ", shoesSize=" + shoesSize + ", shoesColor=" + shoesColor
-				+ ", shoesImg=" + shoesImg + ", shoesName=" + shoesName + ", shoesPrice=" + shoesPrice + ", shoesBrand="
-				+ shoesBrand + ", colorpk=" + colorpk + "]";
+		return "PayVO [ppk=" + ppk + ", mid=" + mid + ", sizepk=" + sizepk + ", address=" + address + ", payday="
+				+ payday + ", flag=" + flag + ", shoesSize=" + shoesSize + ", shoesColor=" + shoesColor + ", shoesImg="
+				+ shoesImg + ", shoesName=" + shoesName + ", shoesPrice=" + shoesPrice + ", shoesBrand=" + shoesBrand
+				+ ", colorpk=" + colorpk + "]";
 	}
 	
 	

@@ -20,7 +20,7 @@ public class PayDAO {
 
 	final String sql_insert="INSERT INTO PAY(MID,SIZEPK,ADDRESS) VALUES(?,?,?)";
 
-	final String sql_selectAll="SELECT P.PPK, P.MID, P.SIZEPK, P.ADDRESS, P.PNUM, P.PAYDAY, SS.SIZE, SC.COLORPK, SC.COLOR, SC.SHOESIMG, SSP.SHOESNAME, SSP.PRICE, SSP.BRAND FROM PAY P "
+	final String sql_selectAll="SELECT P.PPK, P.MID, P.SIZEPK, P.ADDRESS, P.PAYDAY, SS.SIZE, SC.COLORPK, SC.COLOR, SC.SHOESIMG, SSP.SHOESNAME, SSP.PRICE, SSP.BRAND FROM PAY P "
 			+ "INNER JOIN SHOESSIZE SS ON P.SIZEPK = SS.SIZEPK "
 			+ "INNER JOIN SHOESCOLOR SC ON SS.COLORPK = SC.COLORPK "
 			+ "INNER JOIN SHOESSAMPLE SSP ON SC.SAMPLEPK = SSP.SAMPLEPK "
@@ -48,7 +48,6 @@ class PayRowMapper implements RowMapper<PayVO> {
 			data.setMid(rs.getString("MID"));
 			data.setSizepk(rs.getInt("SIZEPK"));
 			data.setAddress(rs.getString("ADDRESS"));
-			data.setPnum(rs.getInt("PNUM"));
 			data.setPayday(rs.getString("PAYDAY"));
 			data.setShoesSize(rs.getInt("SIZE"));
 			data.setShoesColor(rs.getString("COLOR"));

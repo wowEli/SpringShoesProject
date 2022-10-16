@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %><%-- JSTL --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -90,7 +91,7 @@
                         <br><br><br><br>
                         </th>
                         
-                        <th scope="col" style="font-size:50px; color:gray;">${mData.tier } 원
+                        <th scope="col" style="font-size:50px; color:gray;"><fmt:formatNumber type="number" value="${mData.tier}"/>원
                         <br><br><br><br>
                         </th>
                         
@@ -119,11 +120,11 @@
                      		<input type="text" class="form-control" name="mid" value="${mData.mid }" readonly>
                         </th>
                      	<th scope="col">
-                     		<p>비밀번호</p>
-                     		<input type="text" class="form-control" name="mpw" value="${mData.mpw }" readonly>
+                     		<p></p>
+                     		<center><input type="button" class="genric-btn primary-border e-large ss" onclick="getShow()" value="비밀번호 변경" ></center>
                         </th>
-                        <th style="width: 20px">
-                     		<input type="button" class="genric-btn primary-border e-large ss" onclick="getShow()" value="비밀번호 변경" >
+                        <th style="align-text:center;">
+                        <a href="deleteM.do?mid=${mid }" class="genric-btn primary-border e-large ss" style="color:red;">회원 탈퇴</a>
                         </th>
                      </tr>
                       <tr>
@@ -135,7 +136,7 @@
                      		<p>주소</p>
                      		<input type="text" class="form-control" name="maddress" value="${mData.maddress }" readonly>
                         </th>
-                        <th style="width: 20px">
+                        <th style="width: 200px">
                         	<p>발 사이즈</p>
                      		<input type="text" class="form-control" name="shoesSize" value="${mData.shoesSize }" readonly>
                         </th>
@@ -223,7 +224,8 @@
                            </td>
                            <td>
                             	<c:if test="${p.flag == true }">
-                                    <a href="review.do" class="btn-reply text-uppercase"><br><br>후기작성</a>
+                            		<br><br>
+                                    <a href="review.do" class="genric-btn primary-border">후기작성</a>
                                 </c:if>
                                 
                                 <c:if test="${p.flag == false }">
@@ -296,10 +298,12 @@
                            </td>
 
                            <td>
-                              <a href="updateR.do?sizepk=${r.sizepk }" class="btn-reply text-uppercase"><br><br>후기 수정</a>
+                           <br><br>
+                              <a href="updateR.do?sizepk=${r.sizepk }" class="genric-btn primary-border">후기 수정</a>
                            </td>
                            <td>
-                              <a href="deleteR.do?rpk=${r.rpk }" class="btn-reply text-uppercase"><br><br>후기 삭제</a>
+                           <br><br>
+                              <a href="deleteR.do?rpk=${r.rpk }" class="genric-btn primary-border" style="color:red;">후기 삭제</a>
                            </td>
 
                       </tr>

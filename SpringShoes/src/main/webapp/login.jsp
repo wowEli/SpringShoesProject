@@ -66,7 +66,7 @@
 						<div class="hover">
 							<h4>스프링 슈즈가 처음이신가요?</h4>
 							<p>회원가입을 통해<br>스프링 슈즈에서 제공하는 혜택 및 서비스를 받아보세요!</p>
-							<a class="genric-btn primary-border radius ss" href="signUp.jsp">회원가입하기</a>
+							<a class="genric-btn primary-border radius ss" href="signup.jsp">회원가입하기</a>
 						</div>
 					</div>
 				</div>

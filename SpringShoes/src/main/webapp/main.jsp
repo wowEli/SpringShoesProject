@@ -302,7 +302,7 @@
       else{
          //console.log("필터검색페이지");
             
-         $('#pageForm').append("<input type='hidden' name='filterBrand' value='${filterBrand}'>");
+         	$('#pageForm').append("<input type='hidden' name='filterBrand' value='${filterBrand}'>");
             $('#pageForm').append("<input type='hidden' name='filterColor' value='${filterColor}'>");
             $('#pageForm').append("<input type='hidden' name='filterLowPrice' value='${filterLowPrice}'>");
             $('#pageForm').append("<input type='hidden' name='filterHighPrice' value='${filterHighPrice}'>");

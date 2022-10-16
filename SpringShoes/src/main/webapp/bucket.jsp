@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -188,8 +189,8 @@ li {
                             </c:if>
                         </td>
                         <td>
-                          <h1 id="resultPrice">0</h1>
-                          <input type="hidden" name="resultPrice" value="">
+                          <h1 id="resultPrice">0원</h1>
+                          <input type="hidden" id="rP" name="resultPrice" value="">
                         </td>
                         <td>
                        		<c:if test="${mData.tier < 200000 }">
@@ -208,8 +209,8 @@ li {
                             </c:if>
                         </td>
                         <td>
-                        	<h1 id="finalPrice" >0</h1>
-                        	<input type="hidden" name="finalPrice" value="">
+                        	<h1 id="finalPrice">0원</h1>
+                        	<input type="hidden" id="fP" name="finalPrice" value="">
                         </td>
                         <td></td>
                         <td></td>
@@ -309,16 +310,16 @@ li {
                  })
         	  }
               
-               document.getElementById("resultPrice").innerHTML=sum; // id가 resultPriced인 태그바디 안에 총금액을 출력
-               document.getElementsByName("resultPrice").value=sum; // 총금액을 C에게 전달하기 위해 value값 변경
+               document.getElementById("resultPrice").innerHTML=sum+"원"; // id가 resultPriced인 태그바디 안에 총금액을 출력
+               document.getElementById("rP").value=sum; // 총금액을 C에게 전달하기 위해 value값 변경
               
                discount = parseFloat(document.getElementsByName("discount")[0].value);
                // name이 discount인 태그들중 0번째 인덱스의 value값을 실수형으로 형변환
                
                // console.log(sum * discount);
                
-               document.getElementById("finalPrice").innerHTML=sum * discount; // id가 finalPriced인 태그바디 안에 최종금액을 출력
-               document.getElementsByName("finalPrice").value=sum * discount; // 최종금액을 C에게 전달하기 위해 value값 변경
+               document.getElementById("finalPrice").innerHTML=sum * discount+"원"; // id가 finalPriced인 태그바디 안에 최종금액을 출력
+               document.getElementById("fP").value=sum * discount; // 최종금액을 C에게 전달하기 위해 value값 변경
               
             }
            

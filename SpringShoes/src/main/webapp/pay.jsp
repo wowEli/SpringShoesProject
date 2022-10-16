@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -20,24 +21,7 @@
 <meta charset="UTF-8">
 <!-- Site Title -->
 
-<style>
-.tr01{
-   border:1px solid black;
-   margin:10px;
-   }
-.td01{
-   width:300px;
-   border:1px solid black;
-   border-right:none;
-   text-align: left;
-   margin:10px;
-   }
-.td02{
-   text-align: left;
-   }   
-</style>
-
-<title>장바구니</title>
+<title>Spring Shoes</title>
 
 
 <!--
@@ -55,6 +39,32 @@
    src="https://maps.googleapis.com/maps-api-v3/api/js/50/8/intl/ko_ALL/common.js"></script>
 <script type="text/javascript" charset="UTF-8"
    src="https://maps.googleapis.com/maps-api-v3/api/js/50/8/intl/ko_ALL/util.js"></script>
+<style>
+.tr01{
+   border:1px solid black;
+   margin:10px;
+   }
+.td01{
+   width:300px;
+   border:1px solid black;
+   border-right:none;
+   text-align: left;
+   margin:10px;
+   }
+.td02{
+   text-align: left;
+   }
+   .genric-btn.primary-border{
+	   color:black;
+       border:1px solid black;
+       font-size:20px;
+    }
+    .genric-btn.primary-border:hover{
+       background: black;
+       color: white;
+    }
+</style>
+
 </head>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -106,7 +116,7 @@
                            </td>
 
                            <td>
-                              <h5>${s.price}</h5>
+                              <h5><fmt:formatNumber type="number" value="${s.price}"/>원</h5>
                            </td>
 
                       </tr>
@@ -120,13 +130,14 @@
        <div class="container">
          <div class="cart_inner">
             <div class="table-responsive">
+            
                <table class="table">
                   <thead>
                      <tr style="background-color:black;">
                      	<th scope="col" style="width: 194px; color:white;">체크박스</th>
                         <th scope="col" style="color:white;">배송지 이름</th>
                         <th scope="col" style="color:white;">주소</th>
-                        <th scope="col" style="color:white;"><input type="button" onclick="getShow()" value="+ 신규 배송지" ></th>
+                        <th scope="col"><input type="button" class="genric-btn primary-border" style="font-size:15px;" onclick="getShow()" value="+ 신규 배송지" ></th>
                      </tr>
                   </thead>
                   
@@ -134,7 +145,7 @@
                   		<!-- 회원의 기본 배송지 출력 시작 -->
                   		<tr>
                   		<td>
-                        	  <input type="radio" name="address" id="my_checkbox" value="${mData.maddress}" checked/>
+                        	  <input type="radio" name="address" id="defaultAddress" onclick="otherAddress(this)" value="${mData.maddress}" checked/>
 						   </td>
                            <td>
                               <p>기본 배송지</p>
@@ -153,7 +164,7 @@
                         <c:forEach var="a" items="${aDatas}">
  						<tr>
                        	   <td>
-                        	  <input type="radio" name="address" id="my_checkbox" value="${a.address}">
+                        	  <input type="radio" name="address" class="otherAddress" onclick="otherAddress(this)" value="${a.address}">
 						   </td>
                            <td>
                               <p>${a.aname}</p>
@@ -163,7 +174,7 @@
 								<p>${a.address}</p>
 							</td>
 							<td>
-								<p><a href="deleteA.do?apk=${a.apk }">삭제</a></p>
+								<p><a href="deleteA.do?apk=${a.apk }" class="genric-btn primary-border">삭제</a></p>
 							</td>
                         </tr>
                         </c:forEach>
@@ -180,7 +191,7 @@
                      	<th scope="col" style="width: 194px;color:white;">수령인</th>
                         <th scope="col" style="color:white;">주소</th>
                         <th scope="col" style="color:white;">상세주소</th>
-                        <th scope="col" style="color:white;"> <input type="submit" value="배송지 등록" ></th>
+                        <th scope="col" style="color:white;"> <input type="submit" class="genric-btn primary-border" style="font-size:15px;" value="배송지 등록" ></th>
                   	    </tr>
                   </thead>
                         <tr>
@@ -195,7 +206,7 @@
 							  <input type="text" name="detailAddress" class="form-control" placeholder="상세주소 입력"/>
 							</td>
 							<td>
-                			  <input type="button" onclick="sample2_execDaumPostcode()" value="주소 찾기" >
+                			  <input type="button" class="genric-btn primary-border" onclick="sample2_execDaumPostcode()" value="주소 찾기" >
 							</td>
                       	</tr>
              </table>
@@ -213,50 +224,68 @@
                         <th scope="col" style="color:white;">&nbsp;</th>
                   	    </tr>
                   </thead>
-                        <tr>
-                        <!-- 티어 이미지 -->
-                           <td>
-                              <c:if test="${mData.tier < 200000 }">
-                            <img src="img/3rd.png" alt="" style="width:100px">
-                            </c:if>
-                            <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
-                            <img src="img/2nd.png" alt="" style="width:100px">
-                            </c:if>
-                            <c:if test="${400000 < mData.tier }">
-                            <img src="img/1st.png" alt="" style="width:100px">
-                            </c:if>
-                           </td>
+						<tr>
+							<!-- 티어 이미지 -->
+							<td>
+							    <c:if test="${mData.tier < 200000 }">
+									<img src="img/3rd.png" alt="" style="width: 100px">
+								</c:if> 
+								<c:if test="${200000 < mData.tier && mData.tier < 400000 }">
+									<img src="img/2nd.png" alt="" style="width: 100px">
+								</c:if> 
+								<c:if test="${400000 < mData.tier }">
+									<img src="img/1st.png" alt="" style="width: 100px">
+								</c:if>
+							</td>
 
 
 							<td>
-							  <p style="font-size:40px">500000 원 - 50000 원</p>
+								<c:if test="${mData.tier < 200000 }">
+									<p style="font-size: 40px; color:black;"><fmt:formatNumber type="number" value="${resultPrice}"/>원 &nbsp;-5%</p>
+								</c:if> <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
+									<p style="font-size: 40px; color:black;"><fmt:formatNumber type="number" value="${resultPrice}"/>원 &nbsp;-10%</p>
+								</c:if> <c:if test="${400000 < mData.tier }">
+									<p style="font-size: 40px; color:black;"><fmt:formatNumber type="number" value="${resultPrice}"/>원 &nbsp;-20%</p>
+								</c:if>
 							</td>
+
 							<td>
-							  <p style="font-size:40px">450000 원</p>
+								<p style="font-size: 40px; color:black;"><fmt:formatNumber type="number" value="${finalPrice}"/>원</p>
 							</td>
+
 							<td>
-                			  <input type="button" onclick="" value="결제 하기" >
-							</td>
+							<form action="insertP.do">
+							<input type="hidden" name="address" id="payAddress" value="">
+							<input type="submit" class="genric-btn primary-border e-large ss" value="결제 하기">
+							</form>
 							
-                      	</tr>
-             </table>
+							</td>
+						</tr>
+					</table>
              <!-- 결제정보 종료 -->
               	
             </div>
          </div>
       </div>
       
-   <script type="text/javascript">
+	<script type="text/javascript">
+		document.getElementById("newAddress").style.display = "none";
+		console.log(document.getElementById("payAddress").value);
 
-   
-   document.getElementById("newAddress").style.display = "none";
-  
-   function getShow(){
-		document.getElementById("newAddress").style.display = "";
+		function getShow() {
+			document.getElementById("newAddress").style.display = "";
+		}
+	</script>
+	<script type="text/javascript">
+		document.getElementById("payAddress").value = document.getElementById("defaultAddress").value;
 		
-	}
-   
-   </script>
+		function otherAddress(tag){
+				console.log(document.getElementById("payAddress").value);
+				document.getElementById("payAddress").value = tag.value;
+				console.log(document.getElementById("payAddress").value);
+		}
+	
+	</script>
       
    </section>
 	
