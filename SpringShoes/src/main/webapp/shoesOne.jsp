@@ -67,24 +67,24 @@ h6 {
 .close1:after {content: "\00d7"; font-size:15pt;}
 }
 
-   .billing_details .contact_form .form-group a{
-       border-radius: 8px;
-       color: black;
+	.billing_details .contact_form .form-group a{
+    	border-radius: 8px;
+    	color: black;
     }
     .billing_details .contact_form .form-group a.ss:hover{
-       color:white;
+    	color:white;
     }
     .genric-btn.primary-border{
-       border:1px solid black;
-       font-size:20px;
+    	border:1px solid black;
+    	font-size:20px;
     }
     .genric-btn.primary-border:hover{
-       background: black;
-       color: white;
+    	background: black;
+    	color: white;
     }
     span{
-       color: black;
-       font-size: 15px;
+    	color: black;
+    	font-size: 15px;
     }
 </style>
 </head>
@@ -143,9 +143,8 @@ h6 {
                      <div class="modal_content" title="클릭하면 창이 닫힙니다.">
                         <c:forEach var="size" items="${sizeDatas}">
                            <c:if test="${size.cnt != 0 }">
-                              <button class="sizeButton" value="${size.sizepk}"
-                                 style="margin: 5px;">${size.size}</button>
-                              <span style="color: grey;">남은 갯수:${size.cnt }</span>
+                              <button class="sizeButton" value="${size.sizepk}" style="margin: 5px;">${size.size}</button>
+                              남은 갯수:<span style="color: grey;">${size.cnt }</span>
                               <br>
                            </c:if>
                         </c:forEach>
@@ -172,7 +171,22 @@ h6 {
          });
 
          $(".sizeButton").click(function() {
-                        $(".modal").fadeOut();
+        	 			
+                        $(".modal").fadeOut(); // 모달창 닫기
+                        
+                      	var sizeCnt = $(this).next().html(); // 남은재고 숫자부분 span 태그를 가져옴
+                      	console.log(sizeCnt);
+                      	
+                      	var sizeDown = sizeCnt - 1; // 자동형변환이 되어 숫자로 인식하기때문에 -1 하여도 상관없음
+                      	console.log(sizeDown);
+                      	
+                      	$(this).next().html(sizeDown); // 남은재고 숫자부분 span 태그에 -1한 결과값을 다시 넣어줌
+                      	
+                      	if($(this).next().html() == 0){ // -1 하고 난뒤 0이 됐을경우 버튼 비활성화
+                      		$(this).next().html("0");
+                      		$(this).attr('disabled','disabled');
+                      	}
+                        
                         
                         // 제품이 있을경우에만
                         $("#slistText").remove();
@@ -180,7 +194,7 @@ h6 {
                         var $tr = $("<tr id="+"shoesIndex"+shoesIndex+">", {});
                         var $td1 = $("<td style='text-align: center;'><h6>${sData.shoesName }</h6></td>");
                         var $td2 = $("<td><h6>" + $(this).html() + "</h6></td>");
-                        var $td3 = $("<input type='hidden' value='"+ $(this).val() + "' name='sizepk'>)");
+                        var $td3 = $("<input class='sizepk' type='hidden' value='"+ $(this).val() + "' name='sizepk'>)");
                         var $td4 = $("<td><a class='close close1' data-value="+shoesIndex+" id="+"shoesDelete"+shoesIndex+" onclick='shoesDelete(this)'></a></td>")
 
                         $tr.append($td1);
@@ -197,12 +211,42 @@ h6 {
       
       // 삭제버튼 기능
       function shoesDelete(e){
+      var index = document.getElementById(e.getAttribute('id')).getAttribute('data-value');
       console.log(document.getElementById(e.getAttribute('id')).getAttribute('data-value'));
-       var index = document.getElementById(e.getAttribute('id')).getAttribute('data-value');
+      
+      
+//    document.getElementById(e.getAttribute('id')).parentNode.parentNode
+//	  -> 여기까지가 모달창 버튼을 만들었을경우 만들어지는 <tr> </tr> 태그 안의 모든 태그들이다
+//	  .getElementsByTagName('td')[1]
+//	  -> <tr> 태그 안의 태그중 이름이 'td'인 태그를 모두 불러오는데 그중 인덱스 [1]값이 사이즈를 표현하고 있는 태그이다
+	  console.log("삭제한 sizepk = "+document.getElementById(e.getAttribute('id')).parentNode.parentNode.getElementsByTagName('input')[0].value);
+      console.log("삭제한 size = "+document.getElementById(e.getAttribute('id')).parentNode.parentNode.getElementsByTagName('td')[1].innerText);
+      
+//	  X 버튼으로 삭제한 신발의 사이즈를 가지고있는 변수 220을 X했다면 220값을 가지고 있음
+	  var deleteSizePk = document.getElementById(e.getAttribute('id')).parentNode.parentNode.getElementsByTagName('input')[0].value;
+      console.log("sizepk["+deleteSizePk+"]");
+      
+//	  삭제한 SizePk를 가지고있는 버튼태그의 다음인 남은갯수를 나타내는 span태그 타겟
+      var sizeButtonSpan = $('.sizeButton[value='+deleteSizePk+']').next();
+//    console.log(sizeButtonSpan);
+
+//	  sizeButtonSpan의 내용이 자동형변환 되지않고 String 타입 그대로 넘어와서 Int로 형변환 하여 +1함
+	  var sizeButtonSpanUp = parseInt(sizeButtonSpan.html()) + 1;
+	  console.log(parseInt(sizeButtonSpanUp)); 
+	  
+//	  +1 해준값을 다시 버튼의 남은갯수를 표시하는 Span태그 바디안의 내용에 대입
+	  sizeButtonSpan.html(sizeButtonSpanUp);
+	  
+//	  +1 을 해준시점에서 Span태그의 바디 내용이 남은개수 : 1로 바뀌었다면 다시 버튼을 활성화 해주어야함
+	  if(sizeButtonSpan.html() == 1){
+		  // 버튼을 다시 활성화
+		  $('.sizeButton[value='+deleteSizePk+']').prop('disabled', false);
+	  }
+      
+//	  X버튼을 누른 구매목록을 삭제
+      $("#shoesIndex"+index+"").remove();
+//       console.log("콘솔로그"+$(".slist").html());
        
-       $("#shoesIndex"+index+"").remove();
-       
-//        console.log("콘솔로그"+$(".slist").html());
        
        // 제품목록을 삭제하여 모두 없앴을 경우 다시 텍스트 생성하여 출력
        if($(".slist").html() == ""){
@@ -220,10 +264,10 @@ h6 {
    <script type="text/javascript">
       function payform() {
          
-        if($(".slist").html() == ""){
-           alert("사이즈를 선택해주세요");
-           return;
-        }
+    	 if($(".slist").html() == ""){
+    		 alert("사이즈를 선택해주세요");
+    		 return;
+    	 }
          //값들의 갯수 -> 배열 길이를 지정
          var size = $("input[name=sizepk]").length;
          console.log(size);
@@ -266,10 +310,10 @@ h6 {
    <script type="text/javascript">
       function result() {
          
-        if($(".slist").html() == ""){
-            alert("사이즈를 선택해주세요");
-            return;
-         }
+    	 if($(".slist").html() == ""){
+     		 alert("사이즈를 선택해주세요");
+     		 return;
+     	 }
          //값들의 갯수 -> 배열 길이를 지정
          var size = $("input[name=sizepk]").length;
          console.log(size);
