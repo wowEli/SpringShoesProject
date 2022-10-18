@@ -66,6 +66,9 @@ li {
     	background: black;
     	color: white;
     }
+   	input[name="selectall"] {
+	display: none;
+	}
 	</style>
 </head>
 
@@ -97,13 +100,13 @@ li {
                <table class="table">
                   <thead>
                   <label class="genric-btn primary-border login"><input type='checkbox' name='selectall' value='selectall' onclick="selectAll(this); checkSelectAll();"/>전체 선택</label>
-                     <tr>
-                        <th scope="col" style="width: 194px;">체크박스</th>
-                        <th scope="col" style="width: 204px;">상품이미지</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">사이즈</th>
-                        <th scope="col">갯수</th>
-                        <th scope="col">가격</th>
+                     <tr style="background-color:black;">
+                        <th scope="col" style="width: 194px; color:white;">체크박스</th>
+                        <th scope="col" style="width: 204px; color:white;">상품이미지</th>
+                        <th scope="col" style="color:white;">이름</th>
+                        <th scope="col" style="color:white;">사이즈</th>
+                        <th scope="col" style="color:white;">갯수</th>
+                        <th scope="col" style="color:white;">가격</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -149,27 +152,27 @@ li {
                   <!-- 결제 정보 출력 시작 -->
                   <table class="table">
                   
-                  <tr class="out_button_area">
-                        <td>
-                           <h5>내 등급</h5>
-                        </td>
-                        <td style="width:170px">
+                  <tr class="out_button_area" style="background-color:black;">
+                        <th scope="col" style="color:white;">
+                           <center>내 등급</center>
+                        </th>
+                        <th scope="col" style="width:170px color:white;">
                         <h5>&nbsp;</h5>
-                        </td>
-                        <td>
-                          <h5>총 금액</h5>
-                        </td>
+                        </th>
+                        <th scope="col" style="color:white;">
+                        	<center>총 금액</center>
+                        </th>
                         
-                        <td>
-                        <h5>내 등급 할인률</h5>
-                        </td>
+                        <th scope="col" style="color:white;">
+                        	<center>내 등급 할인률</center>
+                        </th>
                         
-                        <td>
-                        	<h5>결제 금액</h5>
-                        </td>
+                        <th scope="col" style="color:white;">
+                        	<center>결제 금액</center>
+                        </th>
                         
-                        <td></td>
-                        <td></td>
+                        <th></th>
+                        <th></th>
                   </tr>
                   </table>
                   <table class="table">
@@ -179,37 +182,37 @@ li {
                          
                         <td>
                             <c:if test="${mData.tier < 200000 }">
-                            <img src="img/3rd.png" alt="" style="width:100px">
+                            	<center><img src="img/3rd.png" alt="" style="width:100px"></center>
                             </c:if>
                             <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
-                            <img src="img/2nd.png" alt="" style="width:100px">
+                            	<center><img src="img/2nd.png" alt="" style="width:100px"></center>
                             </c:if>
                             <c:if test="${400000 < mData.tier }">
-                            <img src="img/1st.png" alt="" style="width:100px">
+                            	<center><img src="img/1st.png" alt="" style="width:100px"></center>
                             </c:if>
                         </td>
                         <td>
-                          <h1 id="resultPrice">0원</h1>
-                          <input type="hidden" id="rP" name="resultPrice" value="">
+                          	<center><h1 id="resultPrice">0원</h1></center>
+                          	<input type="hidden" id="rP" name="resultPrice" value="">
                         </td>
                         <td>
                        		<c:if test="${mData.tier < 200000 }">
                        			<input type="hidden" name="discount" value="0.95">
-                     			<h1>5%</h1>
+                     			<center><h1>5%</h1></center>
                             </c:if>
                             
                             <c:if test="${200000 < mData.tier && mData.tier < 400000 }">
                            		<input type="hidden" name="discount" value="0.90">
-                           		<h1>10%</h1>
+                           		<center><h1>10%</h1></center>
                             </c:if>
                             
                             <c:if test="${400000 < mData.tier }">
                             	<input type="hidden" name="discount" value="0.80">
-                            	<h1>20%</h1>
+                            	<center><h1>20%</h1></center>
                             </c:if>
                         </td>
                         <td>
-                        	<h1 id="finalPrice">0원</h1>
+                        	<center><h1 id="finalPrice">0원</h1></center>
                         	<input type="hidden" id="fP" name="finalPrice" value="">
                         </td>
                         <td></td>
