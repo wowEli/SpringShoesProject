@@ -1,4 +1,4 @@
-package com.ss.biz.controller;
+﻿package com.ss.biz.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +83,7 @@ public class BucketController {
 			 if(bDatas.get(i).equals(sizepkArr[j])) { // 장바구니의 sizepk가 사용자가 선택한 sizepk와 같다면
 //				 System.out.println("if 삭제로직 들어옴 ["+bDatas.get(i)+"]");
 				 bDatas.remove(i); // 장바구니에서 그 sizepk를 제거
+				break;
 			 }
 		 }
 	 }
