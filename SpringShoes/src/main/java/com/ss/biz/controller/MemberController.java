@@ -74,6 +74,7 @@ public class MemberController {
 	
 	@RequestMapping("/updateM.do") // 회원정보 수정
 	public String updateMember(HttpSession session, MemberVO mVO) {
+		mVO.setMid((String)session.getAttribute("mid"));
 		memberService.updateMember(mVO);					
 		return "redirect:selectAllS.do"; //수정 후 메인페이지 이동 (세션정보를 지우면 장바구니가 초기화되서 수정)
 	}
@@ -99,18 +100,17 @@ public class MemberController {
 		// =============== 1회 후기 로직 시작 ===============
 		List<PayVO> pDatas = payService.selectAllPay(pVO); // 한명의 구매목록이 다 출력됨
 		
-		for(int i=0; i < pDatas.size(); i++) {
+		for(int i=0; i < pDatas.size(); i++) { // 구매목록의 개수만큼 반복
 			
 			rVO.setSizepk(pDatas.get(i).getSizepk()); // 이 제품에
 			ReviewVO rVO2 = reviewService.selectOneReviewMS(rVO); // 리뷰를 썻는가?
 			
-			if(rVO2 == null) { // 리뷰를 안썼다면 후기 작성이 가능
+			if(rVO2 == null) { // 리뷰를 안썼다면 후기 작성이 가능(null이라면)
 				pDatas.get(i).setFlag(true);
 			}
-			else { // 리뷰를 이미 썼다면 후기 작성이 불가능
+			else { // 리뷰를 이미 썼다면 후기 작성이 불가능(데이터가 있다면)
 				pDatas.get(i).setFlag(false);
 			}
-				
 		}
 		
 		// 로그

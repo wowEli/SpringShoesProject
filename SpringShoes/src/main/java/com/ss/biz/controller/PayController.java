@@ -126,6 +126,7 @@ public class PayController {
 	    	  session.setAttribute("finalPrice", request.getParameter("finalPrice"));
 	      }
 	      // session에 저장한 이유는 배송지 추가, 삭제를 할 때 위 두 값을 유지시키기 위함
+	      // 처음 요청을 받았을 떄 금액을 저장하면 이후에 다시 요청을 받아도 덮어씌어지지 않아 null값 방지
 		 
 		return "pay.jsp";
 	}

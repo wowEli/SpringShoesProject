@@ -30,13 +30,14 @@ public class ShoesController {
 
 
 		if(sVO.getPageCondition() == null) { // 검색을 이용하지 않고 들어올경우 null임
-			sVO.setPageCondition("nomal"); // 기본 값으로 일반검색(nomal) 사용
+			sVO.setPageCondition("normal"); // 기본 값으로 일반검색(nomal) 사용
 		}
 
 		// 페이징처리시 nomal인지 filter인지 알려주는 데이터 저장
 //		System.out.println("pageCondition :"+sVO.getPageCondition());
 		model.addAttribute("pageCondition", sVO.getPageCondition());
 		// page번호를 누를때 현재 무슨 검색을 사용하는지 데이터를 유지하기 위해 뷰로 데이터 전송
+		// 이 normal 값을 이용하여 페이지 단에 JS함수에 사용되므로 뷰에 보내줘야함
 
 		// 검색을 하지 않고 들어왔을 경우
 		if(sVO.getSearchContent() == null) {
@@ -136,9 +137,11 @@ public class ShoesController {
 		// selectOne한 신발정보인 sVO를 이용하여 color와 size 정보를 가져옴
 		List<ShoesVO> colorDatas = shoesService.selectShoes_Color(sVO);
 		List<ShoesSizeVO> sizeDatas = shoesService.selectShoes_Size(sVO);
-
+		
+		List<ReviewVO> rDatas = reviewService.selectAllReview(rVO);
 
 		model.addAttribute("sData", sVO);
+		model.addAttribute("rDatas", rDatas);
 		model.addAttribute("colorDatas", colorDatas);
 		model.addAttribute("sizeDatas", sizeDatas);
 

@@ -91,7 +91,7 @@
 					<div class="common-filter">
 						<div class="head" style="position: relative;">
 							<form action="selectAllS.do">
-							<input type="hidden" name="pageCondition" value="nomal">
+							<input type="hidden" name="pageCondition" value="normal">
 							검색하기 <span class="lnr lnr-magnifier" id="search"></span>
 							<input type="text" class="form-control" name="searchContent">
 							<input type="submit" style="display:none;">
@@ -293,7 +293,7 @@
          
       //console.log("pageButton값: "+$('#pageButton').val());
          
-      if($("#pageCondition").val() == "nomal"){ // 일반검색일 경우
+      if($("#pageCondition").val() == "normal"){ // 일반검색일 경우
          //console.log("일반검색페이지");
          
             $("#pageForm").attr("action", "selectAllS.do");

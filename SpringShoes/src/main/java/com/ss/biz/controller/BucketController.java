@@ -32,13 +32,12 @@ public class BucketController {
    @SuppressWarnings("unchecked")
    @RequestMapping("/bucket.do")
    public String bucket(HttpSession session,Model model, MemberVO mVO) {
-      //세션에 저장되어있는 장바구니 불러오기
-	  model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
+	   model.addAttribute("mData", memberService.selectOneMember(mVO)); // 회원정보 1개를 저장
       
 	   //세션에 장바구니가 있는지 확인하는 배열 생성
 	   ArrayList<String> sessionTestArr = (ArrayList<String>) session.getAttribute("bDatas");
 	   
-	   //만약 세션에서 불러온 장바구니가 Null이면 새로 세션에 저장하고 selectAll 진행
+	   // 만약 세션에서 불러온 장바구니가 Null이면 새로 세션에 저장
 	   if(sessionTestArr==null) {
 		   sessionTestArr = new ArrayList<String>();
 		   session.setAttribute("bDatas", sessionTestArr);
@@ -47,15 +46,14 @@ public class BucketController {
 	  // String 타입으로 sizepk 들이 저장되어 있음
       ArrayList<String> bDatas = (ArrayList<String>) session.getAttribute("bDatas");
       
-      // 결과값을 저장할 신발 배열 생성
+      // 결과 값을 저장할 신발 배열 생성
       ArrayList<ShoesVO> sDatas = new ArrayList<ShoesVO>();
       
       ShoesSizeVO sVO = new ShoesSizeVO();
       for(String b: bDatas) {
-    	  sVO.setSizepk(Integer.parseInt(b)); // String 타입의 sizepk를 int로 변환하여 ShoesSizeVO에 setter
+    	  sVO.setSizepk(Integer.parseInt(b)); // String 타입의 sizepk를 int로 변환하여 pk를 저장
     	  ShoesVO vo = new ShoesVO();
-    	  vo = shoesService.selectOneShoesBucket(sVO); // sizepk를 이용해서 selectOne
-//    	  System.out.println("장바구니 로그: ["+vo+"]");
+    	  vo = shoesService.selectOneShoesBucket(sVO); // sizepk를 이용해서 출력할 신발 정보를 저장
     	  sDatas.add(vo); // 결과 값을 신발배열에 저장
       }
       

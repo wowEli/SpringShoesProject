@@ -54,7 +54,7 @@ public class ReviewController {
 			String fileName = uploadFile.getOriginalFilename();
 			rVO.setReviewImg(fileName);
 			uploadFile.transferTo(new File(
-					"C:\\Users\\JuHyeon\\Desktop\\새 폴더 (2)\\SpringShoesTest\\src\\main\\webapp\\img"+ fileName));
+					"/Users/dongwook/git/SpringShoesProject/SpringShoes/src/main/webapp/img/"+ fileName));
 		}
 
 		reviewService.insertReview(rVO);
@@ -71,7 +71,7 @@ public class ReviewController {
 			String fileName = uploadFile.getOriginalFilename();
 			rVO.setReviewImg(fileName);
 			uploadFile.transferTo(new File(
-					"C:\\Users\\JuHyeon\\Desktop\\새 폴더 (2)\\SpringShoesTest\\src\\main\\webapp\\img" + fileName));
+					"/Users/dongwook/git/SpringShoesProject/SpringShoes/src/main/webapp/img/" + fileName));
 
 		}
 		
@@ -92,20 +92,6 @@ public class ReviewController {
 		System.out.println("컨트롤러에 들어온 리뷰" + rVO);
 		model.addAttribute("rData", rVO);
 		return "reviewUpdate.jsp"; // 리뷰 하나 보는 페이지
-	}
-
-	@RequestMapping("/selectAllR.do") // 다른 사람 포함 모든 리뷰 확인
-	public String SelectAllR(ReviewVO rVO, Model model) {
-		List<ReviewVO> rDatas = reviewService.selectAllReview(rVO);
-		model.addAttribute("rDatas", rDatas);
-		return "review.do";
-	}
-
-	@RequestMapping("/selectAllMR.do") // 내 리뷰들만 확인
-	public String SelectAllMR(ReviewVO rVO, MemberVO mVO, Model model) {
-		List<ReviewVO> rmDatas = reviewService.selectAllReviewM(rVO);
-		model.addAttribute("rmDatas", rmDatas);
-		return "review.do";
 	}
 
 }

@@ -267,8 +267,8 @@
             </div>
          </div>
       </div>
-      
-	<script type="text/javascript">
+
+		<script type="text/javascript">
 		document.getElementById("newAddress").style.display = "none";
 		console.log(document.getElementById("payAddress").value);
 
@@ -276,13 +276,14 @@
 			document.getElementById("newAddress").style.display = "";
 		}
 	</script>
+	
 	<script type="text/javascript">
 		document.getElementById("payAddress").value = document.getElementById("defaultAddress").value;
 		
 		function otherAddress(tag){
-				console.log(document.getElementById("payAddress").value);
+				// console.log(document.getElementById("payAddress").value);
 				document.getElementById("payAddress").value = tag.value;
-				console.log(document.getElementById("payAddress").value);
+				// console.log(document.getElementById("payAddress").value);
 		}
 	
 	</script>

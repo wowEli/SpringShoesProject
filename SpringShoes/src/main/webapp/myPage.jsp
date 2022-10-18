@@ -197,9 +197,9 @@
                         <c:forEach var="p" items="${pDatas}">
  						<tr>
                            <td>
-                                 <img class="img-fluid blog_right_sidebar"
+                                <a href="selectOneS.do?colorpk=${p.colorpk }"> <img class="img-fluid blog_right_sidebar"
                                     src="${p.shoesImg}" alt="신발이미지"
-                                    style="background-color: white; padding: 0; width:120px;">
+                                    style="background-color: white; padding: 0; width:120px;"></a>
                            </td>
 
                            <td>
@@ -214,7 +214,7 @@
                               <p><br><br>${p.shoesPrice}</p>
                            </td>
 
-						   <td>
+						   <td style="width:230px">
                               <p><br><br>${p.address}</p>
                            </td>
 
@@ -224,13 +224,10 @@
                            </td>
                            <td>
                             	<c:if test="${p.flag == true }">
-                            		<br><br>
-                                    <a href="review.do" class="genric-btn primary-border">후기작성</a>
-                                </c:if>
-                                
+                            		<br><br><a href="review.do?sizepk=${p.sizepk}&colorpk=${p.colorpk}" 
+                                    class="genric-btn primary-border">후기작성</a></c:if>
                                 <c:if test="${p.flag == false }">
-                                    <p><br><br>후기 작성 완료</p>
-                                </c:if>
+                                    <p><br><br>후기 작성 완료</p></c:if>
                            </td>
 
                       </tr>
@@ -264,8 +261,8 @@
                      
                         <th scope="col" style="width: 204px; color:white;">후기이미지</th>
                         <th scope="col" style="color:white;">상품명</th>
-                        <th scope="col" style="color:white;">내용</th>
                         <th scope="col" style="color:white;">사이즈</th>
+                        <th scope="col" style="color:white;">내용</th>
                         <th scope="col" style="color:white;">작성 날짜</th>
                         <th scope="col" style="color:white;">수정</th>
                         <th scope="col" style="color:white;">삭제</th>
@@ -276,21 +273,21 @@
                         <c:forEach var="r" items="${rDatas}">
  						<tr>
                            <td>
-                                 <a href="selectOneS.do?colorpk=${r.colorpk }"><img class="img-fluid blog_right_sidebar"
-                                    src="${r.reviewImg}" alt="신발이미지"
+                            <a href="selectOneS.do?colorpk=${r.colorpk }"> <img class="img-fluid blog_right_sidebar"
+                                    src="img/${r.reviewImg}" alt="신발이미지"
                                     style="background-color: white; padding: 0; width:120px;"></a>
                            </td>
 
                            <td>
-                              <p><br><br><a href="selectOneS.do?colorpk=${r.colorpk }">${r.shoesName}</a></p>
+                              <p><br><br>${r.shoesName}</p>
                            </td>
 
 							<td>
 								<p><br><br>${r.size}</p>
 							</td>
 							
-                           <td>
-                              <p><br><br>${r.content}</p>
+                           <td style="width:150px">
+                              <p><br><br>내용은 상세페이지에서 확인 가능합니다.</p>
                            </td>
                            
                            <td>
@@ -299,11 +296,11 @@
 
                            <td>
                            <br><br>
-                              <a href="updateR.do?sizepk=${r.sizepk }" class="genric-btn primary-border">후기 수정</a>
+                              <a href="selectOneR.do?rpk=${r.rpk}" class="genric-btn primary-border">후기 수정</a>
                            </td>
                            <td>
                            <br><br>
-                              <a href="deleteR.do?rpk=${r.rpk }" class="genric-btn primary-border" style="color:red;">후기 삭제</a>
+                              <a href="deleteR.do?rpk=${r.rpk}" class="genric-btn primary-border" style="color:red;">후기 삭제</a>
                            </td>
 
                       </tr>
