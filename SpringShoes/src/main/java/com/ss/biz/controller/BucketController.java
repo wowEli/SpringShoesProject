@@ -76,13 +76,13 @@ public class BucketController {
 //		System.out.println("장바구니삭제 로그: ["+sizepkArr[i]+"]");
 //	}
 	
-	 for(int i=0; i<bDatas.size(); i++) { // 장바구니 길이 만큼 반복
+	 for(int i=0; i<sizepkArr.length; i++) { // 장바구니 길이 만큼 반복
 //		 System.out.println("for문 1 들어옴");
-		 for(int j=0; j<sizepkArr.length; j++) { // 사용자가 선택한 sizepk 수 만큼 반복
+		 for(int j=0; j<bDatas.size(); j++) { // 사용자가 선택한 sizepk 수 만큼 반복
 //			 System.out.println("for문 2 들어옴");
-			 if(bDatas.get(i).equals(sizepkArr[j])) { // 장바구니의 sizepk가 사용자가 선택한 sizepk와 같다면
+			 if(bDatas.get(j).equals(sizepkArr[j])) { // 장바구니의 sizepk가 사용자가 선택한 sizepk와 같다면
 //				 System.out.println("if 삭제로직 들어옴 ["+bDatas.get(i)+"]");
-				 bDatas.remove(i); // 장바구니에서 그 sizepk를 제거
+				 bDatas.remove(j); // 장바구니에서 그 sizepk를 제거
 				break;
 			 }
 		 }

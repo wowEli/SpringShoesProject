@@ -83,7 +83,12 @@ public class PayController {
 		session.setAttribute("bDatas", bDatas); // 구매한 상품들은 삭제된 장바구니 목록을 다시 저장
 		
 		model.addAttribute("sDatas", sDatas);
-
+		
+		session.removeAttribute("resultPrice");
+		session.removeAttribute("finalPrice");
+		//구매하기가 성공하면 총금액,최종금액은 세션에 담을 필요가 없음으로 불필요한 데이터 삭제
+		
+		
 		return "receipt.jsp"; 
 	}
 	
@@ -119,14 +124,13 @@ public class PayController {
 	      model.addAttribute("sDatas", sDatas);
 	      
 	      // 총 합계 금액 , 최종 금액 저장 로직
-	      if(session.getAttribute("resultPrice") == null) {
+	      //새롭게 장바구니를 통해 결제페이지로 넘어올때 가격을 최신화해준다.
+	      if(request.getParameter("resultPrice")!=null &&request.getParameter("finalPrice")!=null) {
 	    	  session.setAttribute("resultPrice", request.getParameter("resultPrice"));
-	      }
-	      if(session.getAttribute("finalPrice") == null) {
 	    	  session.setAttribute("finalPrice", request.getParameter("finalPrice"));
+	    	  // session에 저장한 이유는 배송지 추가, 삭제를 할 때 위 두 값을 유지시키기 위함
+		      // 처음 요청을 받았을 떄 금액을 저장하면 이후에 다시 요청을 받아도 덮어씌어지지 않아 null값 방지
 	      }
-	      // session에 저장한 이유는 배송지 추가, 삭제를 할 때 위 두 값을 유지시키기 위함
-	      // 처음 요청을 받았을 떄 금액을 저장하면 이후에 다시 요청을 받아도 덮어씌어지지 않아 null값 방지
 		 
 		return "pay.jsp";
 	}
