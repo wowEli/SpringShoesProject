@@ -52,6 +52,7 @@
                <h1>후기 수정</h1>
                 <form  action="updateR.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="rpk" value="${rData.rpk }">
+                <input type="hidden" name="reviewImg" value="${rData.reviewImg}">
  <textarea  name="content" class="form-control" style="width:100%; height:300px">${rData.content }
 </textarea>
                         
