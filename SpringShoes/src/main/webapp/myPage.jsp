@@ -262,7 +262,6 @@
                         <th scope="col" style="width: 204px; color:white;">후기이미지</th>
                         <th scope="col" style="color:white;">상품명</th>
                         <th scope="col" style="color:white;">사이즈</th>
-                        <th scope="col" style="color:white;">내용</th>
                         <th scope="col" style="color:white;">작성 날짜</th>
                         <th scope="col" style="color:white;">수정</th>
                         <th scope="col" style="color:white;">삭제</th>
@@ -285,11 +284,6 @@
 							<td>
 								<p><br><br>${r.size}</p>
 							</td>
-							
-                           <td style="width:150px">
-                              <p><br><br>내용은 상세페이지에서 확인 가능합니다.</p>
-                           </td>
-                           
                            <td>
                               <p><br><br>${r.writeday}</p>
                            </td>

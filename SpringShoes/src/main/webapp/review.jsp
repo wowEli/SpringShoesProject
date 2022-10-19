@@ -53,12 +53,9 @@
                    <input type="hidden" name="sizepk" value="${sizepk}">
                    <input type="hidden" name="colorpk" value="${colorpk}">
                    <input type="hidden" name="mid" value="${mid}">
- <textarea  name="content" class="form-control" style="width:100%; height:300px">
-아이디 : ${mid}&#10; 
-제품명 : ${sData.shoesName}&#10;
-사이즈 : ${sData.shoesSize }&#10;
-후기 작성 : 
- </textarea>
+<textarea  name="content" class="form-control" style="width:100%; height:300px">제품명 : ${sData.shoesName}
+사이즈 : ${sData.shoesSize }
+후기 내용 : </textarea>
                      
                     <img id="preview" alt=""> 
                     <input type="file" id="preview" name="uploadFile" onchange="loadFile(this)">

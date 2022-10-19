@@ -77,6 +77,7 @@ h6 {
     .genric-btn.primary-border{
     	border:1px solid black;
     	font-size:20px;
+    	margin: 7px;
     }
     .genric-btn.primary-border:hover{
     	background: black;
@@ -189,7 +190,7 @@ h6 {
                         
                         
                         // 제품이 있을경우에만
-                        $("#slistText").remove();
+                        $('#slistText').hide();
 
                         var $tr = $("<tr id="+"shoesIndex"+shoesIndex+">", {});
                         var $td1 = $("<td style='text-align: center;'><h6>${sData.shoesName }</h6></td>");
@@ -250,8 +251,7 @@ h6 {
        
        // 제품목록을 삭제하여 모두 없앴을 경우 다시 텍스트 생성하여 출력
        if($(".slist").html() == ""){
-          var html = "<span id='slistText'>사이즈를 선택하여 제품을 담아주세요</span>"
-         $('#slistTextbox').append(html);
+         $('#slistText').show;
        }
       }
       
@@ -381,7 +381,7 @@ h6 {
                                  <h4>${r.mid }</h4>
                               </div>
                            </div>
-                           <p>${r.content }</p>
+                           <textarea name="content" class="form-control" readonly="readonly" style="width:100%; height:150px;background-color:white;border:none;resize: none;">${r.content }</textarea>
                            <br><br><hr>
                         </div>
                      </div>
