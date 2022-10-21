@@ -58,7 +58,7 @@ public class ReviewController {
 		}
 
 		reviewService.insertReview(rVO);
-		return "selectOneM.do";
+		return "redirect:selectOneM.do?mid="+session.getAttribute("mid");
 	}
 
 	@RequestMapping("/updateR.do") // 후기 수정
